@@ -1,0 +1,53 @@
+[
+	{
+		"user": "topolino",
+		"password": "1",
+		"giocate": 3,
+		"vinte": 2,
+		"streaklast": 0,
+		"streakmax": 2,
+		"guessd": [
+			2,
+			1
+		]
+	},
+	{
+		"user": "pluto",
+		"password": "123",
+		"giocate": 18,
+		"vinte": 13,
+		"streaklast": 5,
+		"streakmax": 5,
+		"guessd": [
+			1,
+			2,
+			1
+		]
+	},
+	{
+		"user": "pippo",
+		"password": "test",
+		"giocate": 13,
+		"vinte": 11,
+		"streaklast": 3,
+		"streakmax": 3,
+		"guessd": [
+			1,
+			2,
+			3,
+			4,
+			5
+		]
+	},
+	{
+		"user": "paperino",
+		"password": "test",
+		"giocate": 2,
+		"vinte": 1,
+		"streaklast": 0,
+		"streakmax": 1,
+		"guessd": [
+			1
+		]
+	}
+]
