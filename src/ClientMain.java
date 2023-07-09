@@ -33,7 +33,7 @@ public class ClientMain {
             // ---
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("=== CLIENT CONNESSO ===");
+            System.out.println("=== CONNESSIONE EFFETTUATA ===");
             // ---
             while (input.hasNextLine()) {
                 System.out.println(input.nextLine());
