@@ -47,6 +47,7 @@ public class WordList {
             }
         }
         // ---
+        wordVocabulary.sort(String::compareToIgnoreCase);
         wordExtractor.scheduleAtFixedRate(extractWord, 0, wordTimer, TimeUnit.SECONDS);
     }
 

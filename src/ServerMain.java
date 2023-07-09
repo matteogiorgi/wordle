@@ -116,11 +116,9 @@ public class ServerMain {
             System.out.println("=== SERVER ACCESO ===");
             // ---
             while (true) {
-                try (Socket socket = welcomeSocket.accept()) {
-                    // la threadpool.execute(...) è inserita dentro questo try-with-resources
-                    // per poter "vedere" la socket anche se non lancia alcuna eccezione
-                    // (il codice è più pulito piuttosto che usare un try-catch-finally)
-                    threadPool.execute(new Game(socket, listaUtenti, listaParole));
+                Socket socket = null;
+                try {
+                    socket = welcomeSocket.accept();
                 } catch (SocketException e) {
                     // se il server è stato chiuso,
                     // mi assicuro di uscire dal ciclo
@@ -130,6 +128,8 @@ public class ServerMain {
                     e.printStackTrace();
                     continue;
                 }
+                // ---
+                threadPool.execute(new Game(socket, listaUtenti, listaParole));
             }
         } catch (IOException e) {
             System.err.println("Errore sul server?");

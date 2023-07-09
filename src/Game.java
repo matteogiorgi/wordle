@@ -115,6 +115,13 @@ public class Game implements Runnable {
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream(), true);
             // ---
+            output.println("┌────────────────────┐\n" +
+                           "│ Benvuto su WORDLE! │\n" +
+                           "├────────────────────┤\n" +
+                           "│ 1. registrati      │\n" +
+                           "│ 2. login           │\n" +
+                           "│ 3. esci            │\n" +
+                           "└────────────────────┘");
             while (input.hasNextLine()) {
                 output.println("┌────────────────────┐\n" +
                                "│ Benvuto su WORDLE! │\n" +
@@ -123,7 +130,6 @@ public class Game implements Runnable {
                                "│ 2. login           │\n" +
                                "│ 3. esci            │\n" +
                                "└────────────────────┘");
-                output.println("Benvenuto su WORDLE!\n1. registrati\n2. login\n3. esci\n");
                 String userInfo, username, password;
 
                 switch (input.nextLine()) {
