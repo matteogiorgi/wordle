@@ -203,6 +203,17 @@ public class UserList {
 
 
     /**
+     * Aggiunge un nuovo utente alla lista degli utenti registrati.
+     * @param newUser l'oggetto User contenente i dati del nuovo utente da aggiungere
+     * @return l'oggetto User associato al nuovo utente aggiunto, null se l'utente è già presente
+     * @throws IllegalArgumentException se i dati del nuovo utente non sono validi
+     */
+    public synchronized User addUser(User newUser) {
+        return userRegistrati.putIfAbsent(newUser.getName(), newUser);
+    }
+
+
+    /**
      * Rimuove l'utente con il nome utente specificato dalla lista degli utenti registrati e dalla lista degli utenti loggati.
      * @param userName il nome utente dell'utente da rimuovere
      * @return l'oggetto User associato all'utente rimosso, null se l'utente non è presente

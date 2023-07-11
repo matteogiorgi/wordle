@@ -28,10 +28,13 @@ public class ServerMain {
 
 
     /**
-     * Variabili statiche che rappresentano la socket di benvenuto sulla quale fare la
-     * accept() dei client e il thread pool che gestisce i client connessi
+     * Variabili statiche che rappresentano:
+     * la socket di benvenuto sulla quale fare la accept() dei client,
+     * la socket di connessione per la comunicazione Game <-> Client,
+     * il thread pool che gestisce i client connessi
      */
     private static ServerSocket welcomeSocket;
+    private static Socket socket;
     private static ExecutorService threadPool;
 
 
@@ -51,7 +54,7 @@ public class ServerMain {
                 // ricorda di gestire la shutdown del multicast:
                 // multicastThreadPool.shutdown();
             } catch (IOException e) {
-                System.err.println("Chiusura server-socket fallita");
+                System.err.println("Errore chiusura server-socket");
                 e.printStackTrace();
             } finally {
                 threadPool.shutdown();
@@ -66,7 +69,7 @@ public class ServerMain {
                         listaParole.getSheduler().shutdownNow();
                     }
                 } catch (InterruptedException e) {
-                    System.err.println("Chiusura forzata dei threadpool");
+                    System.err.println("Chiusura forzata");
                     e.printStackTrace();
                     if (!threadPool.isShutdown()) {
                         threadPool.shutdownNow();
@@ -116,7 +119,6 @@ public class ServerMain {
             System.out.println("=== SERVER ACCESO ===");
             // ---
             while (true) {
-                Socket socket = null;
                 try {
                     socket = welcomeSocket.accept();
                 } catch (SocketException e) {
@@ -124,16 +126,20 @@ public class ServerMain {
                     // mi assicuro di uscire dal ciclo
                     break;
                 } catch (IOException e) {
-                    System.err.println("Errore durante la accept()");
+                    System.err.println("Server interrotto durante la accept()");
                     e.printStackTrace();
                     continue;
                 }
                 // ---
-                threadPool.execute(new Game(socket, listaUtenti, listaParole));
-            }
+                if (socket.isBound()) {
+                    System.out.println("Connesso con: " + socket.getInetAddress() + ":" + socket.getPort());
+                    threadPool.execute(new Game(socket, listaUtenti, listaParole));
+                }
+            }  // while (true)
         } catch (IOException e) {
-            System.err.println("Errore sul server?");
+            System.err.println("Errore creazione welcome socket");
             e.printStackTrace();
+            System.exit(1);
         }
     }  // main
 

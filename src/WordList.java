@@ -69,4 +69,9 @@ public class WordList {
         return wordExtractor;
     }
 
+
+    public boolean containsWord(String word) {
+        return wordVocabulary.contains(word);
+    }
+
 }  // class WordList
