@@ -38,13 +38,7 @@ public class Game implements Runnable {
                 default:
                     // analizzo la stringa inserita e invio la maschera in risposta
                     // (termino la partita in caso di vittoria/sconfitta)
-                    if (!wordList.containsWord(tentativo)) {
-                        output.println("  " + "-".repeat(tentativo.length()));
-                        continue;
-                    }
-                    // ---
-                    String mask = word.getMask(tentativo);
-                    if (mask.matches("\\+*")) {
+                    if (tentativo.equals(word.getWord())) {
                         output.println("Complimenti " + user.getName() + ", hai indovinato la parola!");
                         return;
                     }
@@ -54,7 +48,13 @@ public class Game implements Runnable {
                         return;
                     }
                     // ---
-                    output.println("  " + mask);
+                    if (!wordList.containsWord(tentativo)) {
+                        output.println("  " + "-".repeat(tentativo.length()));
+                        contaTentativi--;
+                        continue;
+                    }
+                    // ---
+                    output.println("  " + word.getMask(tentativo));
 
             }
         }  // while(...)

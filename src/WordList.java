@@ -25,7 +25,7 @@ public class WordList {
      * La parola estratta viene assegnata all'attributo currentWord della classe WordList.
      */
     private Runnable extractWord = () -> {
-        currentWord = new Word(wordVocabulary.remove((int) (Math.random() * wordVocabulary.size())));
+        currentWord = new Word(wordVocabulary.get((int) (Math.random() * wordVocabulary.size())));
     };
 
 
