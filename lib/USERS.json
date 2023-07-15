@@ -14,11 +14,15 @@
 	{
 		"user": "matteo",
 		"password": "pippolo11",
-		"giocate": 0,
+		"giocate": 3,
 		"vinte": 0,
 		"streaklast": 0,
 		"streakmax": 0,
-		"guessd": []
+		"guessd": [
+			1,
+			1,
+			1
+		]
 	},
 	{
 		"user": "giorgio",
@@ -28,6 +32,17 @@
 		"streaklast": 0,
 		"streakmax": 0,
 		"guessd": []
+	},
+	{
+		"user": "sara",
+		"password": "pippola",
+		"giocate": 1,
+		"vinte": 1,
+		"streaklast": 1,
+		"streakmax": 1,
+		"guessd": [
+			5
+		]
 	},
 	{
 		"user": "stefania",

@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
 
 
 public class ClientMain {
@@ -11,15 +14,36 @@ public class ClientMain {
     private static ClientSetup clientProperties;
 
 
+    private static ExecutorService multicastListener = Executors.newSingleThreadExecutor();
+
+
+    private static Runnable shareHook = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                multicastListener.shutdown();
+                multicastListener.awaitTermination(1, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                System.err.println("[ERROR] chiusura multicast-listener");
+                e.printStackTrace();
+            }
+        }
+    };
+
+
     public static void main(String[] args) {
+        // registro uno shutdown hook per
+        // gestire la condivisione dei dati
+        multicastListener.submit(new Thread(shareHook));
+
         // leggo il file di configurazione del client
         try {
             clientProperties = new ClientSetup(PATH_CONF);
         } catch (FileNotFoundException e) {
-            System.err.printf("File di configurazione %s non trovato\n", PATH_CONF);
+            System.err.printf("[ERROR] file configurazione %s non trovato\n", PATH_CONF);
             e.printStackTrace();
         } catch (IOException e) {
-            System.err.printf("Errore durante la lettura del file di configurazione %s\n", PATH_CONF);
+            System.err.printf("[ERROR] lettura file configurazione %s fallita\n", PATH_CONF);
             e.printStackTrace();
         }
 
@@ -37,28 +61,33 @@ public class ClientMain {
             // ---
             // leggo i messaggi inviati dal server e li stampo a video
             // leggo i comandi da tastiera e li invio al server
-            boolean exitStatus = true;
-            for (String inputLine, command; !socket.isClosed() && !socket.isInputShutdown() && input.hasNextLine();) {
+            for (String inputLine; !socket.isClosed() && !socket.isInputShutdown() && input.hasNextLine();) {
                 inputLine = input.nextLine();
-                exitStatus = inputLine.matches("^(Arrivederci|Main-menu WORDLE).*");
-                // ---
                 System.out.println(inputLine);
+                // ---
+                // se il comando inviato era "sendmestas",
+                // devo leggere 6 righe di output dal server
+                if (inputLine.matches("^\\[EXIT\\] .*")) {
+                    return;
+                }
+                // ---
+                if (inputLine.matches("^\\[STAT (?!guessd).*\\] .*")) {
+                    continue;
+                }
+                // ---
                 System.out.print("> ");
-                if (!socket.isOutputShutdown() && tastiera.hasNextLine()) {
-                    output.println(command = tastiera.nextLine().trim().toLowerCase());
-                    // ---
-                    // se il comando è "exit" chiudo
-                    // gli stream di I/O e la socket
-                    if (exitStatus && command.equals("exit")) {
-                        System.out.println(input.nextLine());
-                        return;
+                for (String inputCommand; !socket.isOutputShutdown() && tastiera.hasNextLine(); System.out.print("> ")) {
+                    inputCommand = tastiera.nextLine().trim().toLowerCase();
+                    if (!inputCommand.isEmpty()) {
+                        output.println(inputCommand);
+                        break;
                     }
                 }
             }
             // ---
-            System.out.println("Il server ha interrotto la connessione");
+            System.out.println("[SORRY] connessione interrotta :(");
         } catch (IOException e) {
-            System.err.printf("Errore durante l'apertura della socket o degli stream di I/O\n");
+            System.err.printf("[ERROR] apertura socket/stream fallita\n");
             e.printStackTrace();
         }
     }  // main
