@@ -18,8 +18,8 @@ public class Game implements Runnable {
 
 
     private void gameSession(User user) {
-        System.out.println("[GAME-SESSION] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
-        output.println("[GAME-SESSION] user " + user.getName() + ", nuova partita: quit|<tentativo>");
+        System.out.println("[GAME SESSION] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
+        output.println("[GAME SESSION] user " + user.getName() + ", nuova partita: quit|<tentativo>");
         // ---
         String tentativo = null;
         int contaTentativi = 0;
@@ -32,7 +32,7 @@ public class Game implements Runnable {
                 case "quit":
                     // invio un messaggio di fine partita
                     // e restituisco il controllo a loginSession()
-                    output.println("[GAME-SESSION] user " + user.getName() + ", partita interrotta");
+                    output.println("[GAME SESSION] user " + user.getName() + ", partita interrotta");
                     user.update(false, contaTentativi);
                     return;
 
@@ -40,13 +40,13 @@ public class Game implements Runnable {
                     // analizzo la stringa inserita e invio la maschera in risposta
                     // (termino la partita in caso di vittoria/sconfitta)
                     if (tentativo.equals(word.getWord())) {
-                        output.println("[GAME-SESSION] complimenti user " + user.getName() + ", parola indovinata");
+                        output.println("[GAME SESSION] complimenti user " + user.getName() + ", parola indovinata");
                         user.update(true, contaTentativi);
                         return;
                     }
                     // ---
                     if (contaTentativi == 12) {
-                        output.println("[GAME-SESSION] spiacente user " + user.getName() + ", tentativi esauriti");
+                        output.println("[GAME SESSION] spiacente user " + user.getName() + ", tentativi esauriti");
                         user.update(false, contaTentativi);
                         return;
                     }
@@ -65,8 +65,8 @@ public class Game implements Runnable {
 
 
     private void loginSession(User user) {
-        System.out.println("[LOGIN-SESSION] user " + user.getName() + " login effettuato");
-        output.println("[LOGIN-SESSION] user " + user.getName() + ", login effettuato: playwordle|sendmestat|logout");
+        System.out.println("[LOGIN DONE] user " + user.getName());
+        output.println("[LOGIN DONE] user " + user.getName() + ": playwordle|sendmestat|logout");
         // ---
         while (input.hasNextLine()) {
             switch (input.nextLine().trim().toLowerCase()) {
@@ -86,7 +86,7 @@ public class Game implements Runnable {
                 case "sendmestat":
                     // invio contenuto (utile) della mappa utente
                     // torno al while(...)
-                    output.println("[STAT user] " + user.getName());
+                    output.println("[STAT " + user.getName().toUpperCase() + "]");
                     output.println("[STAT giocate] " + user.getGiocate());
                     output.println("[STAT vinte] " + user.getVinte());
                     output.println("[STAT streaklast] " + user.getStreakLast());
@@ -98,13 +98,13 @@ public class Game implements Runnable {
                     // rimuovo l'utente dalla lista dei loggati
                     // restituisco il controllo a run()
                     userList.logoutUser(user.getName());
-                    output.println("[LOGOUT] arrivederci " + user.getName());
+                    output.println("[LOGOUT DONE] arrivederci " + user.getName());
                     return;
 
                 default:
                     // l'utente ha inserito un comando errato
                     // o non eseguibile in questo contesto
-                    output.println("[LOGIN-SESSION] comando non eseguibile: playwordle|sendmestat|logout");
+                    output.println("[LOGIN SESSION] comando non eseguibile: playwordle|sendmestat|logout");
 
             }
         }  // while(...)
@@ -123,7 +123,7 @@ public class Game implements Runnable {
         try {
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream(), true);
-            output.println("[MAIN-SESSION] Welcome to WORDLE: register|remove|login|exit");
+            output.println("[MAIN SESSION] Welcome to WORDLE: register|remove|login|exit");
             // ---
             while (!socket.isClosed() && !socket.isInputShutdown() && input.hasNextLine()) {
                 String inpuString = input.nextLine().trim().toLowerCase();
@@ -219,10 +219,10 @@ public class Game implements Runnable {
                                     // 5. visualizzare le condivisioni
                                     loginSession(userList.getUser(username));
                                 } else {
-                                    output.println("[LOGIN] user " + username + " login fallito");
+                                    output.println("[LOGIN FAILED] user " + username);
                                 }
                             } catch (IllegalArgumentException e) {
-                                output.println("[LOGIN] user " + username + " non registrato");
+                                output.println("[LOGIN FAILED] user " + username);
                             }
                             // ---
                             // torno al while(...)
@@ -232,20 +232,20 @@ public class Game implements Runnable {
                         default:
                             // questo blocco finally verrà eseguito solo nei casi di ArrayIndexOutOfBoundsException
                             // oppure quando l'utente ha inserito un comando che non sia [register|remove|login|exit]
-                            output.println("[MAIN-SESSION] comando non eseguibile: register|remove|login|exit");
+                            output.println("[MAIN SESSION] comando non eseguibile: register|remove|login|exit");
 
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                     // l'utente ha inserito un comando errato/malformattato o non eseguibile in questo contesto
                     // che ha scatenato una ArrayIndexOutOfBoundsException quando ho provato a splittare
-                    output.println("[MAIN-SESSION] comando register|remove|login malformattato");
+                    output.println("[MAIN SESSION] comando register|remove|login malformattato");
                 }
             }  // while(...)
         } catch (EOFException e) {
-            System.err.println("[MAIN-SESSION] errore lettura stream");
+            System.err.println("[MAIN SESSION] errore lettura stream");
             e.printStackTrace();
         } catch (IOException e) {
-            System.err.println("[MAIN-SESSION] errore creazione stream o chiusura socket");
+            System.err.println("[MAIN SESSION] errore creazione stream o chiusura socket");
             e.printStackTrace();
         }
     }  // run()

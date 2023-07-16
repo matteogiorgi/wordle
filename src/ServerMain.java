@@ -6,6 +6,7 @@ import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,7 +42,7 @@ public class ServerMain {
     private static ServerSocket welcomeSocket = null;
     private static Socket socket = null;
     private static ExecutorService threadPool = Executors.newCachedThreadPool();
-    private static ExecutorService multicastListener = Executors.newSingleThreadExecutor();
+    private static Thread multicastListener = null;
 
 
     /**
@@ -62,16 +63,12 @@ public class ServerMain {
                 e.printStackTrace();
             } finally {
                 threadPool.shutdown();
-                multicastListener.shutdown();
+                multicastListener.interrupt();
                 listaParole.getSheduler().shutdown();
                 try {
                     if (!threadPool.awaitTermination(5, TimeUnit.SECONDS)) {
                         System.out.println("[WARNING] forzo chiusura threadpool");
                         threadPool.shutdownNow();
-                    }
-                    if (!multicastListener.awaitTermination(5, TimeUnit.SECONDS)) {
-                        System.out.println("[WARNING] forzo chiusura multicastlistener");
-                        multicastListener.shutdownNow();
                     }
                     if (!listaParole.getSheduler().awaitTermination(5, TimeUnit.SECONDS)) {
                         System.out.println("[WARNING] forzo chiusura scheduler");
@@ -82,9 +79,6 @@ public class ServerMain {
                     e.printStackTrace();
                     if (!threadPool.isShutdown()) {
                         threadPool.shutdownNow();
-                    }
-                    if (!multicastListener.isShutdown()) {
-                        multicastListener.shutdownNow();
                     }
                     if (!listaParole.getSheduler().isShutdown()) {
                         listaParole.getSheduler().shutdownNow();
@@ -107,7 +101,8 @@ public class ServerMain {
         public void run() {
             try (DatagramSocket datagramSocket = new DatagramSocket(serverProperties.getServerNotificationPort());
                  MulticastSocket multicastSocket = new MulticastSocket(serverProperties.getMulticastGroupPort())) {
-                // ---
+                datagramSocket.setSoTimeout(1000);
+
                 // definisco un gruppo multicast e
                 // ne controllo la validità
                 InetAddress multicastGroup = InetAddress.getByName(serverProperties.getMulticastGroupAddress());
@@ -119,17 +114,23 @@ public class ServerMain {
 
                 // ricevo richiesta di condivisione (con i dati partita)
                 // giro in multicast i risultati ricevuti dal client
-                while (true) {
-                    shareRequest = new DatagramPacket(new byte[8192], 8192);
-                    datagramSocket.receive(shareRequest);
-                    // ---
-                    multicastSocket.send(new DatagramPacket(
-                        shareRequest.getData(),
-                        shareRequest.getLength(),
-                        multicastGroup,
-                        serverProperties.getMulticastGroupPort()
-                    ));
-                    System.out.println("[INFO] condivisione dati partita");
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        shareRequest = new DatagramPacket(new byte[8192], 8192);
+                        datagramSocket.receive(shareRequest);
+                        // ---
+                        multicastSocket.send(new DatagramPacket(
+                            shareRequest.getData(),
+                            shareRequest.getLength(),
+                            multicastGroup,
+                            serverProperties.getMulticastGroupPort()
+                        ));
+                        System.out.println("[INFO] condivisione dati partita");
+                    } catch (SocketTimeoutException e) {
+                        if (Thread.currentThread().isInterrupted()) {
+                            break;
+                        }
+                    }
                 }
             } catch (SocketException e) {
                 System.err.println("[ERROR] creazione datagram-socket fallita");
@@ -146,14 +147,9 @@ public class ServerMain {
 
 
     public static void main(String args[]) {
-        // registro uno shutdown hook per gestire la chiusura del server
-        // e uno per la condivisione dei dati
-        Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook));
-        multicastListener.submit(new Thread(shareHook));
-
-        // Leggo il file di configurazione del server,
-        // alloco la lista degli utenti (leggendo il file JSON)
-        // e la lista delle parole (leggendo il file .txt)
+        // leggo file di configurazione server,
+        // alloco lista utenti (leggendo il file JSON)
+        // e lista parole (leggendo il file .txt)
         try {
             serverProperties = new ServerSetup(PATH_CONF);
             listaUtenti = new UserList(serverProperties.getPathJSON());
@@ -161,41 +157,49 @@ public class ServerMain {
         } catch (FileNotFoundException e) {
             System.err.printf("File di configurazione %s non trovato\n", PATH_CONF);
             e.printStackTrace();
-            return;
+            System.exit(1);
         } catch (IOException e) {
             System.err.printf("Errore durante la lettura del file di configurazione %s\n", PATH_CONF);
             e.printStackTrace();
-            return;
+            System.exit(1);
         }
 
-        // Avvio il server sulla porta specificata nel file di configurazione
+        // avvio il server sulla porta specificata nel file di configurazione
         // e mi metto in attesa di connessioni da parte dei client
         try {
             welcomeSocket = new ServerSocket(serverProperties.getPort());
-            System.out.println("=== SERVER ACCESO ===");
-            // ---
-            while (true) {
-                try {
-                    socket = welcomeSocket.accept();
-                } catch (SocketException e) {
-                    // se il server è stato chiuso,
-                    // mi assicuro di uscire dal ciclo
-                    break;
-                } catch (IOException e) {
-                    System.err.println("Server interrotto durante la accept()");
-                    e.printStackTrace();
-                    continue;
-                }
-                // ---
-                if (socket.isBound()) {
-                    System.out.println("Connesso con: " + socket.getInetAddress() + ":" + socket.getPort());
-                    threadPool.execute(new Game(socket, listaUtenti, listaParole));
-                }
-            }  // while (true)
         } catch (IOException e) {
             System.err.println("Errore creazione welcome socket");
             e.printStackTrace();
             System.exit(1);
+        }
+
+        // registro shutdown-hook la chiusura
+        // e shareHook per condivisione dati
+        Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook));
+        multicastListener = new Thread(shareHook);
+        multicastListener.start();
+
+        // server finalmente attivo
+        // in attesa delle connessioni
+        System.out.println("=== SERVER ACCESO ===");
+        while (true) {
+            try {
+                socket = welcomeSocket.accept();
+            } catch (SocketException e) {
+                // se il server è stato chiuso,
+                // mi assicuro di uscire dal ciclo
+                break;
+            } catch (IOException e) {
+                System.err.println("Server interrotto durante la accept()");
+                e.printStackTrace();
+                continue;
+            }
+            // ---
+            if (socket.isBound()) {
+                System.out.println("Connesso con: " + socket.getInetAddress() + ":" + socket.getPort());
+                threadPool.execute(new Game(socket, listaUtenti, listaParole));
+            }
         }
     }  // main
 
