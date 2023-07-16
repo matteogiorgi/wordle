@@ -65,15 +65,15 @@ public class ServerMain {
                 multicastListener.shutdown();
                 listaParole.getSheduler().shutdown();
                 try {
-                    if (!threadPool.awaitTermination(10, TimeUnit.SECONDS)) {
+                    if (!threadPool.awaitTermination(5, TimeUnit.SECONDS)) {
                         System.out.println("[WARNING] forzo chiusura threadpool");
                         threadPool.shutdownNow();
                     }
-                    if (!multicastListener.awaitTermination(10, TimeUnit.SECONDS)) {
+                    if (!multicastListener.awaitTermination(5, TimeUnit.SECONDS)) {
                         System.out.println("[WARNING] forzo chiusura multicastlistener");
                         multicastListener.shutdownNow();
                     }
-                    if (!listaParole.getSheduler().awaitTermination(10, TimeUnit.SECONDS)) {
+                    if (!listaParole.getSheduler().awaitTermination(5, TimeUnit.SECONDS)) {
                         System.out.println("[WARNING] forzo chiusura scheduler");
                         listaParole.getSheduler().shutdownNow();
                     }

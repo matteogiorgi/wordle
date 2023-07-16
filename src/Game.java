@@ -18,7 +18,7 @@ public class Game implements Runnable {
 
 
     private void gameSession(User user) {
-        System.out.println("[GAME-SESSION] user " + user.getName() + " nuova sessione di gioco");
+        System.out.println("[GAME-SESSION] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
         output.println("[GAME-SESSION] user " + user.getName() + ", nuova partita: quit|<tentativo>");
         // ---
         String tentativo = null;
@@ -84,7 +84,7 @@ public class Game implements Runnable {
                     continue;
 
                 case "sendmestat":
-                    // invio il contenuto della mappa utente
+                    // invio contenuto (utile) della mappa utente
                     // torno al while(...)
                     output.println("[STAT user] " + user.getName());
                     output.println("[STAT giocate] " + user.getGiocate());

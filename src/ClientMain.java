@@ -76,8 +76,11 @@ public class ClientMain {
                 }
                 // ---
                 System.out.print("> ");
-                for (String inputCommand; !socket.isOutputShutdown() && tastiera.hasNextLine(); System.out.print("> ")) {
+                for (String inputCommand; tastiera.hasNextLine(); System.out.print("> ")) {
                     inputCommand = tastiera.nextLine().trim().toLowerCase();
+                    if (!socket.isOutputShutdown()) {
+                        break;
+                    }
                     if (!inputCommand.isEmpty()) {
                         output.println(inputCommand);
                         break;
