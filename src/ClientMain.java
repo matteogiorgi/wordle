@@ -38,7 +38,7 @@ public class ClientMain {
                     }
                 }
             } catch (IOException ex) {
-                System.err.println("[ERROR] Errore durante la ricezione di una notifica.");
+                System.err.println("[ERROR] ricezione notifica fallita");
                 ex.printStackTrace();
             }
         }
@@ -73,7 +73,13 @@ public class ClientMain {
             // ---
             // leggo i messaggi inviati dal server e li stampo a video
             // leggo i comandi da tastiera e li invio al server
-            for (String inputLine; !socket.isClosed() && !socket.isInputShutdown() && input.hasNextLine();) {
+            // ---
+            // il controllo sullo stato della socket non è necessario
+            // perchè lato client non viene mai chiusa; sarà la hasNextLine()
+            // a restituire false o lancianre una IllegalStateException
+            // quando la socket verrà chiusa dal server
+            // (https://stackoverflow.com/questions/25527212/detect-closed-socket)
+            for (String inputLine; input.hasNextLine();) {
                 inputLine = input.nextLine();
                 System.out.println(inputLine);
                 // ---
@@ -97,17 +103,21 @@ public class ClientMain {
                 }
                 // ---
                 System.out.print("> ");
-                for (String inputCommand; !socket.isOutputShutdown() && tastiera.hasNextLine(); System.out.print("> ")) {
-                    inputCommand = tastiera.nextLine().trim().toLowerCase();
-                    if (!inputCommand.isEmpty()) {
-                        output.println(inputCommand);
-                        break;
-                    }
+                if (tastiera.hasNextLine()) {
+                    output.println(tastiera.nextLine().trim().toLowerCase());
                 }
             }
             // ---
             System.out.println("[SORRY] connessione interrotta :(");
-        } catch (IOException e) {
+            if (multicastListener != null) {
+                multicastListener.interrupt();
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("[SORRY] connessione interrotta :(");
+            if (multicastListener != null) {
+                multicastListener.interrupt();
+            }
+        }catch (IOException e) {
             System.err.printf("[ERROR] apertura socket/stream fallita\n");
             e.printStackTrace();
         }

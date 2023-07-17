@@ -79,7 +79,7 @@ public class Game implements Runnable {
                     if (word.addUser(user.getName())) {
                         gameSession(user);
                     } else {
-                        output.println("[PLAY] user " + user.getName() + " parola giocata in precedenza");
+                        output.println("[WARNING] user " + user.getName() + " attendere nuova parola");
                     }
                     continue;
 

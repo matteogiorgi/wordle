@@ -14,11 +14,13 @@
 	{
 		"user": "matteo",
 		"password": "pippolo11",
-		"giocate": 3,
-		"vinte": 0,
+		"giocate": 5,
+		"vinte": 1,
 		"streaklast": 0,
-		"streakmax": 0,
+		"streakmax": 1,
 		"guessd": [
+			1,
+			1,
 			1,
 			1,
 			1
@@ -47,11 +49,17 @@
 	{
 		"user": "stefania",
 		"password": "giostemat",
-		"giocate": 0,
-		"vinte": 0,
-		"streaklast": 0,
-		"streakmax": 0,
-		"guessd": []
+		"giocate": 5,
+		"vinte": 5,
+		"streaklast": 5,
+		"streakmax": 5,
+		"guessd": [
+			3,
+			2,
+			1,
+			1,
+			1
+		]
 	},
 	{
 		"user": "pippolo",
