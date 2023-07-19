@@ -1,13 +1,7 @@
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.io.FileNotFoundException;
@@ -24,9 +18,9 @@ public class ServerMain {
 
     /**
      * Variabili statiche che memorizzano le informazioni del server:
-     * - serverProperties: oggetto (ServerSetup) che memorizza le proprietà del server
-     * - listaUtenti: oggetto (UserList) che memorizza gli utenti registrati al gioco
-     * - listaParole: oggetto (WordList) che memorizza le parole da indovinare
+     * serverProperties -> oggetto (ServerSetup) che memorizza le proprietà del server
+     * listaUtenti      -> oggetto (UserList) che memorizza gli utenti registrati al gioco
+     * listaParole      -> oggetto (WordList) che memorizza le parole da indovinare
      */
     private static ServerSetup serverProperties = null;
     private static UserList listaUtenti = null;
@@ -35,9 +29,10 @@ public class ServerMain {
 
     /**
      * Variabili statiche che rappresentano:
-     * la socket di benvenuto sulla quale fare la accept() dei client,
-     * la socket di connessione per la comunicazione Game <-> Client,
-     * il thread pool che gestisce i client connessi
+     * welcomeSocket     -> ServerSocket di benvenuto sulla quale fare la accept() dei client,
+     * socket            -> Socket di connessione per la comunicazione Game <-> Client,
+     * threadPool        -> ExecutorService che gestisce i client connessi
+     * multicastListener -> Thread che legge le notifiche e le invia sul multicast
      */
     private static ServerSocket welcomeSocket = null;
     private static Socket socket = null;
@@ -46,11 +41,8 @@ public class ServerMain {
 
 
     /**
-     * Runnable che gestisce la chiusura del server. Viene eseguito quando viene ricevuto il segnale di shutdown.
-     * Viene chiesto all'utente di inserire un comando tra "exit", "quit" o "kill". In base al comando inserito,
-     * il metodo chiude la socket di benvenuto, il thread pool e lo scheduler delle parole. Se il comando è "kill",
-     * il server viene chiuso immediatamente. Se il comando non è riconosciuto, viene stampato un messaggio di errore.
-     * Se si verifica un'eccezione durante la chiusura, viene stampato un messaggio di errore.
+     * Runnable che gestisce la chiusura del server, eseguito quando viene ricevuto il segnale di shutdown.
+     * Chiude la welcomeSocket, il threadPool, il multicastListener e il sheduler della listaParole.
      */
     private static Runnable shutdownHook = new Runnable() {
         @Override
@@ -96,56 +88,11 @@ public class ServerMain {
     };  // shutdownHook
 
 
-    private static Runnable shareHook = new Runnable() {
-        @Override
-        public void run() {
-            try (DatagramSocket datagramSocket = new DatagramSocket(serverProperties.getServerNotificationPort());
-                 MulticastSocket multicastSocket = new MulticastSocket(serverProperties.getMulticastGroupPort())) {
-                datagramSocket.setSoTimeout(1000);
-
-                // definisco un gruppo multicast e
-                // ne controllo la validità
-                InetAddress multicastGroup = InetAddress.getByName(serverProperties.getMulticastGroupAddress());
-                if (!multicastGroup.isMulticastAddress()) {
-                    throw new IllegalArgumentException("[ERROR] indirizzo multicast non valido: " + multicastGroup.getHostAddress());
-                }
-                multicastSocket.joinGroup(multicastGroup);
-                DatagramPacket shareRequest = null;
-
-                // ricevo richiesta di condivisione (con i dati partita)
-                // giro in multicast i risultati ricevuti dal client
-                while (!Thread.currentThread().isInterrupted()) {
-                    try {
-                        shareRequest = new DatagramPacket(new byte[8192], 8192);
-                        datagramSocket.receive(shareRequest);
-                        // ---
-                        multicastSocket.send(new DatagramPacket(
-                            shareRequest.getData(),
-                            shareRequest.getLength(),
-                            multicastGroup,
-                            serverProperties.getMulticastGroupPort()
-                        ));
-                        System.out.println("[INFO] condivisione dati partita");
-                    } catch (SocketTimeoutException e) {
-                        if (Thread.currentThread().isInterrupted()) {
-                            break;
-                        }
-                    }
-                }
-            } catch (SocketException e) {
-                System.err.println("[ERROR] creazione datagram-socket fallita");
-                e.printStackTrace();
-            } catch (UnknownHostException e) {
-                System.err.println("[ERROR] indirizzo multicast non valido");
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.err.println("[ERROR] ricezione pacchetto fallita");
-                e.printStackTrace();
-            }
-        }
-    };
-
-
+    /**
+     * Main del server.
+     * Legge il file di configurazione, crea le strutture dati
+     * e si mette in attesa di connessioni.
+     */
     public static void main(String args[]) {
         // leggo file di configurazione server,
         // alloco lista utenti (leggendo il file JSON)
@@ -177,7 +124,8 @@ public class ServerMain {
         // registro shutdown-hook la chiusura
         // e shareHook per condivisione dati
         Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook));
-        multicastListener = new Thread(shareHook);
+        MulticastSender multicastSender = new MulticastSender(serverProperties.getMulticastGroupPort(), serverProperties.getMulticastGroupAddress());
+        multicastListener = new Thread(multicastSender);
         multicastListener.start();
 
         // server finalmente attivo
@@ -198,7 +146,7 @@ public class ServerMain {
             // ---
             if (socket.isBound()) {
                 System.out.println("Connesso con: " + socket.getInetAddress() + ":" + socket.getPort());
-                threadPool.execute(new Game(socket, listaUtenti, listaParole));
+                threadPool.execute(new Game(socket, listaUtenti, listaParole, multicastSender));
             }
         }
     }  // main

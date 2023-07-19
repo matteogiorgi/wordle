@@ -6,15 +6,44 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+
 public class Game implements Runnable {
 
+    /**
+     * Variabili che memorizzano le informazioni del gioco:
+     * socket          -> Socket di connessione per la comunicazione Game <-> Client,
+     * userList        -> oggetto (UserList) che memorizza gli utenti registrati al gioco
+     * wordList        -> oggetto (WordList) che memorizza le parole da indovinare
+     * multicastSender -> oggetto (MulticastSender) che invia le notifiche sul multicast
+     */
     private final Socket socket;
     private final UserList userList;
     private final WordList wordList;
-    // ---
+    private final MulticastSender multicastSender;
+
+
+    /**
+     * Variabili necessarie per la lettura e scrittura sulla socket,
+     * oltre alla parola da indovinare.
+     */
     private Scanner input = null;
     private PrintWriter output = null;
     private Word word = null;
+
+
+    /**
+     * Costruttore della classe Game.
+     * @param socket il socket di connessione per la comunicazione Game <-> Client
+     * @param userList l'oggetto (UserList) che memorizza gli utenti registrati al gioco
+     * @param wordList l'oggetto (WordList) che memorizza le parole da indovinare
+     * @param multicastSender l'oggetto (MulticastSender) che invia le notifiche sul multicast
+     */
+    public Game(Socket socket, UserList userList, WordList wordList, MulticastSender multicastSender) {
+        this.socket = socket;
+        this.userList = userList;
+        this.wordList = wordList;
+        this.multicastSender = multicastSender;
+    }
 
 
     private void gameSession(User user) {
@@ -60,13 +89,13 @@ public class Game implements Runnable {
                     output.println("  " + word.getMask(tentativo));
 
             }
-        }  // while(...)
+        }  // while
     }
 
 
     private void loginSession(User user) {
         System.out.println("[LOGIN DONE] user " + user.getName());
-        output.println("[LOGIN DONE] user " + user.getName() + ": playwordle|sendmestat|logout");
+        output.println("[LOGIN DONE] user '" + user.getName() + "': playwordle|sendmestat|logout");
         // ---
         while (input.hasNextLine()) {
             switch (input.nextLine().trim().toLowerCase()) {
@@ -86,12 +115,24 @@ public class Game implements Runnable {
                 case "sendmestat":
                     // invio contenuto (utile) della mappa utente
                     // torno al while(...)
-                    output.println("[STAT " + user.getName().toUpperCase() + "]");
+                    output.println("[STAT '" + user.getName() + "']");
                     output.println("[STAT giocate] " + user.getGiocate());
                     output.println("[STAT vinte] " + user.getVinte());
                     output.println("[STAT streaklast] " + user.getStreakLast());
                     output.println("[STAT streakmax] " + user.getStreakMax());
                     output.println("[STAT guessd] " + user.getGuessDistribution().toString());
+                    continue;
+                
+                case "share":
+                    multicastSender.readNotification(
+                        "[STAT '" + user.getName() + "']\n" +
+                        "[STAT giocate] " + user.getGiocate() + "\n" +
+                        "[STAT vinte] " + user.getVinte() + "\n" +
+                        "[STAT streaklast] " + user.getStreakLast() + "\n" +
+                        "[STAT streakmax] " + user.getStreakMax() + "\n" +
+                        "[STAT guessd] " + user.getGuessDistribution().toString()
+                    );
+                    output.println("[LOGIN SESSION] user " + user.getName() + ", share effettuato");
                     continue;
 
                 case "logout":
@@ -107,14 +148,7 @@ public class Game implements Runnable {
                     output.println("[LOGIN SESSION] comando non eseguibile: playwordle|sendmestat|logout");
 
             }
-        }  // while(...)
-    }
-
-
-    public Game(Socket socket, UserList userList, WordList wordList) {
-        this.socket = socket;
-        this.userList = userList;
-        this.wordList = wordList;
+        }  // while
     }
 
 

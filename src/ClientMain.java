@@ -1,48 +1,19 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.DatagramPacket;
-import java.net.MulticastSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class ClientMain {
 
     private static final String PATH_CONF = "lib/CLIENT.conf";
+    // ---
     private static ClientSetup clientProperties = null;
     private static Thread multicastListener = null;
-    private static LinkedList<String> sharedNotifications = new LinkedList<>();
-
-
-    private static Runnable shareHook = new Runnable() {
-        @Override
-        public void run() {
-            try (MulticastSocket multicastSocket = new MulticastSocket(clientProperties.getMulticastGroupPort())) {
-                multicastSocket.setSoTimeout(1000);
-                DatagramPacket sharedRequest = null;
-
-                while (!Thread.currentThread().isInterrupted()) {
-                    try {
-                        sharedRequest = new DatagramPacket(new byte[8192], 8192);
-                        multicastSocket.receive(sharedRequest);
-                        // ---
-                        sharedNotifications.add(new String(sharedRequest.getData(), 0, sharedRequest.getLength(), "UTF-8"));
-                        System.out.println("[MULTICAST] nuova notifica");
-                    } catch (SocketTimeoutException e) {
-                        if (Thread.currentThread().isInterrupted()) {
-                            break;
-                        }
-                    }
-                }
-            } catch (IOException ex) {
-                System.err.println("[ERROR] ricezione notifica fallita");
-                ex.printStackTrace();
-            }
-        }
-    };
+    private static MulticastReceiver multicastReceiver = null;
 
 
     public static void main(String[] args) {
@@ -94,7 +65,15 @@ public class ClientMain {
                 }
                 // ---
                 if (inputLine.matches("^\\[LOGIN DONE\\].*")) {
-                    multicastListener = new Thread(shareHook);
+                    Pattern pattern = Pattern.compile("'(.*?)'");
+                    Matcher matcher = pattern.matcher(inputLine);
+                    // ---
+                    multicastReceiver = new MulticastReceiver(
+                        clientProperties.getMulticastGroupPort(),
+                        clientProperties.getMulticastGroupAddress(),
+                        matcher.find() ? matcher.group(1) : "unknown"
+                    );
+                    multicastListener = new Thread(multicastReceiver);
                     multicastListener.start();
                 }
                 // ---
@@ -103,8 +82,16 @@ public class ClientMain {
                 }
                 // ---
                 System.out.print("> ");
-                if (tastiera.hasNextLine()) {
-                    output.println(tastiera.nextLine().trim().toLowerCase());
+                for (String command; tastiera.hasNextLine(); System.out.print("> ")) {
+                    command = tastiera.nextLine().trim().toLowerCase();
+                    if (command.equals("showmesharing")) {
+                        while (!multicastReceiver.isEmpty()) {
+                            System.out.println(multicastReceiver.poll());
+                        }
+                    } else {
+                        output.println(command);
+                        break;
+                    }
                 }
             }
             // ---
