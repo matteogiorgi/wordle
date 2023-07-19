@@ -4,22 +4,24 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 
-
-
-/**
- * Questa classe rappresenta un utente del gioco Wordle.
- * L'utente è rappresentato come una mappa di coppie chiave-valore, dove la chiave è una
- * stringa che rappresenta il nome del campo e il valore è un oggetto generico.
- * La classe estende la classe HashMap e fornisce metodi per accedere ai campi dell'utente.
- */
 public class User {
 
+    /**
+     * L'utente è rappresentato come una mappa di coppie chiave-valore.
+     * (non estende HashMap per evitare di esporre i metodi di modifica della mappa)
+     * La chiave è una stringa che rappresenta il nome del campo,
+     * il valore è archiviato come un oggetto di tipo Object.
+     */
     private Map<String, Object> user;
 
 
     /**
      * Costruttore che crea un nuovo oggetto User a partire da una mappa di coppie chiave-valore.
-     * @param map la mappa di coppie chiave-valore da cui creare l'oggetto User
+     * Prima di creare l'oggetto User, controlla che la mappa contenga tutti i campi necessari.
+     * @param user la mappa di coppie chiave-valore da cui creare l'oggetto User
+     * @return un nuovo oggetto User
+     * @throws NullPointerException se la mappa passata è null
+     * @throws IllegalArgumentException se la mappa passata non contiene tutti i campi corretti
      */
     public User(Map<String, Object> user) {
         if (user == null) {
@@ -40,6 +42,10 @@ public class User {
     }
 
 
+    /**
+     * Metodo che crea una copia profonda dell'oggetto corrente.
+     * @return una copia dell'oggetto corrente
+     */
     @SuppressWarnings("unchecked")
     public synchronized User copy() {
         Map<String, Object> copyMap = new HashMap<>();

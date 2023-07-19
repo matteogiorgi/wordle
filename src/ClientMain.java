@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 public class ClientMain {
 
     private static final String PATH_CONF = "lib/CLIENT.conf";
-    // ---
     private static ClientSetup clientProperties = null;
     private static Thread multicastListener = null;
     private static MulticastReceiver multicastReceiver = null;

@@ -6,9 +6,7 @@ import java.util.Properties;
 /**
  * Classe che rappresenta le proprietà del server.
  * PORT (int)                        ->  numero di porta del server
- * SERVER_NOTIFICATION_PORT (int)    ->  numero di porta per le notifiche dei risultati (in UDP)
  * PATH_VOCABULARY (String)          ->  path del file contenente il vocabolario
- * TIMEOUT (int)                     ->  tempo di attesa per la risposta del client
  * PATH_JSON (String)                ->  path del file contenente i dati degli utenti (in JSON)
  * WORD_TIMER (int)                  ->  tempo che intercorre tra le pubblicazioni della parola segreta
  * MULTICAST_GROUP_ADDRESS (String)  ->  indirizzo del gruppo multicast
@@ -38,29 +36,11 @@ public class ServerSetup extends Properties {
 
 
     /**
-     * Restituisce il numero di porta per le notifiche dei risultati (in UDP).
-     * @return il numero di porta per le notifiche dei risultati (in UDP).
-     */
-    public int getServerNotificationPort() {
-        return Integer.parseInt(this.getProperty("SERVER_NOTIFICATION_PORT"));
-    }
-
-
-    /**
      * Restituisce il path del file contenente il vocabolario.
      * @return il path del file contenente il vocabolario.
      */
     public String getPathVocabulary() {
         return this.getProperty("PATH_VOCABULARY");
-    }
-
-
-    /**
-     * Restituisce il tempo di attesa per la risposta del client.
-     * @return il tempo di attesa per la risposta del client.
-     */
-    public int getTimeout() {
-        return Integer.parseInt(this.getProperty("TIMEOUT"));
     }
 
 

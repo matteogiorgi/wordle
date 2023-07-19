@@ -2,10 +2,12 @@ import java.util.Set;
 import java.util.LinkedHashSet;
 
 
-
-
 public class Word {
 
+    /**
+     * La parola da indovinare è rappresentata da una stringa
+     * e da un insieme di utenti che hanno giocato tale parola.
+     */
     private final String currentWord;
     private Set<String> userSet;
 

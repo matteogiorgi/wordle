@@ -2,28 +2,24 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-// ---
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-// ---
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 
-
-
-/**
- * Questa classe rappresenta una lista di utenti registrati e loggati.
- * Gli utenti registrati sono memorizzati in una mappa, dove la chiave è il nome utente e il valore è un oggetto User.
- * Gli utenti loggati sono memorizzati in una lista di stringhe contenente i nomi utente.
- */
 public class UserList {
 
+    /**
+     * La lista degli utenti è rappresentata da due strutture dati:
+     * una Map<String,User> che contiene gli utenti registrati come coppie nome-User
+     * un Set<String> che contiene i nomi degli utenti loggati
+     */
     private Map<String, User> userRegistrati;
     private Set<String> userLoggati;
 
@@ -44,6 +40,7 @@ public class UserList {
     /**
      * Legge un file JSON contenente i dati degli utenti registrati e li aggiunge alla lista degli utenti registrati.
      * @param pathJSON il percorso del file JSON da leggere
+     * @throws FileNotFoundException se il file JSON specificato non viene trovato
      * @throws IOException se si verifica un errore durante la lettura del file JSON
      */
     private void readJSON(String pathJSON) throws FileNotFoundException, IOException {
@@ -123,6 +120,7 @@ public class UserList {
      * Costruttore della classe UserList che inizializza la lista degli utenti registrati e la lista degli utenti loggati.
      * Legge i dati degli utenti registrati dal file JSON specificato nel percorso pathJSON.
      * @param pathJSON il percorso del file JSON da leggere
+     * @throws FileNotFoundException se il file JSON specificato non viene trovato
      * @throws IOException se si verifica un errore durante la lettura del file JSON
      */
     public UserList (String pathJSON) throws FileNotFoundException, IOException {

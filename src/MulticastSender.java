@@ -8,10 +8,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MulticastSender extends ConcurrentLinkedQueue<String> implements Runnable {
 
+    /**
+     * Variabili private che identificano:
+     * porta del gruppo multicast
+     * indirizzo del gruppo multicast
+     */
     private final int multicastGroupPort;
     private final String multicastGroupAddress;
 
 
+    /**
+     * Costruttore che inizializza le variabili private.
+     * @param multicastGroupPort porta del gruppo multicast
+     * @param multicastGroupAddress indirizzo del gruppo multicast
+     */
     public MulticastSender(int multicastGroupPort, String multicastGroupAddress) {
         super();
         this.multicastGroupPort = multicastGroupPort;
@@ -19,6 +29,11 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
     }
 
 
+    /**
+     * Metodo privato che ritorna la notifica da inviare sul multicast.
+     * @return notifica da inviare sul multicast
+     * @throws InterruptedException
+     */
     private synchronized String getNotification() throws InterruptedException {
         String notification = null;
         while ((notification = poll()) == null) {
@@ -29,12 +44,23 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
     }
 
 
+    /**
+     * Metodo pubblico che aggiunge una notifica alla coda e sveglia il thread.
+     * @param notification notifica da inviare sul multicast
+     */
     public synchronized void readNotification(String notification) {
         offer(notification);
         notify();
     }
 
 
+    /**
+     * run() del thread MulticastListener.
+     * Il Thread che contiene MulticastSender legge le notifiche dalla coda e le invia sul multicast.
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @Override
     public void run() {
         try (MulticastSocket multicastSocket = new MulticastSocket(multicastGroupPort)) {

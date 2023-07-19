@@ -46,6 +46,13 @@ public class Game implements Runnable {
     }
 
 
+    /**
+     * Metodo che gestisce la sessione di gioco.
+     * In questa fase l'utente può:
+     * 1. interrompere la partita in corso (quit!)
+     * 2. inserire una stringa (<tentativo>)
+     * @param user l'utente che ha effettuato il login
+     */
     private void gameSession(User user) {
         System.out.println("[GAME SESSION] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
         output.println("[GAME SESSION] user " + user.getName() + ", nuova partita: quit|<tentativo>");
@@ -58,7 +65,7 @@ public class Game implements Runnable {
             contaTentativi++;
             switch (tentativo) {
 
-                case "quit":
+                case "quit!":
                     // invio un messaggio di fine partita
                     // e restituisco il controllo a loginSession()
                     output.println("[GAME SESSION] user " + user.getName() + ", partita interrotta");
@@ -90,12 +97,21 @@ public class Game implements Runnable {
 
             }
         }  // while
-    }
+    }  // gameSession
 
 
+    /**
+     * Metodo che gestisce la sessione di login.
+     * In questa fase l'utente può:
+     * 1. giocare una nuova partita (playwordle)
+     * 2. ricevere le proprie statistiche (sendmestat)
+     * 3. condividere le proprie statistiche (share)
+     * 4. effettuare il logout (logout)
+     * @param user l'utente che ha effettuato il login
+     */
     private void loginSession(User user) {
         System.out.println("[LOGIN DONE] user " + user.getName());
-        output.println("[LOGIN DONE] user '" + user.getName() + "': playwordle|sendmestat|logout");
+        output.println("[LOGIN DONE] user '" + user.getName() + "': playwordle|sendmestat|share|logout");
         // ---
         while (input.hasNextLine()) {
             switch (input.nextLine().trim().toLowerCase()) {
@@ -103,7 +119,7 @@ public class Game implements Runnable {
                 case "playwordle":
                     // estraggo la parola da giocare:
                     // se non giocata, lancio sessione di gioco
-                    // altrimenti torno al while(...)
+                    // altrimenti torno al while
                     word = wordList.getCurrentWord();
                     if (word.addUser(user.getName())) {
                         gameSession(user);
@@ -114,7 +130,7 @@ public class Game implements Runnable {
 
                 case "sendmestat":
                     // invio contenuto (utile) della mappa utente
-                    // torno al while(...)
+                    // torno al while
                     output.println("[STAT '" + user.getName() + "']");
                     output.println("[STAT giocate] " + user.getGiocate());
                     output.println("[STAT vinte] " + user.getVinte());
@@ -122,7 +138,7 @@ public class Game implements Runnable {
                     output.println("[STAT streakmax] " + user.getStreakMax());
                     output.println("[STAT guessd] " + user.getGuessDistribution().toString());
                     continue;
-                
+
                 case "share":
                     multicastSender.readNotification(
                         "[STAT '" + user.getName() + "']\n" +
@@ -145,13 +161,24 @@ public class Game implements Runnable {
                 default:
                     // l'utente ha inserito un comando errato
                     // o non eseguibile in questo contesto
-                    output.println("[LOGIN SESSION] comando non eseguibile: playwordle|sendmestat|logout");
+                    output.println("[LOGIN SESSION] comando non eseguibile: playwordle|sendmestat|share|logout");
 
             }
         }  // while
-    }
+    }  // loginSession
 
 
+    /**
+     * run() del thread Game.
+     * Il Thread che contiene Game gestisce la comunicazione Game <-> Client:
+     * prepara gli stream di I/O sulla socket, invia un messaggio di benvenuto
+     * e rimane in attesa di un comando.
+     * In questa fase l'utente può:
+     * 1. registrarsi (register)
+     * 2. cancellarsi (remove)
+     * 3. effettuare il login (login)
+     * 4. uscire dal programma (exit)
+     */
     @Override
     public void run() {
         try {
@@ -245,12 +272,7 @@ public class Game implements Runnable {
                             // ---
                             try {
                                 if (userList.loginUser(username, password)) {
-                                    // avvio la sessione di login dove l'utente può:
-                                    // 1. giocare una parola
-                                    // 2. effettuare il logout
-                                    // 3. ricevere statistiche
-                                    // 4. condividere
-                                    // 5. visualizzare le condivisioni
+                                    // avvio la sessione di login
                                     loginSession(userList.getUser(username));
                                 } else {
                                     output.println("[LOGIN FAILED] user " + username);
@@ -282,6 +304,6 @@ public class Game implements Runnable {
             System.err.println("[MAIN SESSION] errore creazione stream o chiusura socket");
             e.printStackTrace();
         }
-    }  // run()
+    }  // run
 
 }  // class Game

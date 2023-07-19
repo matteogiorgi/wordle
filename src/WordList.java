@@ -2,7 +2,6 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-// ---
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -11,10 +10,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-
-
 public class WordList {
 
+    /**
+     * La lista delle parole (vocabolario) è rappresentata da tre strutture dati:
+     * una List<String> che contiene le parole del vocabolario
+     * un ScheduledExecutorService che estrae una parola casuale dal vocabolario ogni tot secondi
+     * un oggetto Word che rappresenta la parola corrente
+     */
     private List<String> wordVocabulary;
     private ScheduledExecutorService wordExtractor;
     private Word currentWord;
@@ -22,7 +25,7 @@ public class WordList {
 
     /**
      * Runnable che rappresenta il task di estrazione di una parola casuale dal vocabolario di parole.
-     * La parola estratta viene assegnata all'attributo currentWord della classe WordList.
+     * (La parola estratta viene assegnata all'attributo currentWord)
      */
     private Runnable extractWord = () -> {
         currentWord = new Word(wordVocabulary.get((int) (Math.random() * wordVocabulary.size())));
@@ -70,6 +73,11 @@ public class WordList {
     }
 
 
+    /**
+     * Metodo che controlla se la parola passata come parametro è presente nel vocabolario.
+     * @param word la parola da cercare nel vocabolario.
+     * @return true se la parola è presente nel vocabolario, false altrimenti.
+     */
     public boolean containsWord(String word) {
         return wordVocabulary.contains(word);
     }
