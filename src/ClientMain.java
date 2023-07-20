@@ -9,12 +9,24 @@ import java.util.regex.Pattern;
 
 public class ClientMain {
 
+    /**
+     * Variabili statiche che rappresntano:
+     * PATH_CONF         -> String che contiene il path del file di configurazione
+     * clientProperties  -> oggetto (ClientSetup) che memorizza le proprietà del client
+     * multicastListener -> Thread che rimane in ascolto delle notifiche sul multicast
+     * multicastReceiver -> oggetto (MulticastReceiver) che memorizza le notifiche ricevute
+     */
     private static final String PATH_CONF = "lib/CLIENT.conf";
     private static ClientSetup clientProperties = null;
     private static Thread multicastListener = null;
     private static MulticastReceiver multicastReceiver = null;
 
 
+    /**
+     * Main del client.
+     * Legge il file di configurazione, si connette al server
+     * e rimane in attesa di input da tastiera.
+     */
     public static void main(String[] args) {
         // leggo file configurazione client
         try {
@@ -32,7 +44,7 @@ public class ClientMain {
         // alloco le seguenti risorse dentro un try-with-resources:
         // Socket, Scanner per l'input, PrintWriter per l'output
         // ---
-        // Da notare che un return all'interno del try-with-resources, è solo zucchero sintattico:
+        // da notare che un return all'interno del try-with-resources, è solo zucchero sintattico:
         // la JVM chiude le risorse correttamente spostando il return alla fine del blocco try.
         // (https://stackoverflow.com/questions/22947755/try-with-resources-and-return-statements-in-java)
         try (Socket socket = new Socket(clientProperties.getHostname(), clientProperties.getPort());
@@ -109,4 +121,4 @@ public class ClientMain {
         }
     }  // main
 
-}  // ClientMain
+}  // class ClientMain

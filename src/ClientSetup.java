@@ -1,5 +1,4 @@
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -8,23 +7,18 @@ import java.util.Properties;
  * La classe ClientSetup estende la classe Properties e rappresenta la configurazione del client:
  * HOSTNAME (String)                -> nome del server
  * PORT (int)                       -> numero di porta del server
- * SERVER_NOTIFICATION_PORT (int)   -> numero di porta per le notifiche dei risultati (in UDP)
  * MULTICAST_GROUP_ADDRESS (String) -> indirizzo del gruppo multicast
  * MULTICAST_GROUP_PORT (int)       -> numero di porta del gruppo multicast
- * @see Properties
  */
 public class ClientSetup extends Properties {
 
-    private static final String CONFIG_FILE = "lib/CLIENT.conf";
-
-
     /**
      * Costruttore della classe ClientSetup.
-     * @throws FileNotFoundException se il file di configurazione non viene trovato.
+     * @param configFile il percorso del file di configurazione.
      * @throws IOException se si verifica un errore durante la lettura del file di configurazione.
      */
     public ClientSetup(String configFile) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(CONFIG_FILE)) {
+        try (FileInputStream inputStream = new FileInputStream(configFile)) {
             this.load(inputStream);
         }
     }
@@ -49,15 +43,6 @@ public class ClientSetup extends Properties {
 
 
     /**
-     * Restituisce la porta di notifica del server.
-     * @return la porta di notifica del server.
-     */
-    public int getServerNotificationPort() {
-        return Integer.parseInt(this.getProperty("SERVER_NOTIFICATION_PORT"));
-    }
-
-
-    /**
      * Restituisce l'indirizzo del gruppo multicast.
      * @return l'indirizzo del gruppo multicast.
      */
@@ -74,4 +59,4 @@ public class ClientSetup extends Properties {
         return Integer.parseInt(this.getProperty("MULTICAST_GROUP_PORT"));
     }
 
-}  // ClientSetup
+}  // class ClientSetup

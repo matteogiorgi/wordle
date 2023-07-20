@@ -10,8 +10,8 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
 
     /**
      * Variabili private che identificano:
-     * porta del gruppo multicast
-     * indirizzo del gruppo multicast
+     * multicastGroupPort    -> numero di porta del gruppo multicast
+     * multicastGroupAddress -> indirizzo del gruppo multicast
      */
     private final int multicastGroupPort;
     private final String multicastGroupAddress;
@@ -55,11 +55,8 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
 
 
     /**
-     * run() del thread MulticastListener.
+     * run() del thread di MulticastListener.
      * Il Thread che contiene MulticastSender legge le notifiche dalla coda e le invia sul multicast.
-     * @throws UnknownHostException
-     * @throws IOException
-     * @throws InterruptedException
      */
     @Override
     public void run() {
@@ -88,7 +85,10 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
             System.err.println("[ERROR] multicast socket");
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // bye bye
+            // il thread è stato interrotto mentre in wait sulla getNotification in attesa di una notifica
+            // goto next iteration e se il thread è stato nel frattempo interrotto, esco dal ciclo
+            // e termino l'esecuzione
         }
-    }
-}
+    }  // run
+
+}  // class MulticastSender

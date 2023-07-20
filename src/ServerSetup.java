@@ -17,7 +17,7 @@ public class ServerSetup extends Properties {
     /**
      * Costruttore della classe ServerSetup.
      * @param configFile il percorso del file di configurazione.
-     * @throws IOException
+     * @throws IOException se si verifica un errore durante la lettura del file di configurazione.
      */
     public ServerSetup(String configFile) throws IOException {
         try (FileInputStream inputStream = new FileInputStream(configFile)) {
