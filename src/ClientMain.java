@@ -15,11 +15,13 @@ public class ClientMain {
      * clientProperties  -> oggetto (ClientSetup) che memorizza le proprietà del client
      * multicastListener -> Thread che rimane in ascolto delle notifiche sul multicast
      * multicastReceiver -> oggetto (MulticastReceiver) che memorizza le notifiche ricevute
+     * logStatus         -> stato del log (false: non loggato, true: loggato)
      */
     private static final String PATH_CONF = "lib/CLIENT.conf";
     private static ClientSetup clientProperties = null;
     private static Thread multicastListener = null;
     private static MulticastReceiver multicastReceiver = null;
+    private static boolean logStatus = false;
 
 
     /**
@@ -86,16 +88,26 @@ public class ClientMain {
                     );
                     multicastListener = new Thread(multicastReceiver);
                     multicastListener.start();
+                    logStatus = true;
                 }
                 // ---
                 if (inputLine.matches("^\\[LOGOUT DONE\\].*")) {
                     multicastListener.interrupt();
+                    logStatus = false;
+                }
+                // ---
+                if (inputLine.matches("^\\[GAME START\\].*")) {
+                    logStatus = false;
+                }
+                // ---
+                if (inputLine.matches("^\\[GAME END\\].*")) {
+                    logStatus = true;
                 }
                 // ---
                 System.out.print("> ");
                 for (String command; tastiera.hasNextLine(); System.out.print("> ")) {
                     command = tastiera.nextLine().trim().toLowerCase();
-                    if (command.equals("showmesharing")) {
+                    if (command.equals("showmesharing") && logStatus) {
                         while (!multicastReceiver.isEmpty()) {
                             System.out.println(multicastReceiver.poll());
                         }

@@ -28,7 +28,9 @@ public class WordList {
      * (La parola estratta viene assegnata all'attributo currentWord)
      */
     private Runnable extractWord = () -> {
-        currentWord = new Word(wordVocabulary.get((int) (Math.random() * wordVocabulary.size())));
+        synchronized (this) {
+            currentWord = new Word(wordVocabulary.get((int) (Math.random() * wordVocabulary.size())));
+        }
     };
 
 
@@ -59,7 +61,7 @@ public class WordList {
      * Metodo che restituisce la parola corrente.
      * @return la parola corrente.
      */
-    public Word getCurrentWord() {
+    public synchronized Word getCurrentWord() {
         return currentWord;
     }
 

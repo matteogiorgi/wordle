@@ -41,7 +41,7 @@ public class Word {
      * @param user l'utente da cercare nella lista degli utenti che hanno indovinato la parola rappresentata dall'oggetto Word.
      * @return true se l'utente è presente nella lista degli utenti che hanno indovinato la parola rappresentata dall'oggetto Word, false altrimenti.
      */
-    public boolean containsUser(String user) {
+    public synchronized boolean containsUser(String user) {
         return userSet.contains(user);
     }
 
@@ -53,7 +53,7 @@ public class Word {
      *         rappresentata dall'oggetto Word, false altrimenti.
      * @throws IllegalArgumentException se l'utente passato come parametro è nullo.
      */
-    public boolean addUser(String user) {
+    public synchronized boolean addUser(String user) {
         return userSet.add(user);
     }
 

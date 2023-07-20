@@ -54,8 +54,8 @@ public class Game implements Runnable {
      * @param user l'utente che ha effettuato il login
      */
     private void gameSession(User user) {
-        System.out.println("[GAME SESSION] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
-        output.println("[GAME SESSION] user " + user.getName() + ", nuova partita: quit|<tentativo>");
+        System.out.println("[GAME START] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
+        output.println("[GAME START] user " + user.getName() + ", nuova partita: quit|<tentativo>");
         // ---
         String tentativo = null;
         int contaTentativi = 0;
@@ -68,7 +68,7 @@ public class Game implements Runnable {
                 case "quit!":
                     // invio un messaggio di fine partita
                     // e restituisco il controllo a loginSession()
-                    output.println("[GAME SESSION] user " + user.getName() + ", partita interrotta");
+                    output.println("[GAME END] user " + user.getName() + ", partita interrotta");
                     user.update(false, contaTentativi);
                     return;
 
@@ -76,13 +76,13 @@ public class Game implements Runnable {
                     // analizzo la stringa inserita e invio la maschera in risposta
                     // (termino la partita in caso di vittoria/sconfitta)
                     if (tentativo.equals(word.getWord())) {
-                        output.println("[GAME SESSION] complimenti user " + user.getName() + ", parola indovinata");
+                        output.println("[GAME QUIT] complimenti user " + user.getName() + ", parola indovinata");
                         user.update(true, contaTentativi);
                         return;
                     }
                     // ---
                     if (contaTentativi == 12) {
-                        output.println("[GAME SESSION] spiacente user " + user.getName() + ", tentativi esauriti");
+                        output.println("[GAME QUIT] spiacente user " + user.getName() + ", tentativi esauriti");
                         user.update(false, contaTentativi);
                         return;
                     }
@@ -111,7 +111,7 @@ public class Game implements Runnable {
      */
     private void loginSession(User user) {
         System.out.println("[LOGIN DONE] user " + user.getName());
-        output.println("[LOGIN DONE] user '" + user.getName() + "': playwordle|sendmestat|share|logout");
+        output.println("[LOGIN DONE] user '" + user.getName() + "': playwordle|sendmestat|share|showmesharing|logout");
         // ---
         while (input.hasNextLine()) {
             switch (input.nextLine().trim().toLowerCase()) {
@@ -161,7 +161,7 @@ public class Game implements Runnable {
                 default:
                     // l'utente ha inserito un comando errato
                     // o non eseguibile in questo contesto
-                    output.println("[LOGIN SESSION] comando non eseguibile: playwordle|sendmestat|share|logout");
+                    output.println("[LOGIN SESSION] comando non eseguibile: playwordle|sendmestat|share|showmesharing|logout");
 
             }
         }  // while

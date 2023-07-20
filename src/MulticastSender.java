@@ -3,18 +3,21 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
-public class MulticastSender extends ConcurrentLinkedQueue<String> implements Runnable {
+public class MulticastSender implements Runnable {
 
     /**
      * Variabili private che identificano:
      * multicastGroupPort    -> numero di porta del gruppo multicast
      * multicastGroupAddress -> indirizzo del gruppo multicast
+     * queue                 -> coda di notifiche da inviare sul multicast
      */
     private final int multicastGroupPort;
     private final String multicastGroupAddress;
+    private final Queue<String> queue = new LinkedList<>();
 
 
     /**
@@ -23,7 +26,6 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
      * @param multicastGroupAddress indirizzo del gruppo multicast
      */
     public MulticastSender(int multicastGroupPort, String multicastGroupAddress) {
-        super();
         this.multicastGroupPort = multicastGroupPort;
         this.multicastGroupAddress = multicastGroupAddress;
     }
@@ -36,7 +38,7 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
      */
     private synchronized String getNotification() throws InterruptedException {
         String notification = null;
-        while ((notification = poll()) == null) {
+        while ((notification = queue.poll()) == null) {
             wait();
         }
         // ---
@@ -49,7 +51,7 @@ public class MulticastSender extends ConcurrentLinkedQueue<String> implements Ru
      * @param notification notifica da inviare sul multicast
      */
     public synchronized void readNotification(String notification) {
-        offer(notification);
+        queue.offer(notification);
         notify();
     }
 
