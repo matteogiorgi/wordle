@@ -1,0 +1,143 @@
+<mxfile host="app.diagrams.net" modified="2023-08-04T00:11:50.231Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="dMi7riatp8695wgt58nJ" version="21.6.6" type="device">
+  <diagram name="Page-1" id="AYuJeRKvqkkNsh38nICG">
+    <mxGraphModel dx="1535" dy="528" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-54" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;labelBackgroundColor=default;strokeColor=#000000;fontFamily=Ubuntu Mono;fontSize=11;fontColor=#000000;endArrow=open;endFill=0;" parent="1" source="60f3MoB0Vz32lBh0VVLf-3" target="60f3MoB0Vz32lBh0VVLf-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-58" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;login&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;─────────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;/font&gt;user aggiunto&lt;br style=&quot;font-size: 11px;&quot;&gt;a lista loggati&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;fontStyle=0;labelBackgroundColor=none;" parent="60f3MoB0Vz32lBh0VVLf-54" vertex="1" connectable="0">
+          <mxGeometry x="-0.128" y="1" relative="1" as="geometry">
+            <mxPoint x="8" y="-30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;" edge="1" parent="1" source="60f3MoB0Vz32lBh0VVLf-3" target="xTMwFMf0HeDenURHJso6-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-16" value="&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;exit&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;───────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;socket closed" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-14">
+          <mxGeometry x="0.0108" y="-1" relative="1" as="geometry">
+            <mxPoint x="51" y="-31" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-3" value="sessione primaria&lt;br&gt;[MAIN SESSION]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Ubuntu Mono;fontSize=12;labelBackgroundColor=#e9edf3;fillColor=#e9edf3;arcSize=4;strokeColor=#000000;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="41" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-55" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;labelBackgroundColor=default;strokeColor=#000000;fontFamily=Ubuntu Mono;fontSize=11;fontColor=#000000;endArrow=open;endFill=0;" parent="1" source="60f3MoB0Vz32lBh0VVLf-6" target="60f3MoB0Vz32lBh0VVLf-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-59" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;logout&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;──────────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;/font&gt;user rimosso&lt;br style=&quot;font-size: 11px;&quot;&gt;da lista loggati&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;fontStyle=0;labelBackgroundColor=none;" parent="60f3MoB0Vz32lBh0VVLf-55" vertex="1" connectable="0">
+          <mxGeometry x="-0.0353" y="-1" relative="1" as="geometry">
+            <mxPoint x="-2" y="32" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-56" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;labelBackgroundColor=default;strokeColor=#000000;fontFamily=Ubuntu Mono;fontSize=11;fontColor=#000000;endArrow=open;endFill=0;" parent="1" source="60f3MoB0Vz32lBh0VVLf-6" target="60f3MoB0Vz32lBh0VVLf-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-60" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;playwordle&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;─────────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;/font&gt;user locked nel&lt;br style=&quot;font-size: 11px;&quot;&gt;prompt di gioco&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;fontStyle=0;labelBackgroundColor=none;" parent="60f3MoB0Vz32lBh0VVLf-56" vertex="1" connectable="0">
+          <mxGeometry x="0.0835" y="1" relative="1" as="geometry">
+            <mxPoint x="-6" y="-31" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-6" value="sessione di login&lt;br&gt;[LOGIN SESSION]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Ubuntu Mono;fontSize=12;labelBackgroundColor=#e9edf3;fillColor=#e9edf3;arcSize=4;strokeColor=#000000;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="300" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-57" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;labelBackgroundColor=default;strokeColor=#000000;fontFamily=Ubuntu Mono;fontSize=11;fontColor=#000000;endArrow=open;endFill=0;" parent="1" source="60f3MoB0Vz32lBh0VVLf-8" target="60f3MoB0Vz32lBh0VVLf-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-61" value="&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;quit&lt;/font&gt;&lt;/i&gt; o&lt;br style=&quot;font-size: 11px;&quot;&gt;fine-partita&lt;br style=&quot;font-size: 11px;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;──────────────&lt;/font&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;───" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" parent="60f3MoB0Vz32lBh0VVLf-57" vertex="1" connectable="0">
+          <mxGeometry x="0.0798" relative="1" as="geometry">
+            <mxPoint x="11" y="31" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60f3MoB0Vz32lBh0VVLf-8" value="sessione di gioco&lt;br&gt;[GAME SESSION]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Ubuntu Mono;fontSize=12;labelBackgroundColor=#e9edf3;fillColor=#e9edf3;arcSize=4;strokeColor=#000000;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="560" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;" edge="1" parent="1" source="xTMwFMf0HeDenURHJso6-9" target="60f3MoB0Vz32lBh0VVLf-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-15" value="accept()&lt;br style=&quot;font-size: 11px;&quot;&gt;─────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;socket open" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-13">
+          <mxGeometry x="-0.1783" y="2" relative="1" as="geometry">
+            <mxPoint x="-48" y="37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-9" value="client non&lt;br&gt;connesso" style="whiteSpace=wrap;html=1;rounded=1;labelBackgroundColor=#e9edf3;strokeColor=#a80000;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#A80000;fillColor=#e9edf3;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="41" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-18" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;rounded=0;" edge="1" parent="1" source="60f3MoB0Vz32lBh0VVLf-3" target="60f3MoB0Vz32lBh0VVLf-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="20" y="285" />
+              <mxPoint x="20" y="330" />
+              <mxPoint x="71" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-25" value="&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;register&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;───────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;user aggiunto&lt;br style=&quot;font-size: 11px;&quot;&gt;a lista-utenti" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-18">
+          <mxGeometry x="0.261" y="-1" relative="1" as="geometry">
+            <mxPoint x="-29" y="31" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-21" value="" style="whiteSpace=wrap;html=1;rounded=1;labelBackgroundColor=#e9edf3;strokeColor=#A80000;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;fillColor=none;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="46" y="75" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;" edge="1" parent="1" source="60f3MoB0Vz32lBh0VVLf-3" target="60f3MoB0Vz32lBh0VVLf-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="101" y="330" />
+              <mxPoint x="131" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-26" value="&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;remove&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;─────────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;user rimosso&lt;br style=&quot;font-size: 11px;&quot;&gt;da lista-utenti" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-22">
+          <mxGeometry x="0.1341" y="1" relative="1" as="geometry">
+            <mxPoint x="-6" y="33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="319.9999999999998" y="300" as="sourcePoint" />
+            <mxPoint x="349.9999999999998" y="300" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="320" y="330" />
+              <mxPoint x="350" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-29" value="&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;sendmestat&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;─────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;invio&lt;br&gt;statistiche" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-23">
+          <mxGeometry x="0.0651" y="1" relative="1" as="geometry">
+            <mxPoint x="-8" y="34" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="369.9999999999998" y="300" as="sourcePoint" />
+            <mxPoint x="399.9999999999998" y="300" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="370" y="330" />
+              <mxPoint x="400" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-30" value="&lt;i style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#a80000&quot; style=&quot;font-size: 11px;&quot;&gt;share&lt;/font&gt;&lt;/i&gt;&lt;br style=&quot;font-size: 11px;&quot;&gt;───────────&lt;br style=&quot;font-size: 11px;&quot;&gt;richiesta&lt;br&gt;multicast" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-24">
+          <mxGeometry x="0.2107" y="1" relative="1" as="geometry">
+            <mxPoint x="10" y="34" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;fontFamily=Ubuntu Mono;fontSize=12;fontColor=#000000;endArrow=open;endFill=0;" edge="1" parent="1" source="60f3MoB0Vz32lBh0VVLf-8" target="60f3MoB0Vz32lBh0VVLf-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="330" />
+              <mxPoint x="650" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xTMwFMf0HeDenURHJso6-31" value="Guess-Word&lt;br style=&quot;font-size: 11px;&quot;&gt;──────────────&lt;br style=&quot;font-size: 11px;&quot;&gt;invio indizi" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontFamily=Ubuntu Mono;fontColor=#000000;labelBackgroundColor=none;" vertex="1" connectable="0" parent="xTMwFMf0HeDenURHJso6-28">
+          <mxGeometry x="-0.2171" y="2" relative="1" as="geometry">
+            <mxPoint x="13" y="28" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

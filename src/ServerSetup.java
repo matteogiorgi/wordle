@@ -4,18 +4,24 @@ import java.util.Properties;
 
 
 /**
- * Classe che rappresenta le proprietà del server.
- * PORT (int)                        ->  numero di porta del server
- * PATH_VOCABULARY (String)          ->  path del file contenente il vocabolario
- * PATH_JSON (String)                ->  path del file contenente i dati degli utenti (in JSON)
- * WORD_TIMER (int)                  ->  tempo che intercorre tra le pubblicazioni della parola segreta
- * MULTICAST_GROUP_ADDRESS (String)  ->  indirizzo del gruppo multicast
- * MULTICAST_GROUP_PORT (int)        ->  numero di porta del gruppo multicast
+ * Classe che rappresenta le proprietà del server: questa classe che estende <tt>Properties</tt>, è pensata per essere
+ * utilizzata all'accensione del server, per leggere il file di configurazione e memorizzare le proprietà del server.
+ * <p>
+ * Le seguenti proprietà sono disponibili:
+ * <ul>
+ * <li><tt>PORT</tt>: numero di porta del server (letto come un <tt>int</tt>)
+ * <li><tt>PATH_VOCABULARY</tt>: path del file contenente il vocabolario (letto come una <tt>String</tt>)
+ * <li><tt>PATH_JSON</tt>: path del file JSON contenente i dati degli utenti (letto come una <tt>String</tt>)
+ * <li><tt>WORD_TIMER</tt>: tempo che intercorre tra le pubblicazioni della parola segreta (letto come un <tt>int</tt>)
+ * <li><tt>MULTICAST_GROUP_ADDRESS</tt>: indirizzo del gruppo multicast (letto come una <tt>String</tt>)
+ * <li><tt>MULTICAST_GROUP_PORT</tt>: numero di porta del gruppo multicast (letto come un <tt>int</tt>)
+ * </ul>
  */
 public class ServerSetup extends Properties {
 
     /**
      * Costruttore della classe ServerSetup.
+     * 
      * @param configFile il percorso del file di configurazione.
      * @throws IOException se si verifica un errore durante la lettura del file di configurazione.
      */

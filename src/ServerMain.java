@@ -8,10 +8,15 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 
+
+/**
+ * Classe principale del server Wordle.
+ */
 public class ServerMain {
 
+
     /**
-     * Percorso del file di configurazione del server.
+     * Path del file di configurazione del server.
      */
     private static final String PATH_CONF = "lib/SERVER.conf";
 
@@ -92,6 +97,8 @@ public class ServerMain {
      * Main del server.
      * Legge il file di configurazione, crea le strutture dati
      * e si mette in attesa di connessioni.
+     * 
+     * @param args argomenti da linea di comando (non utilizzati)
      */
     public static void main(String args[]) {
         // leggo file di configurazione server,
