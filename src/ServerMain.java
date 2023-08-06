@@ -10,44 +10,71 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Classe principale del server Wordle.
+ * Classe principale del server Wordle contenente il metodo main.
+ * Crea le strutture dati utili (elenco utenti e il dizionario), si mette in attesa di connessioni, gestisce chiusura
+ * di socket e threadpools.
  */
 public class ServerMain {
 
 
     /**
-     * Path del file di configurazione del server.
+     * String che rappresenta il path del file di configurazione del server.
      */
     private static final String PATH_CONF = "lib/SERVER.conf";
 
 
     /**
-     * Variabili statiche che memorizzano le informazioni del server:
-     * serverProperties -> oggetto (ServerSetup) che memorizza le proprietà del server
-     * listaUtenti      -> oggetto (UserList) che memorizza gli utenti registrati al gioco
-     * listaParole      -> oggetto (WordList) che memorizza le parole da indovinare
+     * Oggetto ServerSetup che memorizza le proprietà del server.
      */
     private static ServerSetup serverProperties = null;
+
+
+    /**
+     * Oggetto UserList che memorizza gli utenti registrati al gioco.
+     */
     private static UserList listaUtenti = null;
+
+
+    /**
+     * Oggetto WordList che memorizza le parole da indovinare.
+     */
     private static WordList listaParole = null;
 
 
     /**
-     * Variabili statiche che rappresentano:
-     * welcomeSocket     -> ServerSocket di benvenuto sulla quale fare la accept() dei client,
-     * socket            -> Socket di connessione per la comunicazione Game <-> Client,
-     * threadPool        -> ExecutorService che gestisce i client connessi
-     * multicastListener -> Thread che legge le notifiche e le invia sul multicast
+     * ServerSocket di benvenuto sulla quale fare la accept() dei client.
      */
     private static ServerSocket welcomeSocket = null;
+
+
+    /**
+     * Socket di connessione per la comunicazione tra Game client.
+     */
     private static Socket socket = null;
+
+
+    /**
+     * ExecutorService che gestisce i client connessi.
+     */
     private static ExecutorService threadPool = Executors.newCachedThreadPool();
+
+
+    /**
+     * Thread che legge le notifiche e le invia sul multicast.
+     */
     private static Thread multicastListener = null;
 
 
     /**
-     * Runnable che gestisce la chiusura del server, eseguito quando viene ricevuto il segnale di shutdown.
-     * Chiude la welcomeSocket, il threadPool, il multicastListener e il sheduler della listaParole.
+     * Runnable che, alla ricezione del segnale di shutdown, gestisce la chiusura del server.
+     * <p>
+     * Le operazioni eseguite sono:
+     * <ul>
+     * <li>chiusura welcomeSocket
+     * <li>shutdown threadPool
+     * <li>shutdown multicastListener
+     * <li>shutdown sheduler di listaParole
+     * </ul>
      */
     private static Runnable shutdownHook = new Runnable() {
         @Override
@@ -94,11 +121,10 @@ public class ServerMain {
 
 
     /**
-     * Main del server.
-     * Legge il file di configurazione, crea le strutture dati
-     * e si mette in attesa di connessioni.
+     * Metodo main del server.
+     * Legge il file di configurazione, crea le strutture dati e si mette in attesa di connessioni.
      * 
-     * @param args argomenti da linea di comando (non utilizzati)
+     * @param args  argomenti da linea di comando (non utilizzati)
      */
     public static void main(String args[]) {
         // leggo file di configurazione server,

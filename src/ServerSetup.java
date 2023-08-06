@@ -4,10 +4,11 @@ import java.util.Properties;
 
 
 /**
- * Classe che rappresenta le proprietà del server: questa classe che estende <tt>Properties</tt>, è pensata per essere
- * utilizzata all'accensione del server, per leggere il file di configurazione e memorizzare le proprietà del server.
+ * Classe che rappresenta le proprietà del server.
+ * Questa classe estende <tt>Properties</tt> ed è pensata per essere utilizzata all'accensione del server per leggere
+ * il file di configurazione e memorizzare le varie proprietà nelle strutture dati più opportune.
  * <p>
- * Le seguenti proprietà sono disponibili:
+ * Le seguenti sono le proprietà disponibili:
  * <ul>
  * <li><tt>PORT</tt>: numero di porta del server (letto come un <tt>int</tt>)
  * <li><tt>PATH_VOCABULARY</tt>: path del file contenente il vocabolario (letto come una <tt>String</tt>)
@@ -20,10 +21,11 @@ import java.util.Properties;
 public class ServerSetup extends Properties {
 
     /**
-     * Costruttore della classe ServerSetup.
+     * Unico costruttore della classe ServerSetup.
      * 
-     * @param configFile il percorso del file di configurazione.
-     * @throws IOException se si verifica un errore durante la lettura del file di configurazione.
+     * @param configFile  path (relativo o assoluto) del file di configurazione.
+     * @throws IOException se il file di configurazione indicato nel path non viene trovato o si verifica un errore
+     * durante la lettura del file di configurazione.
      */
     public ServerSetup(String configFile) throws IOException {
         try (FileInputStream inputStream = new FileInputStream(configFile)) {
@@ -34,6 +36,7 @@ public class ServerSetup extends Properties {
 
     /**
      * Restituisce il numero di porta del server.
+     *
      * @return il numero di porta del server.
      */
     public int getPort() {
@@ -43,6 +46,7 @@ public class ServerSetup extends Properties {
 
     /**
      * Restituisce il path del file contenente il vocabolario.
+     *
      * @return il path del file contenente il vocabolario.
      */
     public String getPathVocabulary() {
@@ -52,6 +56,7 @@ public class ServerSetup extends Properties {
 
     /**
      * Restituisce il path del file contenente i dati degli utenti (in JSON).
+     *
      * @return il path del file contenente i dati degli utenti (in JSON).
      */
     public String getPathJSON() {
@@ -61,6 +66,7 @@ public class ServerSetup extends Properties {
 
     /**
      * Restituisce il tempo che intercorre tra le pubblicazioni della parola segreta.
+     *
      * @return il tempo che intercorre tra le pubblicazioni della parola segreta.
      */
     public int getWordTimer() {
@@ -70,6 +76,7 @@ public class ServerSetup extends Properties {
 
     /**
      * Restituisce l'indirizzo del gruppo multicast.
+     *
      * @return l'indirizzo del gruppo multicast.
      */
     public String getMulticastGroupAddress() {
@@ -79,6 +86,7 @@ public class ServerSetup extends Properties {
 
     /**
      * Restituisce il numero di porta del gruppo multicast.
+     *
      * @return il numero di porta del gruppo multicast.
      */
     public int getMulticastGroupPort() {
