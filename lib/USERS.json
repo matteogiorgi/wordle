@@ -49,13 +49,14 @@
 	{
 		"user": "stefania",
 		"password": "giostemat",
-		"giocate": 5,
-		"vinte": 5,
-		"streaklast": 5,
-		"streakmax": 5,
+		"giocate": 6,
+		"vinte": 6,
+		"streaklast": 6,
+		"streakmax": 6,
 		"guessd": [
 			3,
 			2,
+			1,
 			1,
 			1,
 			1

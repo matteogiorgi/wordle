@@ -35,10 +35,16 @@ Prima di entrare nelle specifiche dell'implementazione ecco qua sotto l'ASF che 
 ## Struttura server
 
 ### [`ServerMain`](file:///home/geoteo/Documents/reti/wordle/doc/ServerMain.html)
-
 ### [`ServerSetup`](file:///home/geoteo/Documents/reti/wordle/doc/ServerSetup.html)
 ### [`MulticastSender`](file:///home/geoteo/Documents/reti/wordle/doc/MulticastSender.html)
 ### [`Game`](file:///home/geoteo/Documents/reti/wordle/doc/Game.html)
+
+---
+
+### [`User`](file:///home/geoteo/Documents/reti/wordle/doc/User.html)
+### [`UserList`](file:///home/geoteo/Documents/reti/wordle/doc/UserList.html)
+### [`Word`](file:///home/geoteo/Documents/reti/wordle/doc/Word.html)
+### [`WordList`](file:///home/geoteo/Documents/reti/wordle/doc/WordList.html)
 
 
 ## Struttura client

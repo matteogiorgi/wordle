@@ -7,14 +7,41 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 
+/**
+ * Classe che implementa un thread per la gestione dell'interazione tra il server e un client.
+ * <br>
+ * Game propone una interfaccia testuala al client composta di tre fasi:
+ * <ul>
+ * <li><code>[MAIN SESSION]</code>: fase iniziale in cui l'utente può</li>
+ *     <ul>
+ *     <li>uscire dal programma (<code>exit</code>)</li>
+ *     <li>registrarsi al gioco (<code>register</code>)</li>
+ *     <li>cancellarsi dal gioco (<code>remove</code>)</li>
+ *     <li>autenticarsi al gioco (<code>login</code>)</li>
+ *     </ul>
+ * <li><code>[LOGIN SESSION]</code>: fase in cui l'utente può</li>
+ *     <ul>
+ *     <li>giocare una nuova partita (<code>playwordle</code>)</li>
+ *     <li>ricevere le proprie statistiche (<code>sendmestat</code>)</li>
+ *     <li>condividere le proprie statistiche (<code>sharemestat</code>)</li>
+ *     <li>effettuare il logout (<code>logout</code>)</li>
+ *     </ul>
+ * <li><code>[GAME SESSION]</code>: fase in cui l'utente può</li>
+ *     <ul>
+ *     <li>interrompere la partita in corso (<i>quit!</i>)</li>
+ *     <li>inserire una stringa (<i>Guessed-Word</i>)</li>
+ *     </ul>
+ * </ul>
+ */
 public class Game implements Runnable {
 
     /**
-     * Variabili che memorizzano le informazioni del gioco:
-     * socket          -> Socket di connessione per la comunicazione Game <-> Client,
-     * userList        -> oggetto (UserList) che memorizza gli utenti registrati al gioco
-     * wordList        -> oggetto (WordList) che memorizza le parole da indovinare
-     * multicastSender -> oggetto (MulticastSender) che invia le notifiche sul multicast
+     * Variabili utili.
+     *
+     * - socket: Socket di connessione per la comunicazione tra Game e Client
+     * - userList: oggetto (UserList) che memorizza gli utenti registrati al gioco
+     * - wordList: oggetto (WordList) che memorizza le parole da indovinare
+     * - multicastSender: oggetto (MulticastSender) che invia le notifiche sul multicast
      */
     private final Socket socket;
     private final UserList userList;
@@ -23,8 +50,11 @@ public class Game implements Runnable {
 
 
     /**
-     * Variabili necessarie per la lettura e scrittura sulla socket,
-     * oltre alla parola da indovinare.
+     * Variabili utili.
+     *
+     * - input: Scanner per la lettura dalla socket
+     * - output: PrintWriter per la scrittura sulla socket
+     * - word: oggetto (Word) che memorizza la parola da indovinare
      */
     private Scanner input = null;
     private PrintWriter output = null;
@@ -32,11 +62,12 @@ public class Game implements Runnable {
 
 
     /**
-     * Costruttore della classe Game.
-     * @param socket il socket di connessione per la comunicazione Game <-> Client
-     * @param userList l'oggetto (UserList) che memorizza gli utenti registrati al gioco
-     * @param wordList l'oggetto (WordList) che memorizza le parole da indovinare
-     * @param multicastSender l'oggetto (MulticastSender) che invia le notifiche sul multicast
+     * Costruttore della classe <code>Game</code>.
+     *
+     * @param socket  socket di connessione per la comunicazione tra Game e Client
+     * @param userList  oggetto (UserList) che memorizza gli utenti registrati al gioco
+     * @param wordList  oggetto (WordList) che memorizza le parole da indovinare
+     * @param multicastSender  oggetto (MulticastSender) che invia le notifiche sul multicast
      */
     public Game(Socket socket, UserList userList, WordList wordList, MulticastSender multicastSender) {
         this.socket = socket;
@@ -48,10 +79,10 @@ public class Game implements Runnable {
 
     /**
      * Metodo che gestisce la sessione di gioco.
+     *
      * In questa fase l'utente può:
-     * 1. interrompere la partita in corso (quit!)
-     * 2. inserire una stringa (<tentativo>)
-     * @param user l'utente che ha effettuato il login
+     * - interrompere la partita in corso (quit!)
+     * - inserire una stringa (Guessed-Word)
      */
     private void gameSession(User user) {
         System.out.println("[GAME START] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
@@ -102,12 +133,12 @@ public class Game implements Runnable {
 
     /**
      * Metodo che gestisce la sessione di login.
+     *
      * In questa fase l'utente può:
-     * 1. giocare una nuova partita (playwordle)
-     * 2. ricevere le proprie statistiche (sendmestat)
-     * 3. condividere le proprie statistiche (share)
-     * 4. effettuare il logout (logout)
-     * @param user l'utente che ha effettuato il login
+     * - giocare una nuova partita (playwordle)
+     * - ricevere le proprie statistiche (sendmestat)
+     * - condividere le proprie statistiche (share)
+     * - effettuare il logout (logout)
      */
     private void loginSession(User user) {
         System.out.println("[LOGIN DONE] user " + user.getName());
@@ -169,15 +200,18 @@ public class Game implements Runnable {
 
 
     /**
-     * run() del thread Game.
-     * Il Thread che contiene Game gestisce la comunicazione Game <-> Client:
-     * prepara gli stream di I/O sulla socket, invia un messaggio di benvenuto
-     * e rimane in attesa di un comando.
+     * Metodo run() del thread Game.
+     * <br>
+     * Il Thread che contiene Game gestisce la comunicazione tra Game e Client: prepara gli stream di I/O sulla socket,
+     * invia un messaggio di benvenuto e rimane in attesa di un comando.
+     * <p>
      * In questa fase l'utente può:
-     * 1. registrarsi (register)
-     * 2. cancellarsi (remove)
-     * 3. effettuare il login (login)
-     * 4. uscire dal programma (exit)
+     * <ul>
+     * <li>uscire dal programma (exit)</ol>
+     * <li>registrarsi (register)</ol>
+     * <li>cancellarsi (remove)</ol>
+     * <li>effettuare il login (login)</ol>
+     * </ul>
      */
     @Override
     public void run() {

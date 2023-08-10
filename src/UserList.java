@@ -13,22 +13,27 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 
+/**
+ * Classe che implementa l'elenco degli utenti.
+ * <br>
+ * La classe è implementata con un <code>Set&lt;String&gt;</code> che contiene i nomi degli utenti registrati
+ * e un <code>Map&lt;String&gt;</code> che contiene i nomi degli utenti loggati.
+ */
 public class UserList {
 
     /**
-     * La lista degli utenti è rappresentata da due strutture dati:
-     * una Map<String,User> che contiene gli utenti registrati come coppie nome-User
-     * un Set<String> che contiene i nomi degli utenti loggati
+     * Variabili che rappresentano le due strutture dati principali.
+     *
+     * - userRegistrati: Map<String,User> degli utenti registrati
+     * - userLoggati: Set<String> dei nomi degli utenti loggati
      */
     private Map<String, User> userRegistrati;
     private Set<String> userLoggati;
 
 
     /**
-     * Controlla se il nome del campo corrente nel file JSON corrisponde al nome atteso.
-     * @param nextName il nome del campo corrente nel file JSON
-     * @param expectedName il nome atteso del campo
-     * @throws JsonSyntaxException se il nome del campo corrente non corrisponde al nome atteso
+     * Metodo privato usato per controllare che il file JSON sia formattato correttamente e lancia una
+     * JsonSyntaxException se se il nome del campo corrente nel JSON non corrispondesse al nome atteso.
      */
     private void checkField(String nextName, String expectedName) {
         if (!nextName.equals(expectedName)) {
@@ -38,10 +43,8 @@ public class UserList {
 
 
     /**
-     * Legge un file JSON contenente i dati degli utenti registrati e li aggiunge alla lista degli utenti registrati.
-     * @param pathJSON il percorso del file JSON da leggere
-     * @throws FileNotFoundException se il file JSON specificato non viene trovato
-     * @throws IOException se si verifica un errore durante la lettura del file JSON
+     * Metodo privato che legge un file JSON contenente i dati degli utenti registrati e li aggiunge alla
+     * lista degli utenti registrati.
      */
     private void readJSON(String pathJSON) throws FileNotFoundException, IOException {
         try (JsonReader jsonReader = new JsonReader(new FileReader(pathJSON))) {
@@ -86,9 +89,8 @@ public class UserList {
 
 
     /**
-     * Scrive i dati degli utenti registrati in un file JSON.
-     * @param pathJSON il percorso del file JSON in cui scrivere i dati degli utenti registrati
-     * @throws IOException se si verifica un errore durante la scrittura del file JSON
+     * Metodo privato che scrive i dati degli utenti registrati in un file JSON e lancia una IOException
+     * se si verifica un errore durante la scrittura del file JSON.
      */
     private void writeJSON(String pathJSON) throws IOException {
         try (JsonWriter jsonWriter = new JsonWriter(new FileWriter(pathJSON))) {
@@ -117,10 +119,13 @@ public class UserList {
 
 
     /**
-     * Costruttore della classe UserList che inizializza la lista degli utenti registrati e la lista degli utenti loggati.
-     * Legge i dati degli utenti registrati dal file JSON specificato nel percorso pathJSON.
-     * @param pathJSON il percorso del file JSON da leggere
-     * @throws FileNotFoundException se il file JSON specificato non viene trovato
+     * Costruttore della classe <code>UserList</code>.
+     * <br>
+     * Inizializza la lista degli utenti registrati, la lista degli utenti loggati e legge i dati degli utenti
+     * registrati dal file JSON specificato, nel percorso pathJSON.
+     *
+     * @param pathJSON  percorso del file JSON da leggere
+     * @throws FileNotFoundException se il file JSON specificato, non viene trovato
      * @throws IOException se si verifica un errore durante la lettura del file JSON
      */
     public UserList (String pathJSON) throws FileNotFoundException, IOException {
@@ -131,8 +136,9 @@ public class UserList {
 
 
     /**
-     * Restituisce un insieme di stringhe contenente i nomi degli utenti registrati.
-     * @return un insieme di stringhe contenente i nomi degli utenti registrati
+     * Metodo che restituisce un insieme di stringhe contenente i nomi degli utenti registrati.
+     *
+     * @return un <code>Set&lt;String&gt;</code> contenente i nomi degli utenti registrati
      */
     public synchronized Set<String> getRegistrati() {
         return new LinkedHashSet<>(userRegistrati.keySet());
@@ -140,8 +146,9 @@ public class UserList {
 
 
     /**
-     * Scrive i dati degli utenti registrati in un file JSON specificato nel percorso pathJSON.
-     * @param pathJSON il percorso del file JSON in cui scrivere i dati degli utenti registrati
+     * Metoo che scrive i dati degli utenti registrati in un file JSON specificato, nel percorso pathJSON.
+     *
+     * @param pathJSON  percorso del file JSON in cui scrivere i dati degli utenti registrati
      * @throws IOException se si verifica un errore durante la scrittura del file JSON
      */
     public synchronized void setRegistrati(String pathJSON) throws IOException {
@@ -150,8 +157,8 @@ public class UserList {
 
 
     /**
-     * Restituisce una lista di stringhe contenente i nomi degli utenti loggati.
-     * @return una lista di stringhe contenente i nomi degli utenti loggati
+     * Metodo che restituisce una insieme di stringhe contenente i nomi degli utenti loggati.
+     * @return un <code>Set&lt;String&gt;</code> contenente i nomi degli utenti loggati
      */
     public synchronized Set<String> getLoggati() {
         return userLoggati;
@@ -159,9 +166,10 @@ public class UserList {
 
 
     /**
-     * Verifica se l'utente con il nome utente specificato è registrato.
-     * @param userName il nome utente dell'utente da cercare
-     * @return true se l'utente è registrato, false altrimenti
+     * Metodo che verifica se l'utente con il nome-utente specificato, è registrato.
+     *
+     * @param userName  nome-utente dell'utente da cercare
+     * @return <i>true</i> se l'utente è registrato, <i>false</i> altrimenti
      */
     public synchronized boolean isRegistrato(String userName) {
         return userRegistrati.containsKey(userName);
@@ -169,9 +177,10 @@ public class UserList {
 
 
     /**
-     * Verifica se l'utente con il nome utente specificato è loggato.
-     * @param userName il nome utente dell'utente da cercare
-     * @return true se l'utente è loggato, false altrimenti
+     * Metodo che verifica se l'utente con il nome-utente specificato, è loggato.
+     *
+     * @param userName  nome-utente dell'utente da cercare
+     * @return <i>true</i> se l'utente è loggato, <i>false</i> altrimenti
      */
     public synchronized boolean isLoggato(String userName) {
         return userLoggati.contains(userName);
@@ -179,9 +188,10 @@ public class UserList {
 
 
     /**
-     * Restituisce l'oggetto User associato all'utente con il nome utente specificato.
-     * @param userName il nome utente dell'utente da cercare
-     * @return l'oggetto User associato all'utente con il nome utente specificato
+     * Metodo che restituisce l'oggetto User associato all'utente con il nome-utente specificato.
+     *
+     * @param userName  nome-utente dell'utente da cercare
+     * @return oggetto <code>User</code> associato all'utente con il nome-utente specificato
      */
     public synchronized User getUser(String userName) {
         return userRegistrati.get(userName);
@@ -189,9 +199,11 @@ public class UserList {
 
 
     /**
-     * Aggiunge un nuovo utente alla lista degli utenti registrati.
-     * @param newUser una mappa contenente i dati del nuovo utente da aggiungere
-     * @return l'oggetto User associato al nuovo utente aggiunto, null se l'utente è già presente
+     * Metodo che aggiunge una <code>&lt;Map<String, Object>&gt;</code> rappresentante un <code>Utente</code>
+     * alla lista degli utenti registrati.
+     *
+     * @param newUser  <code>&lt;Map<String, Object>&gt;</code> contenente i dati del nuovo utente da aggiungere
+     * @return oggetto <code>User</code> associato al nuovo utente aggiunto, <i>null</i> se l'utente è già presente
      * @throws IllegalArgumentException se i dati del nuovo utente non sono validi
      */
     public synchronized User addUser(Map<String, Object> newUser) {
@@ -201,9 +213,10 @@ public class UserList {
 
 
     /**
-     * Aggiunge un nuovo utente alla lista degli utenti registrati.
-     * @param newUser l'oggetto User contenente i dati del nuovo utente da aggiungere
-     * @return l'oggetto User associato al nuovo utente aggiunto, null se l'utente è già presente
+     * Metodo che aggiunge un nuovo utente alla lista degli utenti registrati.
+     *
+     * @param newUser  oggetto <code>User</code> contenente i dati del nuovo utente da aggiungere
+     * @return oggetto <code>User</code> associato al nuovo utente aggiunto, <i>null</i> se l'utente è già presente
      * @throws IllegalArgumentException se i dati del nuovo utente non sono validi
      */
     public synchronized User addUser(User newUser) {
@@ -212,9 +225,11 @@ public class UserList {
 
 
     /**
-     * Rimuove l'utente con il nome utente specificato dalla lista degli utenti registrati e dalla lista degli utenti loggati.
-     * @param userName il nome utente dell'utente da rimuovere
-     * @return l'oggetto User associato all'utente rimosso, null se l'utente non è presente
+     * Metodo che rimuove l'utente con il nome-utente specificato, dalla lista degli utenti registrati e
+     * dalla lista degli utenti loggati.
+     *
+     * @param userName  nome-utente dell'utente da rimuovere
+     * @return oggetto <code>User</code> associato all'utente rimosso, <i>null</i> se l'utente non è presente
      */
     public synchronized User removeUser(String userName) {
         userLoggati.remove(userName);
@@ -223,9 +238,10 @@ public class UserList {
 
 
     /**
-     * Aggiorna i dati dell'utente specificato nella lista degli utenti registrati.
-     * @param newUser una mappa contenente i nuovi dati dell'utente da aggiornare
-     * @return l'oggetto User associato all'utente aggiornato, null se l'utente non è presente
+     * Metodo che aggiorna i dati dell'utente specificato, nella lista degli utenti registrati.
+     *
+     * @param newUser  <code>Map&lt;String, Object&gt;</code> contenente i nuovi dati dell'utente da aggiornare
+     * @return oggetto <code>User</code> associato all'utente aggiornato, <i>null</i> se l'utente non è presente
      * @throws IllegalArgumentException se i nuovi dati dell'utente non sono validi
      */
     public synchronized User updateUser(Map<String, Object> newUser) {
@@ -235,9 +251,10 @@ public class UserList {
 
 
     /**
-     * Aggiunge l'utente con il nome utente specificato alla lista degli utenti loggati.
-     * @param userName il nome utente dell'utente da loggare
-     * @return true se l'utente è stato loggato con successo, false se l'utente era già loggato
+     * Metodo che aggiunge l'utente con il nome-utente specificato, alla lista degli utenti loggati.
+     *
+     * @param userName  nome-utente dell'utente da loggare
+     * @return <i>true</i> se l'utente è stato loggato con successo, <i>false</i> se l'utente era già loggato
      * @throws IllegalArgumentException se l'utente non è registrato
      */
     public synchronized boolean loginUser(String userName, String password) {
@@ -250,9 +267,10 @@ public class UserList {
 
 
     /**
-     * Rimuove l'utente con il nome utente specificato dalla lista degli utenti loggati.
-     * @param userName il nome utente dell'utente da sloggare
-     * @return true se l'utente è stato sloggato con successo, false se l'utente non era loggato
+     * Metodo che rimuove l'utente con il nome-utente specificato, dalla lista degli utenti loggati.
+     *
+     * @param userName  nome-utente dell'utente per cui effettuare il logout
+     * @return <i>trueo</i> se il logout dell'utente è stato effettuato con successo, <i>false</i> se l'utente non è loggato
      * @throws IllegalArgumentException se l'utente non è registrato
      */
     public synchronized boolean logoutUser(String userName) {

@@ -10,13 +10,25 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
+/**
+ * Classe che rappresenta il vocabolario usato da Wordle per estrarre la Secret-Word e controllare la validità
+ * delle Guessed-Word inserite dall'utente
+ * <br>
+ * La classe è implementata usando tre strutture dati principali:
+ * <ul>
+ * <li>una <code>List&lt;String&gt;</code> che contiene le parole del vocabolario</li>
+ * <li>un <code>ScheduledExecutorService</code> che estrae una parola casuale dal vocabolario ogni <i>n</i> secondi</li>
+ * <li>un oggetto <code>Word</code> che rappresenta la parola corrente</li>
+ * </ul>
+ */
 public class WordList {
 
     /**
-     * La lista delle parole (vocabolario) è rappresentata da tre strutture dati:
-     * una List<String> che contiene le parole del vocabolario
-     * un ScheduledExecutorService che estrae una parola casuale dal vocabolario ogni tot secondi
-     * un oggetto Word che rappresenta la parola corrente
+     * Variabili utili.
+     *
+     * - wordVocabulary: List<String> che contiene le parole del vocabolario
+     * - wordExtractor: ScheduledExecutorService che estrae una parola casuale dal vocabolario ogni n secondi
+     * - currentWord: Word che rappresenta la parola corrente
      */
     private List<String> wordVocabulary;
     private ScheduledExecutorService wordExtractor;
@@ -24,8 +36,7 @@ public class WordList {
 
 
     /**
-     * Runnable che rappresenta il task di estrazione di una parola casuale dal vocabolario di parole.
-     * (La parola estratta viene assegnata all'attributo currentWord)
+     * Runnable che rappresenta il task di estrazione casuale di una parola (currentWord) dal vocabolario di parole.
      */
     private Runnable extractWord = () -> {
         synchronized (this) {
@@ -35,11 +46,12 @@ public class WordList {
 
 
     /**
-     * Costruttore della classe WordList.
-     * @param pathVocabulary il percorso del file contenente il vocabolario di parole.
-     * @param wordTimer il tempo in secondi tra l'estrazione di una parola casuale dal vocabolario.
-     * @throws FileNotFoundException se il file contenente il vocabolario di parole non viene trovato.
-     * @throws IOException se si verifica un errore durante la lettura del file contenente il vocabolario di parole.
+     * Costruttore della classe <code>WordList</code>.
+     *
+     * @param pathVocabulary  percorso del file contenente il vocabolario di parole
+     * @param wordTimer  tempo in secondi tra l'estrazione di una parola casuale dal vocabolario
+     * @throws FileNotFoundException se il file contenente il vocabolario di parole non viene trovato
+     * @throws IOException se si verifica un errore durante la lettura del file contenente il vocabolario di parole
      */
     public WordList(String pathVocabulary, int wordTimer) throws FileNotFoundException, IOException {
         wordVocabulary = new ArrayList<>();
@@ -59,7 +71,8 @@ public class WordList {
 
     /**
      * Metodo che restituisce la parola corrente.
-     * @return la parola corrente.
+     *
+     * @return parola corrente (Secret-Word)
      */
     public synchronized Word getCurrentWord() {
         return currentWord;
@@ -67,8 +80,9 @@ public class WordList {
 
 
     /**
-     * Metodo che restituisce l'ExecutorService utilizzato per l'estrazione delle parole dal vocabolario.
-     * @return l'ExecutorService utilizzato per l'estrazione delle parole dal vocabolario.
+     * Metodo che restituisce l'ExecutorService utilizzato per l'estrazione della Secret-Word dal vocabolario.
+     *
+     * @return ExecutorService utilizzato per l'estrazione della Secret-Word
      */
     public ExecutorService getSheduler() {
         return wordExtractor;
@@ -76,9 +90,10 @@ public class WordList {
 
 
     /**
-     * Metodo che controlla se la parola passata come parametro è presente nel vocabolario.
-     * @param word la parola da cercare nel vocabolario.
-     * @return true se la parola è presente nel vocabolario, false altrimenti.
+     * Metodo che controlla se la parola passata come argomento è presente nel vocabolario.
+     *
+     * @param word  parola da cercare nel vocabolario
+     * @return <code>true</code> se la parola è presente nel vocabolario, <code>false</code> altrimenti
      */
     public boolean containsWord(String word) {
         return wordVocabulary.contains(word);

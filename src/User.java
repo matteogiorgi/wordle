@@ -4,23 +4,41 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 
+/**
+ * Classe che rappresenta un utente del gioco.
+ * <br>
+ * L'utente è implementato come una mappa di coppie chiave-valore con i seguenti campi:
+ * <ul>
+ * <li>user: nome utente</li>
+ * <li>password: password</li>
+ * <li>giocate: numero di partite giocate</li>
+ * <li>vinte: numero di partite vinte</li>
+ * <li>streaklast: lunghezza della serie di vincite più recente</li>
+ * <li>streakmax: lunghezza massima della serie di vincite</li>
+ * <li>guessd: distribuzione di tentativi impiegati per arrivare alla soluzione</li>
+ * </ul>
+ */
 public class User {
 
     /**
-     * L'utente è rappresentato come una mappa di coppie chiave-valore.
-     * (non estende HashMap per evitare di esporre i metodi di modifica della mappa)
-     * La chiave è una stringa che rappresenta il nome del campo,
-     * il valore è archiviato come un oggetto di tipo Object.
+     * L'utente è rappresentato come una <code>Map&lt;String, Object&gt;</code>
+     * (non estende <code>HashMap</code> per evitare di esporre i metodi di modifica della mappa).
+     * <br>
+     * La chiave è una <code>String</code> che rappresenta il nome del campo, il valore è archiviato come
+     * un <code>Object</code> generico (può essere di tipo diverso).
      */
     private Map<String, Object> user;
 
 
     /**
-     * Costruttore che crea un nuovo oggetto User a partire da una mappa di coppie chiave-valore.
-     * Prima di creare l'oggetto User, controlla che la mappa contenga tutti i campi necessari.
-     * @param user la mappa di coppie chiave-valore da cui creare l'oggetto User
-     * @return un nuovo oggetto User
-     * @throws NullPointerException se la mappa passata è null
+     * Costruttore della classe <code>User</code>.
+     * <br>
+     * Viene creato un nuovo oggetto <code>User</code> a partire da una <code>Map&lt;String, Object&gt;</code>;
+     * se la mappa non dovesse contenere tutti i campi necessari, viene lanciata una <code>IllegalArgumentException</code>.
+     *
+     * @param user  mappa di coppie chiave-valore da cui creare l'oggetto <code>User</code>
+     * @return nuovo oggetto <code>User</code> creato a partire dalla mappa passata
+     * @throws NullPointerException se la mappa passata è <code>null</code>
      * @throws IllegalArgumentException se la mappa passata non contiene tutti i campi corretti
      */
     public User(Map<String, Object> user) {
@@ -43,8 +61,9 @@ public class User {
 
 
     /**
-     * Metodo che crea una copia profonda dell'oggetto corrente.
-     * @return una copia dell'oggetto corrente
+     * Metodo che crea una copia profonda di <code>this</code>.
+     *
+     * @return nuovo oggetto <code>User</code> che rappresenta una copia profonda dell'oggetto corrente
      */
     @SuppressWarnings("unchecked")
     public synchronized User copy() {
@@ -67,66 +86,81 @@ public class User {
 
 
     /**
-     * Restituisce il nome utente dell'utente.
-     * @return il nome utente dell'utente
+     * Metodo che restituisce il nome-utente.
+     *
+     * @return nome-utente
      */
     public synchronized String getName() {
         return (String) user.get("user");
     }
 
+
     /**
-     * Restituisce la password dell'utente.
-     * @return la password dell'utente
+     * Metodo che restituisce la password.
+     *
+     * @return password
      */
     public synchronized String getPassword() {
         return (String) user.get("password");
     }
 
+
     /**
-     * Restituisce il numero di giocate dell'utente.
-     * @return il numero di giocate dell'utente
+     * Restituisce il numero di partite giocate.
+     *
+     * @return numero di partite giocate
      */
     public synchronized int getGiocate() {
         return (int) user.get("giocate");
     }
 
+
     /**
-     * Restituisce il numero di partite vinte dall'utente.
-     * @return il numero di partite vinte dall'utente
+     * Metodo che restituisce il numero di partite vinte.
+     *
+     * @return numero di partite vinte
      */
     public synchronized int getVinte() {
         return (int) user.get("vinte");
     }
 
+
     /**
-     * Restituisce la lunghezza della serie di tentativi corretti più recente dell'utente.
-     * @return la lunghezza della serie di tentativi corretti più recente dell'utente
+     * Metodo che restituisce la lunghezza della serie di vincite più recente
+     *
+     * @return lunghezza della serie di vincite più recente
      */
     public synchronized int getStreakLast() {
         return (int) user.get("streaklast");
     }
 
+
     /**
-     * Restituisce la lunghezza massima della serie di tentativi corretti dell'utente.
-     * @return la lunghezza massima della serie di tentativi corretti dell'utente
+     * Metodo che restituisce la lunghezza massima della serie di vincite.
+     *
+     * @return lunghezza massima della serie di vincite
      */
     public synchronized int getStreakMax() {
         return (int) user.get("streakmax");
     }
 
+
     /**
-     * Restituisce la distribuzione dei tentativi dell'utente.
-     * @return la distribuzione dei tentativi dell'utente
+     * Metodo che restituisce la distribuzione dei tentativi impiegati per arrivare alla soluzione.
+     *
+     * @return distribuzione dei tentativi
      */
     @SuppressWarnings("unchecked")
     public synchronized List<Integer> getGuessDistribution() {
         return (List<Integer>) user.get("guessd");
     }
 
+
     /**
-     * Aggiorna i dati dell'utente in base all'esito dell'ultima partita.
-     * @param win true se l'utente ha vinto la partita, false altrimenti
-     * @param tentativi il numero di tentativi effettuati dall'utente nella partita
+     * Metodo che aggiorna i dati in base all'esito dell'ultima partita.
+     *
+     * @param win  valore booleano che indica se l'utente ha vinto (<code>true</code>) o perso la partita (<code>false</code>)
+     * @param tentativi  numero di tentativi effettuati nella partita
      */
     public synchronized void update(boolean win, int tentativi) {
         int streakLast = win ? getStreakLast()+1 :0;

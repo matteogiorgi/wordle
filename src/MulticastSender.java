@@ -9,30 +9,27 @@ import java.util.Queue;
 
 /**
  * Classe che implementa un thread per l'invio di notifiche su un gruppo multicast.
+ * <br>
  * MulticastSender si mette in wait sull'oggetto this fintanto che un oggetto Game non notifica di aver aggiunto una
  * nuova notifica, la notifica verrà quindi letta e inviata sul canale multicast.
  */
 public class MulticastSender implements Runnable {
 
     /**
-     * Numero intero che rappresenta il numero di porta del gruppo multicast.
+     * Variabili utili.
+     *
+     * - multicastGroupPort: Numero intero che rappresenta il numero di porta del gruppo multicast.
+     * - multicastGroupAddress: Stringa che rappresenta l'indirizzo del gruppo multicast.
+     * - queue: Queue utilizzata per salvare le notifiche inviate dal server in attesa di essere lette e inviate sul
+     *          canale multicast.
      */
     private final int multicastGroupPort;
-
-    /**
-     * Stringa che rappresenta l'indirizzo del gruppo multicast.
-     */
     private final String multicastGroupAddress;
-
-    /**
-     * Queue utilizzata per salvare le notifiche inviate dal server in attesa di essere lette e inviate sul canale
-     * multicast.
-     */
     private final Queue<String> queue = new LinkedList<>();
 
 
     /**
-     * Costruttore che inizializza le variabili private.
+     * Costruttore della classe <code>MulticastSender</code>.
      *
      * @param multicastGroupPort  porta del gruppo multicast
      * @param multicastGroupAddress  indirizzo del gruppo multicast
@@ -45,9 +42,6 @@ public class MulticastSender implements Runnable {
 
     /**
      * Metodo privato che ritorna la notifica da inviare sul multicast.
-     *
-     * @return notifica da inviare sul multicast
-     * @throws InterruptedException
      */
     private synchronized String getNotification() throws InterruptedException {
         String notification = null;
@@ -60,7 +54,7 @@ public class MulticastSender implements Runnable {
 
 
     /**
-     * Metodo pubblico che aggiunge una notifica alla coda e sveglia il thread.
+     * Metodo che aggiunge una notifica alla coda e sveglia il thread.
      *
      * @param notification  notifica da inviare sul multicast
      */
@@ -72,7 +66,7 @@ public class MulticastSender implements Runnable {
 
     /**
      * Metodo run() del thread di MulticastListener.
-     *
+     * <br>
      * Il Thread questo Runnable legge le notifiche dalla coda e le invia sul multicast.
      */
     @Override

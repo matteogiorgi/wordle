@@ -7,15 +7,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * Classe che rappresenta il client.
+ */
 public class ClientMain {
 
     /**
-     * Variabili statiche che rappresntano:
-     * PATH_CONF         -> String che contiene il path del file di configurazione
-     * clientProperties  -> oggetto (ClientSetup) che memorizza le proprietà del client
-     * multicastListener -> Thread che rimane in ascolto delle notifiche sul multicast
-     * multicastReceiver -> oggetto (MulticastReceiver) che memorizza le notifiche ricevute
-     * logStatus         -> stato del log (false: non loggato, true: loggato)
+     * Variabili utili.
+     *
+     * - PATH_CONF: String che contiene il path del file di configurazione
+     * - clientProperties: oggetto ClientSetup che memorizza le proprietà del client
+     * - multicastListener: Thread che rimane in ascolto delle notifiche sul multicast
+     * - multicastReceiver: oggetto MulticastReceiver che memorizza le notifiche ricevute
+     * - logStatus: stato del log (false = non-loggato, true = loggato)
      */
     private static final String PATH_CONF = "lib/CLIENT.conf";
     private static ClientSetup clientProperties = null;
@@ -25,9 +29,11 @@ public class ClientMain {
 
 
     /**
-     * Main del client.
-     * Legge il file di configurazione, si connette al server
-     * e rimane in attesa di input da tastiera.
+     * Metodo main del client.
+     *
+     * Il client legge il file di configurazione, si connette al server e rimane in attesa di input da tastiera.
+     * Quando riceve un comando (input da tastiera), lo invia al server e stampa a video l'output ricevuto;
+     * quando riceve una notifica, la stampa a video.
      */
     public static void main(String[] args) {
         // leggo file configurazione client

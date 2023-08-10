@@ -8,13 +8,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * Classe che rappresenta il thread che rimane in ascolto delle notifiche sul multicast.
+ * <br>
+ * Estende <code>ConcurrentLinkedQueue&lt;String&gt;</code> per poter aggiungere le notifiche ricevute alla
+ * coda delle notifiche.
+ */
 public class MulticastReceiver extends ConcurrentLinkedQueue<String> implements Runnable {
 
     /*
-     * Variabili private che rappresentano:
-     * multicastGroupPort    -> numero di porta del gruppo multicast
-     * multicastGroupAddress -> indirizzo del gruppo multicast
-     * userName              -> nome dell'utente in ascolto
+     * Variabili utili.
+     *
+     * - multicastGroupPort: numero di porta del gruppo multicast
+     * - multicastGroupAddress: indirizzo del gruppo multicast
+     * - userName: nome dell'utente in ascolto
      */
     private final int multicastGroupPort;
     private final String multicastGroupAddress;
@@ -22,10 +29,11 @@ public class MulticastReceiver extends ConcurrentLinkedQueue<String> implements 
 
 
     /**
-     * Costruttore che inizializza le variabili private.
-     * @param multicastGroupPort porta del gruppo multicast
-     * @param multicastGroupAddress indirizzo del gruppo multicast
-     * @param userName nome dell'utente in ascolto
+     * Costruttore della classe <code>MulticastReceiver</code>.
+     *
+     * @param multicastGroupPort  porta del gruppo multicast
+     * @param multicastGroupAddress  indirizzo del gruppo multicast
+     * @param userName  nome dell'utente in ascolto
      */
     public MulticastReceiver(int multicastGroupPort, String multicastGroupAddress, String userName) {
         super();
@@ -36,7 +44,8 @@ public class MulticastReceiver extends ConcurrentLinkedQueue<String> implements 
 
 
     /**
-     * run() del thread di MulticastListener.
+     * Metodo run() del thread di MulticastListener.
+     *
      * Il Thread che contiene MulticastReceiver rimane in ascolto delle notifiche sul multicast.
      */
     @Override
