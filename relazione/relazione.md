@@ -18,10 +18,12 @@ Ogni 24h il gioco estrae casualmente dal proprio dizionario una Secret-Word di 5
 
 Questa implementazione consiste in una versione semplificata del gioco, che conserva la logica di base dell'originale ma apporta modifiche su alcune funzionalità come la condivisione social dei risultati (realizzata qui con un gruppo multicast), e l'assenza di una interfaccia grafica (sostituita da una semplice Command-Line UI).
 
-La presente relazione è affiancata da una documentazione [JavaDoc](file:///home/geoteo/Documents/reti/wordle/doc/allclasses-index.html) scritta come da specifica Oracle e dettagliata nelle linee guida delle [Tecnical-Resources](https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html).
+La presente relazione è affiancata da documentazione [JavaDoc](file:///home/geoteo/Documents/reti/wordle/doc/allclasses-index.html) secondo quanto specificato nelle [Tecnical-Resources](https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html) Oracle. **Questo testo esiste anche in [html]() wiki-page**.
 </div>
 
 *Wordle 3.0* usa una classica struttura client-server. Il server legge il proprio file di configurazione e si occupa di caricare in memoria l'elenco degli utenti, l'elenco delle parole (dizionario) e rimanere in attesa di connessioni su una welcome-socket (`ServerSocket`) appositamente allocata su una porta predefinita nel file di configurazione. Agganciato un client, il server lancierà dunque un nuovo Runnable (`Game`) con cui verranno soddisfatte le richieste, per poi rimettersi in attesa di una nuova connessione. Il client invece, dopo la lettura del proprio file di configurazione, ha l'unico scopo di connettersi al server con una socket (`Socket`) e inviare comandi sottoforma di *lines* (stringhe terminanti con il carattere di line-break).
+
+
 
 
 ## Struttura del Progetto
@@ -34,10 +36,14 @@ Prima di entrare nelle specifiche dell'implementazione ecco qua sotto l'ASF che 
 </center>
 
 
+
+
 ### Modelli principali
 
 - `Word` e `WordList` gestiscono le parole del gioco: la classe `Word` rappresenta una singola parola, mentre `WordList` il dizionario usato da *Wordle* per estrarre ciclicamente la *Secret-Word* e controllare la validità delle *Guessed-Words* inserite dall'utente in gioco.
 - `User` e `UserList` in modo analogo alle classi precedenti, rappresentano rispettivamente il singolo utente e l'insieme degli utenti registrati sul server del gioco.
+
+
 
 
 ### Funzionalità del server
@@ -47,10 +53,14 @@ Prima di entrare nelle specifiche dell'implementazione ecco qua sotto l'ASF che 
 - `MulticastSender` gestisce la condivisione dei risultati attraverso un gruppo multicast.
 
 
+
+
 ### Funzionalità del client
 
 - `ClientSetup` e `ClientMain` analogamente alle loro controparti, rappresentano le proprietà e il punto di ingresso del client.
 - `MulticastReceiver` gestisce la condivisione dei risultati attraverso un gruppo multicast.
+
+
 
 
 ## Classe [`Word`](file:///home/geoteo/Documents/reti/wordle/doc/Word.html)
@@ -60,9 +70,11 @@ Classe che rappresenta la parola che i giocatori devono indovinare, è implement
 - *`currentWord`*: `String` che identifica la *Secret-Word* corrente.
 - *`userSet`*: `Set<String>` che contiene i nomi degli utenti che hanno già giocato la *Secret-Word* corrente. Un utente che avesse già giocato la *Secret-Word* corrente e chiedesse di iniziare una nuova partita, rimarrebbe in `[LOGIN SESSION]` (si veda AST).
 
-Il costruttore della classe prende come parametro una `String` che rappresenta la parola da indovinare; non è consentito creare una parola *null*, causerebbe il lancio di una `IllegalArgumentException`.
+Il [costruttore](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/Word.java#L26-L39) della classe prende come parametro una `String` che rappresenta la parola da indovinare; non è consentito creare una parola *null*, causerebbe il lancio di una `IllegalArgumentException`.
 
 Oltre ai metodi [*`getWord`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L42-L49), [*`containsUser`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L52-L62) e [*`addUser`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L65-L75), la classe contiene anche [*`getMask`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L78-L107), necessario a `Game` per fornire informazioni al client sulla correttezza della *Guessed-Word* inserita, sottoforma di una maschera di caratteri speciali (`X`, `+`, `?`) come da specifica.
+
+
 
 
 ## Classe [`WordList`](file:///home/geoteo/Documents/reti/wordle/doc/WordList.html)
@@ -76,94 +88,78 @@ Classe che rappresenta il vocabolario utilizzato da *Wordle* per estrarre la *Se
 La classe contiene anche il `Runnable` [*`extractWord`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/WordList.java#L38-L45) che rappresenta il task di estrazione casuale di una nuova *Secret-Word* dal vocabolario, eseguito da `wordExtractor` ogni `wordTimer` secondi (tempo specificato nel file di configurazione del server).
 
 
+
+
 ## Classe [`User`](file:///home/geoteo/Documents/reti/wordle/doc/User.html)
 
-Il file `User.java` definisce la classe `User`, che rappresenta un utente del gioco Wordle. Ecco una panoramica iniziale del suo contenuto:
+Classe che rappresenta l'utente come una mappa chiave-valore che ne specifica le proprietà.
 
-### User
+- *`user`*: nome dell'utente.
+- *`password`*: password per il login dell'utente.
+- *`giocate`*: numero di partite giocate dall'utente.
+- *`vinte`*: numero di partite vinte dall'utente.
+- *`streaklast`*: lunghezza della serie di vittorie più recente dell'utente.
+- *`streakmax`*: lunghezza massima della serie di vittorie ottenuta dall'utente.
+- *`guessd`*: distribuzione che indica i tentativi impiegati dall'utente per arrivare alla soluzione nelle partite giocate.
 
-La classe `User` rappresenta un singolo utente del gioco. L'utente è strutturato come una mappa di coppie chiave-valore con i seguenti campi:
+Per evitare di esporre i metodi di modifica della mappa, invece di estendere una delle implementazioni di `Map`, è stata usata la variabile privata *`user`* di tipo `Map<String, Object>` per identificare l'utente con le sue proprietà.
 
-- **user**: Il nome dell'utente.
-- **password**: La password dell'utente.
-- **giocate**: Il numero di partite giocate dall'utente.
-- **vinte**: Il numero di partite vinte dall'utente.
-- **streaklast**: La lunghezza della serie di vittorie più recente.
-- **streakmax**: La lunghezza massima della serie di vittorie ottenuta dall'utente.
-- **guessd**: Una distribuzione che indica quanti tentativi sono stati impiegati dall'utente per arrivare alla soluzione in diverse partite.
+Questa scelta permette di avere una struttura sicura e flessibile, facilmente modificabile al termine di ogni partita con l'apposito metodo [*`update`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L159-L174), con il quale `Game` può aggiornare i dati dell'utente.
 
-L'utente è rappresentato come una `Map<String, Object>`. Questa scelta di design permette di avere una struttura flessibile, ma al tempo stesso strutturata, per rappresentare le diverse proprietà e statistiche associate a ciascun utente.
+Oltre ai [metodi getter](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L88-L156) con i quali recuperare i sette valori della mappa, la classe contiene il metodo [*`copy`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L63-L85) che permette di creare una copia profonda dell'utente.
 
-La classe `User` quindi fornisce la logica per gestire e memorizzare le informazioni relative a ciascun utente, inclusi i suoi risultati e le statistiche di gioco.
+La classe ha un unico [costruttore](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L33-L60) che permette di creare un nuovo utente partendo da una `Map<String, Object>`. Non è consentito creare un oggetto della classe `User` usando una mappa *null*, incompleta o contenente associazioni chiave-valore di tipo sbagliato: questi casi causerebbero il lancio di una `NullPointerException` o di una `IllegalArgumentException`.
 
-Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
+
 
 
 ## Classe [`UserList`](file:///home/geoteo/Documents/reti/wordle/doc/UserList.html)
 
-Il file `UserList.java` definisce la classe `UserList`, che rappresenta l'elenco degli utenti del gioco Wordle. Ecco una panoramica iniziale del suo contenuto:
+La classe implementa l'elenco degli utenti registrati e contiene due strutture dati principali.
 
-### UserList
+- *`userRegistrati`*: `Map<String, User>` contenente gli utenti registrati al gioco. Il nome utente rappresentata la chiave, l'oggetto `User` il valore associato (l'associazione è biunivoca: il nome identifica univocamemte l'utente registrato).
+- *`userLoggati`*: `Set<String>` contenente i nomi degli utenti attualmente loggati al gioco.
 
-La classe `UserList` implementa l'elenco degli utenti. Ha due strutture dati principali:
+La classe utilizza la libreria [*Gson*](https://github.com/google/gson) per gestire la serializzazione e deserializzazione degli utenti in formato JSON, permettendo di [caricare](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L45-L88)/[salvare](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L91-L118) l'elenco degli utenti da/verso un file `.json` il cui path è specificato nel file di configurazione del server.
 
-- **userRegistrati**: Una `Map<String, User>` che contiene gli utenti registrati al gioco. La chiave è il nome dell'utente e il valore è un oggetto `User` che rappresenta l'utente.
-- **userLoggati**: Un `Set<String>` che contiene i nomi degli utenti attualmente loggati al gioco.
 
-La classe utilizza le librerie `com.google.gson.*` per gestire la serializzazione e deserializzazione degli utenti in formato JSON, permettendo di salvare e caricare l'elenco degli utenti da e verso un file.
-
-La classe `UserList` fornisce metodi per aggiungere, rimuovere, recuperare e manipolare gli utenti. Inoltre, gestisce le operazioni di login e logout, garantendo che un utente possa essere loggato una sola volta.
-
-Questa classe è fondamentale per la gestione degli utenti nel gioco, memorizzando le informazioni di ogni utente e garantendo l'integrità dei dati.
-
-Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
 ## Classe [`ServerSetup`](file:///home/geoteo/Documents/reti/wordle/doc/ServerSetup.html)
 
-Questa classe estende `Properties` e si preoccupa di leggere il file di configurazione del server all'avvio, memorizzando le varie proprietà nelle appropriate strutture dati. Le proprietà disponibili sono:
+Classe che fornisce al server tutte le informazioni necessarie per la sua configurazione iniziale. Estende la classe `Properties` e viene usata da `ServerMain` per leggere il file di configurazione all'avvio, memorizzando le varie proprietà.
 
-1. **PORT**: Il numero di porta su cui il server si mette in ascolto. È un valore intero.
-2. **PATH_VOCABULARY**: Il percorso del file che contiene il vocabolario (dizionario) del gioco. È una stringa.
-3. **PATH_JSON**: Il percorso del file JSON che contiene i dati degli utenti. È una stringa.
-4. **WORD_TIMER**: Il tempo che intercorre tra le pubblicazioni della parola segreta. È un valore intero.
-5. **MULTICAST_GROUP_ADDRESS**: L'indirizzo del gruppo multicast, utilizzato per la condivisione dei risultati. È una stringa.
+1. *`PORT`*: numero di porta (`int`) su cui il server si mette in ascolto.
+2. *`PATH_VOCABULARY`*: path (`String`) del file che contiene il vocabolario (dizionario) del gioco.
+3. *`PATH_JSON`*: path (`String`) del file JSON che contiene i dati degli utenti.
+4. *`WORD_TIMER`*: tempo in secondi (`int`) che intercorre tra le pubblicazioni della parola segreta.
+5. *`MULTICAST_GROUP_ADDRESS`*: indirizzo (`String`) del gruppo multicast, utilizzato per la condivisione dei risultati.
 
-La classe `ServerSetup` quindi fornisce al server tutte le informazioni necessarie per la sua configurazione iniziale, permettendo di personalizzare vari aspetti del gioco e della sua esecuzione.
 
-Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
 ## Classe [`ServerMain`](file:///home/geoteo/Documents/reti/wordle/doc/ServerMain.html)
 
-Il file `ServerMain.java` definisce la classe `ServerMain`, che sembra essere la classe principale del server Wordle. Ecco una descrizione iniziale del suo contenuto:
+Classe che contiene il punto di ingresso (`main`) ed è responsabile per l'inizializzazione, l'attesa di connessioni e la comunicazione con i client.
 
-### ServerMain
+1. *Creazione strutture dati*: all'avvio, il server crea l'elenco degli utenti (`UserList`) e il dizionario (`WordList`).
+2. *Attesa connessioni*: il server rimane in attesa di connessioni dai client; ad ogni connessione ricevuta, lancierà `Game` che si preoccuperà di gestire l'interazione con il client.
+3. *Gestione socket e thread-pools*: la classe si occupa anche di gestire la chiusura delle socket e dei thread pools usando il `Runnable` [*`shutdownHook`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/ServerMain.java#L43-L94) che esegue tutte le operazioni necessarie per un corretta chiusura del server.
 
-Questa classe contiene il metodo `main` ed è responsabile per l'inizializzazione e l'esecuzione del server. Ha i seguenti compiti principali:
+Le variabili principali usate dalla classe sono le seguenti.
 
-1. **Creazione delle Strutture Dati**: All'avvio, il server crea le strutture dati necessarie, come l'elenco degli utenti (`UserList`) e il dizionario (`WordList`).
-2. **Attesa di Connessioni**: Il server si mette in attesa di connessioni dai client. Una volta ricevuta una connessione, gestisce la comunicazione con il client.
-3. **Gestione di Socket e Thread Pools**: La classe si occupa anche di gestire la chiusura delle socket e dei thread pools.
+- *`PATH_CONF`*: `String` che rappresenta il path del file di configurazione del server.
+- *`serverProperties`*: istanza di `ServerSetup` che memorizza le proprietà del server.
+- *`listaUtenti`*: istanza di `UserList` che memorizza gli utenti registrati al gioco.
+- *`listaParole`*: istanza di `WordList` che memorizza le parole del gioco.
+- *`welcomeSocket`*: `ServerSocket` utilizzata per accettare connessioni dai client.
 
-In termini di variabili, vediamo:
 
-- **PATH_CONF**: Rappresenta il percorso del file di configurazione del server.
-- **serverProperties**: Un'istanza di `ServerSetup` che memorizza le proprietà del server.
-- **listaUtenti**: Un'istanza di `UserList` che memorizza gli utenti registrati al gioco.
-- **listaParole**: Un'istanza di `WordList` che memorizza le parole del gioco.
-- **welcomeSocket**: Una `ServerSocket` utilizzata per accettare connessioni dai client.
-
-La classe `ServerMain` funge da punto di ingresso per il server, gestendo l'inizializzazione, l'attesa di connessioni e la comunicazione con i client.
-
-Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
 ## Classe [`Game`](file:///home/geoteo/Documents/reti/wordle/doc/Game.html)
 
 Il file `Game.java` definisce la classe `Game`, che rappresenta un thread per gestire l'interazione tra il server e un client. Ecco una panoramica iniziale del suo contenuto:
-
-### Game
 
 Questa classe implementa un thread che propone una interfaccia testuale al client, suddivisa in diverse fasi:
 
@@ -185,11 +181,11 @@ Dalla panoramica iniziale, sembra che questa classe abbia un ruolo centrale nell
 Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
+
+
 ## Classe [`MulticastSender`](file:///home/geoteo/Documents/reti/wordle/doc/MulticastSender.html)
 
 Il file `MulticastSender.java` definisce la classe `MulticastSender`, che sembra essere responsabile dell'invio di notifiche su un gruppo multicast. Ecco una breve descrizione del suo contenuto:
-
-### MulticastSender
 
 La classe `MulticastSender` implementa l'interfaccia `Runnable` e gestisce l'invio di notifiche tramite un gruppo multicast:
 
@@ -204,11 +200,11 @@ Questa classe svolge un ruolo chiave nella funzionalità di condivisione dei ris
 Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
+
+
 ## Classe [`ClientSetup`](file:///home/geoteo/Documents/reti/wordle/doc/ClientSetup.html)
 
 Il file `ClientSetup.java` definisce la classe `ClientSetup`, che rappresenta le proprietà del client. Ecco una breve descrizione del suo contenuto:
-
-### ClientSetup
 
 Questa classe estende `Properties` e ha il compito di leggere il file di configurazione del client all'avvio, memorizzando le varie proprietà nelle appropriate strutture dati. Le proprietà disponibili sono:
 
@@ -222,11 +218,11 @@ Similmente a `ServerSetup`, la classe `ClientSetup` fornisce al client tutte le 
 Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
+
+
 ## Classe [`ClientMain`](file:///home/geoteo/Documents/reti/wordle/doc/ClientMain.html)
 
 Il file `ClientMain.java` definisce la classe `ClientMain`, che rappresenta il punto di ingresso principale per il client. Ecco una breve descrizione del suo contenuto:
-
-### ClientMain
 
 Questa è la classe principale che rappresenta il client:
 
@@ -243,11 +239,11 @@ Questa classe è essenziale per avviare e gestire il comportamento del client ne
 Proseguiamo con un'analisi più dettagliata di questa classe o preferisci passare alla successiva?
 
 
+
+
 ## Classe [`MulticastReceiver`](file:///home/geoteo/Documents/reti/wordle/doc/MulticastReceiver.html)
 
 Il file `MulticastReceiver.java` definisce la classe `MulticastReceiver`, che gestisce la ricezione di notifiche da un gruppo multicast. Ecco una breve descrizione del suo contenuto:
-
-### MulticastReceiver
 
 La classe `MulticastReceiver` estende `ConcurrentLinkedQueue<String>` e implementa l'interfaccia `Runnable`. Questo suggerisce che la classe funge da coda thread-safe di stringhe (probabilmente le notifiche ricevute) e può essere eseguita come un thread.
 
