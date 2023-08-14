@@ -86,7 +86,7 @@ public class Game implements Runnable {
      */
     private void gameSession(User user) {
         System.out.println("[GAME START] user " + user.getName() + ", nuova partita (" + word.getWord() + ")");
-        output.println("[GAME START] user " + user.getName() + ", nuova partita: quit|<tentativo>");
+        output.println("[GAME START] user " + user.getName() + ", nuova partita: quit!|<tentativo>");
         // ---
         String tentativo = null;
         int contaTentativi = 0;

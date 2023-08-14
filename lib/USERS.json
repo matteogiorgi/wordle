@@ -27,6 +27,17 @@
 		]
 	},
 	{
+		"user": "franco",
+		"password": "pippolo",
+		"giocate": 1,
+		"vinte": 1,
+		"streaklast": 1,
+		"streakmax": 1,
+		"guessd": [
+			3
+		]
+	},
+	{
 		"user": "giorgio",
 		"password": "12345",
 		"giocate": 0,
