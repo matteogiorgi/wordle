@@ -1,5 +1,3 @@
-# Wordle 3.0
-
 Progetto di fine corso *Laboratorio di Reti* 2022-2023.
 
 - Pagina progetto su *geoteo.net*: [Wordle 3.0](https://www.geoteo.net/wordle)
