@@ -113,8 +113,8 @@ public class ClientMain {
                 System.out.print("> ");
                 for (String command; tastiera.hasNextLine(); System.out.print("> ")) {
                     command = tastiera.nextLine().trim().toLowerCase();
-                    if (command.equals("showmesharing") && logStatus) {
-                        while (!multicastReceiver.isEmpty()) {
+                    if (command.equals("showmesharing")) {
+                        while (logStatus && !multicastReceiver.isEmpty()) {
                             System.out.println(multicastReceiver.poll());
                         }
                     } else {

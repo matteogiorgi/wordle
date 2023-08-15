@@ -1,34 +1,7 @@
 [
 	{
-		"user": "topolino",
-		"password": "1",
-		"giocate": 3,
-		"vinte": 2,
-		"streaklast": 0,
-		"streakmax": 2,
-		"guessd": [
-			2,
-			1
-		]
-	},
-	{
-		"user": "matteo",
-		"password": "pippolo11",
-		"giocate": 5,
-		"vinte": 1,
-		"streaklast": 0,
-		"streakmax": 1,
-		"guessd": [
-			1,
-			1,
-			1,
-			1,
-			1
-		]
-	},
-	{
-		"user": "mariangelo",
-		"password": "nonso",
+		"user": "pluto",
+		"password": "456",
 		"giocate": 0,
 		"vinte": 0,
 		"streaklast": 0,
@@ -36,69 +9,14 @@
 		"guessd": []
 	},
 	{
-		"user": "franco",
-		"password": "pippolo",
-		"giocate": 2,
-		"vinte": 2,
-		"streaklast": 2,
-		"streakmax": 2,
-		"guessd": [
-			3,
-			1
-		]
-	},
-	{
-		"user": "giorgio",
-		"password": "12345",
-		"giocate": 0,
-		"vinte": 0,
-		"streaklast": 0,
-		"streakmax": 0,
-		"guessd": []
-	},
-	{
-		"user": "sara",
-		"password": "pippola",
+		"user": "pippo",
+		"password": "123",
 		"giocate": 1,
 		"vinte": 1,
 		"streaklast": 1,
 		"streakmax": 1,
 		"guessd": [
-			5
+			3
 		]
-	},
-	{
-		"user": "stefania",
-		"password": "giostemat",
-		"giocate": 6,
-		"vinte": 6,
-		"streaklast": 6,
-		"streakmax": 6,
-		"guessd": [
-			3,
-			2,
-			1,
-			1,
-			1,
-			1
-		]
-	},
-	{
-		"user": "pippolo",
-		"password": "987654321",
-		"giocate": 0,
-		"vinte": 0,
-		"streaklast": 0,
-		"streakmax": 0,
-		"guessd": []
-	},
-	{
-		"user": "maiale",
-		"password": "123",
-		"giocate": 0,
-		"vinte": 0,
-		"streaklast": 0,
-		"streakmax": 0,
-		"guessd": []
 	}
 ]
