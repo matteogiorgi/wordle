@@ -247,7 +247,7 @@ Classe che contiene il punto di ingresso (`main`) ed è responsabile per l'inizi
 - *`multicastReceiver`*: istanza di `MulticastReceiver` che memorizza le notifiche ricevute.
 - *`logStatus`*: `boolean` che indica lo stato del log (*false* se non-loggato, *true* se loggato).
 
-La particolarità di `ClientMain` sta nel fatto che non mantiene traccia dello stato del client: invia il comando da eseguire sul server, stampa la risposta e, in base alla regex presente in testa a [ciascuna *line* letta](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/ClientMain.java#L52-L139), decide il comando da eseguire.
+La particolarità di `ClientMain` sta nel fatto che non mantiene traccia dello stato del client: invia il comando da eseguire sul server, stampa la risposta e, in base alla regex presente in testa a [ciascuna *line* letta](https://github.com/matteogiorgi/wordle/blob/704c6f953ed5945f513289f01f3d8d6fd465bb25/src/ClientMain.java#L52-L139), decide il comando da eseguire.
 
 
 
