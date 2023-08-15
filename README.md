@@ -2,7 +2,7 @@
 
 Progetto di fine corso *Laboratorio di Reti* 2022-2023.
 
-- Pagina progetto su *geoteo.net*: [Wordle 3.0](https://github.com/matteogiorgi/wordle/tree/master)
+- Pagina progetto su *geoteo.net*: [Wordle 3.0](https://www.geoteo.net/wordle)
 - Pagina *GitHub*: [Wordle 3.0 - *GitHub*](https://github.com/matteogiorgi/wordle/tree/master)
 - Relazione *PDF*: [Wordle 3.0 - *PDF*](https://www.geoteo.net/wordle/relazione/relazione.pdf).
 - Relazione *HTML*: [Wordle 3.0 - *HTML*](https://www.geoteo.net/wordle/relazione/notes/relazione.html)
