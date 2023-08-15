@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>relazione – relazione</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%237d6ee7%22></rect><path d=%22M32.27 77.81L32.27 77.81Q28.31 77.81 28.31 74.57L28.31 74.57L28.31 23.72Q29.93 22.10 33.17 22.10L33.17 22.10Q35.33 22.10 36.86 22.95Q38.39 23.81 39.65 26.06L39.65 26.06L56.84 54.86Q57.92 56.75 59.09 58.86Q60.26 60.98 61.34 63.09Q62.42 65.21 63.36 67.06Q64.31 68.90 64.94 70.16L64.94 70.16L65.30 70.07Q64.58 62.78 64.44 55.40Q64.31 48.02 64.31 41L64.31 41L64.31 22.82Q64.85 22.64 65.75 22.41Q66.65 22.19 67.73 22.19L67.73 22.19Q71.69 22.19 71.69 25.43L71.69 25.43L71.69 76.37Q70.88 77.09 69.62 77.50Q68.36 77.90 66.83 77.90L66.83 77.90Q64.67 77.90 63.14 77.05Q61.61 76.19 60.35 73.94L60.35 73.94L43.25 45.14Q42.17 43.34 40.95 41.18Q39.74 39.02 38.61 36.95Q37.49 34.88 36.55 32.99Q35.60 31.10 34.97 29.84L34.97 29.84L34.61 29.93Q35.06 34.25 35.33 39.79Q35.60 45.32 35.60 50.27L35.60 50.27L35.60 77.18Q35.15 77.36 34.20 77.58Q33.26 77.81 32.27 77.81Z%22 fill=%22%23fff%22></path></svg>" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu Mono">
+  <link rel="stylesheet" href="https://latex.now.sh/style.css">
+  <link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <style>
+    body {
+        max-width: 60rem;
+        line-height: 1.4;
+        color: black;
+        background: white;
+    }
+    code, pre, kbd {
+        font-family: 'Ubuntu Mono', monospace;
+        font-size: 95%;
+    }
+    blockquote {
+        font-style: italic;
+        border: 1px solid black;
+        border-radius: 4px;
+        background: #e9edf3;
+        padding: 1rem 3rem 2rem 3rem;
+        margin-left: 0rem;
+        margin-right: 0rem;
+    }
+    hr {
+        width: 50%;
+        height: 1px;
+        border: none;
+        background: gray;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+<nav class="site-nav" style="font-weight:bold">
+    <!-- before content -->
+</nav>
+<style>
+h1 { margin-top: -1.5rem; }
+h4 { margin-top: -1rem; }
+</style>
+<center>
+<h1 id="wordle-3.0"><em>Wordle 3.0</em></h1>
+<h4 id="matteo-giorgi-517183"><em>Matteo Giorgi</em> <code>517183</code></h4>
+</center>
+<p><br></p>
+<blockquote>
+<p>Il progetto consiste nella implementazione di <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>, un gioco di parole web-based sviluppato da Josh Wardle nel 2021, acquistato poi dal New York Times a fine 2022.</p>
+<p>Ogni 24h il gioco estrae casualmente dal proprio dizionario una Secret-Word di 5 lettere che il giocatore deve indovinare proponendo una Guessed-Word per ciascuno dei 6 tentativi massimi consentiti. Ad ogni tentativo, Wordle risponderà con indizi utili riguardo le lettere che compongono la Guessed-Word così da aiutare il giocatore a indovinare la Secret-Word giornaliera.</p>
+<p>Questa implementazione consiste in una versione semplificata del gioco, che conserva la logica di base dell’originale ma apporta modifiche su alcune funzionalità come la condivisione social dei risultati (realizzata qui con un gruppo multicast), e l’assenza di una interfaccia grafica (sostituita da una semplice Command-Line UI).</p>
+<p>La presente relazione è corredata da documentazione <a href="https://www.geoteo.net/wordle/doc/allclasses-index.html">JavaDoc</a> secondo quanto specificato nelle <a href="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html">Tecnical-Resources</a> Oracle e affiancata dai <a href="https://github.com/matteogiorgi/wordle/tree/master/src">sorgenti</a> Java su GitHub.</p>
+</blockquote>
+<p><em>Wordle 3.0</em> usa una classica struttura client-server. Il server legge il proprio file di configurazione e si occupa di caricare in memoria l’elenco degli utenti, l’elenco delle parole (dizionario) e rimanere in attesa di connessioni su una welcome-socket (<code>ServerSocket</code>) appositamente allocata su una porta predefinita nel file di configurazione. Agganciato un client, il server lancerà dunque un nuovo Runnable (<code>Game</code>) con cui verranno soddisfatte le richieste, per poi rimettersi in attesa di una nuova connessione. Il client invece, dopo la lettura del proprio file di configurazione, ha l’unico scopo di connettersi al server con una socket (<code>Socket</code>) e inviare comandi sottoforma di <em>lines</em> (stringhe terminanti con il carattere di line-break).</p>
+<h2 id="struttura-del-progetto">Struttura del Progetto</h2>
+<p>Prima di entrare nelle specifiche dell’implementazione ecco qua sotto l’ASF che illustra i possibili stati di un client nelle varie fasi di gioco (si consideri ovviamente che client e server abbiano superato la fase iniziale di setup).</p>
+<br>
+<center>
+<img src="asf.svg" width="100%" />
+</center>
+<h3 id="modelli-principali">Modelli principali</h3>
+<ul>
+<li><code>Word</code> e <code>WordList</code> gestiscono le parole del gioco: la classe <code>Word</code> rappresenta una singola parola, mentre <code>WordList</code> il dizionario usato per estrarre ciclicamente la <em>Secret-Word</em> e controllare la validità delle <em>Guessed-Words</em> inserite dall’utente in partita.</li>
+<li><code>User</code> e <code>UserList</code> in modo analogo alle classi precedenti, rappresentano rispettivamente il singolo utente e l’insieme degli utenti registrati sul server del gioco.</li>
+</ul>
+<h3 id="funzionalità-del-server">Funzionalità del server</h3>
+<ul>
+<li><code>ServerSetup</code> e <code>ServerMain</code> sono le classi che descrivono le proprietà e identificano il punto di ingresso principale del server.</li>
+<li><code>Game</code> è la classe responsabile dell’interazione con ciascun client, secondo i quattro stati specificati nell’ASF.</li>
+<li><code>MulticastSender</code> è responsabile della lettura dei messaggi di condivisione e dell’invio degli stessi sul canale multicast.</li>
+</ul>
+<h3 id="funzionalità-del-client">Funzionalità del client</h3>
+<ul>
+<li><code>ClientSetup</code> e <code>ClientMain</code> analogamente alle loro controparti, rappresentano le proprietà e il punto di ingresso del client.</li>
+<li><code>MulticastReceiver</code> è responsabile della ricezione delle notifiche inviate dal <code>MulticastSender</code> sul canale multicast.</li>
+</ul>
+<h2 id="word"><a href="https://www.geoteo.net/wordle/doc/Word.html"><code>Word</code></a></h2>
+<p>Classe che rappresenta la <em>Guess-Word</em> che i giocatori devono indovinare; è implementata usando due variabili private. Di seguito la struttura di base.</p>
+<ul>
+<li><em><code>currentWord</code></em>: <code>String</code> che identifica la <em>Secret-Word</em> corrente.</li>
+<li><em><code>userSet</code></em>: <code>Set&lt;String&gt;</code> che contiene i nomi degli utenti che hanno già giocato la <em>Secret-Word</em> corrente.</li>
+</ul>
+<p>Come illustrato nell’AST, un utente che avesse già giocato la <em>Secret-Word</em> corrente e chiedesse di iniziare una nuova partita, rimarrebbe nella sessione di login, in attesa della <em>Secret-Word</em> successiva.</p>
+<p>Il <a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/Word.java#L26-L39">costruttore</a> della classe prende come parametro una <code>String</code> che rappresenta la parola da indovinare; non è consentito creare una parola <em>null</em>, causerebbe il lancio di una <code>IllegalArgumentException</code>.</p>
+<p>Oltre ai metodi <a href="https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L42-L49"><em><code>getWord</code></em></a>, <a href="https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L52-L62"><em><code>containsUser</code></em></a> e <a href="https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L65-L75"><em><code>addUser</code></em></a>, la classe contiene anche <a href="https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L78-L107"><em><code>getMask</code></em></a>, necessario a ciascun <code>Game</code> per fornire informazioni al client sulla correttezza della <em>Guessed-Word</em> inserita, sottoforma di una maschera di caratteri speciali (<code>X</code>, <code>+</code>, <code>?</code>) come da specifica.</p>
+<h2 id="wordlist"><a href="https://www.geoteo.net/wordle/doc/WordList.html"><code>WordList</code></a></h2>
+<p>Classe che rappresenta il vocabolario utilizzato da <em>Wordle</em> per estrarre la <em>Secret-Word</em> e controllare la validità delle <em>Guessed-Word</em> inserite dagli utenti durante una partita. Di seguito la struttura base.</p>
+<ul>
+<li><em><code>wordVocabulary</code></em>: <code>List&lt;String&gt;</code> che contiene le parole del vocabolario.</li>
+<li><em><code>currentWord</code></em>: istanza della classe <code>Word</code> che rappresenta la parola attualmente selezionata come <em>Secret-Word</em>.</li>
+<li><em><code>wordExtractor</code></em>: <code>ScheduledExecutorService</code> che estrae dal vocabolario ogni nuova <em>Secret-Word</em>.</li>
+<li><a href="https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/WordList.java#L38-L45"><em><code>extractWord</code></em></a>: <code>Runnable</code> che rappresenta il task di estrazione casuale di una nuova <em>Secret-Word</em> dal vocabolario, eseguito da <code>wordExtractor</code> ogni <code>wordTimer</code> secondi (tempo specificato nel file di configurazione del server).</li>
+</ul>
+<p>Si ricorda che il vocabolario fornito contiene solamente stringhe di 10 caratteri e i tentativi consentiti per indovinare la <em>Guessed-Word</em> sono fissati ad un massimo di 12, come da specifica.</p>
+<h2 id="user"><a href="https://www.geoteo.net/wordle/doc/User.html"><code>User</code></a></h2>
+<p>Classe che rappresenta l’utente come una mappa chiave-valore che ne definisce le seguenti proprietà.</p>
+<ul>
+<li><em><code>user</code></em>: nome dell’utente (String).</li>
+<li><em><code>password</code></em>: password per il login dell’utente (int).</li>
+<li><em><code>giocate</code></em>: numero di partite giocate dall’utente (int).</li>
+<li><em><code>vinte</code></em>: numero di partite vinte dall’utente (int).</li>
+<li><em><code>streaklast</code></em>: lunghezza della serie di vittorie più recente dell’utente (int).</li>
+<li><em><code>streakmax</code></em>: lunghezza massima della serie di vittorie ottenuta dall’utente (int).</li>
+<li><em><code>guessd</code></em>: distribuzione che indica i tentativi impiegati dall’utente per arrivare alla soluzione nelle partite giocate (List<Integer>).</li>
+</ul>
+<p>Per evitare di esporre i metodi di modifica della mappa, invece di estendere una delle implementazioni di <code>Map</code>, è stata usata la variabile privata <code>Map&lt;String, Object&gt;</code> <em><code>user</code></em> che identifica l’utente con le sue proprietà.</p>
+<p>Questa scelta permette di avere una struttura sicura e flessibile, facilmente modificabile al termine di ogni partita con l’apposito metodo <a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L159-L174"><em><code>update</code></em></a>, che il relativo <code>Game</code> userà per aggiornare i dati dell’utente.</p>
+<p>Oltre ai <a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L88-L156">metodi getter</a> con i quali recuperare i sette valori della mappa, la classe contiene anche il metodo <a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L63-L85"><em><code>copy</code></em></a> che permette di creare una copia profonda dell’utente.</p>
+<p>La classe ha un unico <a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L33-L60">costruttore</a> che permette di creare un nuovo utente partendo da una <code>Map&lt;String, Object&gt;</code>. Non è consentito creare un oggetto della classe <code>User</code> usando una mappa <em>null</em>, incompleta o contenente associazioni chiave-valore di tipo sbagliato: questi casi causerebbero il lancio di una <code>NullPointerException</code> o di una <code>IllegalArgumentException</code>.</p>
+<h2 id="userlist"><a href="https://www.geoteo.net/wordle/doc/UserList.html"><code>UserList</code></a></h2>
+<p>Classe che implementa l’elenco degli utenti registrati e contiene due strutture dati principali.</p>
+<ul>
+<li><em><code>userRegistrati</code></em>: <code>Map&lt;String, User&gt;</code> contenente gli utenti registrati al gioco, nella quale il nome utente rappresenta la chiave e l’oggetto <code>User</code> il valore associato. L’associazione è biunivoca: il nome identifica univocamemte l’utente registrato.</li>
+<li><em><code>userLoggati</code></em>: <code>Set&lt;String&gt;</code> contenente i nomi degli utenti attualmente loggati al gioco.</li>
+</ul>
+<p>La classe utilizza la libreria <a href="https://github.com/google/gson"><em>Gson</em></a> per gestire la serializzazione e deserializzazione degli utenti in formato <em>JSON</em>, permettendo di <a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L45-L88">caricare</a>/<a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L91-L118">salvare</a> l’elenco degli utenti da/verso un file <code>.json</code> il cui path è specificato nel file di configurazione del server.</p>
+<h2 id="serversetup"><a href="https://www.geoteo.net/wordle/doc/User.html"><code>ServerSetup</code></a></h2>
+<p>Classe che fornisce al server tutte le informazioni necessarie per la sua configurazione iniziale. Estende la classe <code>Properties</code> e viene usata da <code>ServerMain</code> per leggere il file di configurazione all’avvio, memorizzando le varie proprietà.</p>
+<ol type="1">
+<li><em><code>PORT</code></em>: numero di porta su cui il server si mette in ascolto (<code>int</code>).</li>
+<li><em><code>PATH_VOCABULARY</code></em>: path del file che contiene il vocabolario (dizionario) del gioco (<code>String</code>).</li>
+<li><em><code>PATH_JSON</code></em>: path del file <em>JSON</em> che contiene i dati degli utenti (<code>String</code>).</li>
+<li><em><code>WORD_TIMER</code></em>: tempo in secondi che intercorre tra due estrazioni della <em>Secret-Word</em> (<code>int</code>).</li>
+<li><em><code>MULTICAST_GROUP_ADDRESS</code></em>: indirizzo del gruppo multicast utilizzato per la condivisione dei risultati (<code>String</code>).</li>
+</ol>
+<h2 id="servermain"><a href="https://www.geoteo.net/wordle/doc/ServerMain.html"><code>ServerMain</code></a></h2>
+<p>Classe che contiene il punto di ingresso (<code>main</code>) ed è responsabile dell’inizializzazione, dell’attesa di connessioni e della comunicazione con i client. Le variabili principali usate dalla classe sono le seguenti.</p>
+<ul>
+<li><em><code>PATH_CONF</code></em>: <code>String</code> che rappresenta il path del file di configurazione del server.</li>
+<li><em><code>serverProperties</code></em>: istanza di <code>ServerSetup</code> che memorizza le proprietà del server.</li>
+<li><em><code>listaUtenti</code></em>: istanza di <code>UserList</code> che memorizza gli utenti registrati al gioco.</li>
+<li><em><code>listaParole</code></em>: istanza di <code>WordList</code> che memorizza le parole del gioco.</li>
+<li><em><code>welcomeSocket</code></em>: <code>ServerSocket</code> utilizzata per accettare connessioni dai client.</li>
+<li><em><code>socket</code></em>: <code>Socket</code> di connessione per la comunicazione tra <code>Game</code> e client.</li>
+<li><em><code>threadPool</code></em>: <code>ExecutorService</code> che gestisce i client connessi.</li>
+<li><em><code>multicastListener</code></em>: <code>Thread</code> che legge le notifiche inviate dai <code>Game</code> e le inoltra sul canale multicast.</li>
+<li><a href="https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/ServerMain.java#L43-L94"><em><code>shutdownHook</code></em></a>: task atto allo spegnimento di <em>Wordle</em>, vedi <a href="#shutdown-hook">Shutdown-Hook</a>.</li>
+</ul>
+<p>L’esecuzione del <code>main</code> può essere schematizzata in tre fasi.</p>
+<ol type="1">
+<li><em>Creazione strutture dati</em>: all’avvio, il server crea l’elenco degli utenti (<code>UserList</code>) e il dizionario (<code>WordList</code>).</li>
+<li><em>Attesa connessioni</em>: il server <a href="https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/ServerMain.java#L139-L159">rimane in attesa</a> di connessioni dai client; ad ogni connessione ricevuta, lancerà una istanza di <code>Game</code> che si occuperà di gestire l’interazione con il client.</li>
+<li><em>Gestione socket e thread-pools</em>: <em><code>ServerMain</code></em> esegue anche la chiusura delle socket e dei thread-pools, usando il <code>Runnable</code> <em><code>shutdownHook</code></em> che garantisce tutte le operazioni indispensabili per una terminazione appropriata del server.</li>
+</ol>
+<h3 id="shutdown-hook">Shutdown-Hook</h3>
+<p>Nello specifico, <code>ServerMain</code> usa il <code>Runnable</code> <em><code>shutdownHook</code></em> per creare un nuovo <code>Thread</code> e registrarlo come <em>shutdown-hook</em> usando il <code>Runtime</code> della applicazione <em>Java</em> corrente.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="bu">Runtime</span>.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> <span class="bu">Thread</span>(shutdownHook));</span></code></pre></div>
+<p>In caso di una interruzione (<code>^C</code> da tastiera o <em>system-shutdown</em>), la <em>JVM</em> eseguità lo <em>shutdown-hook</em> come prima istruzione della procedura di spegnimento. <em><code>shutdownHook</code></em>, a sua volta, lancerà i seguenti comandi per chiudere <a href="https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/ServerMain.java#L37"><em><code>welcomeSocket</code></em></a>, <a href="https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/ServerMain.java#L39"><em><code>threadPool</code></em></a>, <a href="https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/ServerMain.java#L40"><em><code>multicastListener</code></em></a> e <a href="https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/WordList.java#L34"><em><code>wordExtractor</code></em></a> di <em><code>listaParole</code></em> appositamente controllati dai relativi <code>try-catch</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>welcomeSocket.<span class="fu">close</span>();</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>...</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>threadPool.<span class="fu">shutdown</span>();</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>multicastListener.<span class="fu">interrupt</span>();</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>listaParole.<span class="fu">getSheduler</span>().<span class="fu">shutdown</span>();</span></code></pre></div>
+<p>In coda allo <em>shutdown-hook</em> viene eseguito un blocco <em>try-catch</em> per salvare i dati relativi agli utenti registrati in <code>lib/USERS.json</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">try</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>    listaUtenti.<span class="fu">setRegistrati</span>(serverProperties.<span class="fu">getPathJSON</span>());</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>} <span class="kw">catch</span> (<span class="bu">IOException</span> e) { ...</span></code></pre></div>
+<h2 id="game"><a href="https://www.geoteo.net/wordle/doc/Game.html"><code>Game</code></a></h2>
+<p><code>Runnable</code> che gestisce l’interazione tra il server e un singolo client, organizzando la comunicazione in tre sessioni (come da AST).</p>
+<ol type="1">
+<li><code>[MAIN SESSION]</code>: fase iniziale subito successiva alla <em><code>accept()</code></em>, in cui il client può lanciare i seguenti comandi.
+<ul>
+<li><em><code>exit</code></em>: disconnettersi e uscire dal programma.</li>
+<li><em><code>register</code></em>: registrarsi al gioco.</li>
+<li><em><code>remove</code></em>: cancellarsi dal gioco.</li>
+<li><em><code>login</code></em>: autenticarsi al gioco e passare alla sessione di login.</li>
+</ul></li>
+<li><code>[LOGIN SESSION]</code>: fase successiva all’esecuzione del comando <em><code>login</code></em>, in cui l’utente può lanciare i seguenti comandi.
+<ul>
+<li><em><code>playwordle</code></em>: entrare nella sessione di gioco e iniziare una nuova partita.</li>
+<li><em><code>sendmestat</code></em>: richiedere le proprie statistiche di gioco.</li>
+<li><em><code>share</code></em>: condividere le proprie statistiche sul canale multicast.</li>
+<li><u><em><code>showmesharing</code></em></u>: visualizzare le statistiche condivise dagli altri utenti. <u>Questo comando non è fornito dalla classe <code>Game</code></u>, ma eseguito direttamente dal client. Per questo motivo non è incluso nella documentazione <em>JavaDoc</em> allegata.</li>
+<li><em><code>logout</code></em>: effettuare il logout e tornare alla sessione principale.</li>
+</ul></li>
+<li><code>[GAME SESSION]</code>: fase successiva all’esecuzione del comando <em><code>playwordle</code></em>, in cui l’utente può lanciare i seguenti comandi.
+<ul>
+<li><em><code>quit!</code></em>: interrompere la partita in corso e tornare alla sessione di login.</li>
+<li><em><code>&lt;tentativo&gt;</code></em>: nuova <em>Guessed-Word</em>.</li>
+</ul></li>
+</ol>
+<p>I comandi documentati delle specifiche non sono quindi universalmente disponibili ma limitati al contesto della singola sessione. La classe <code>Game</code> gestisce l’interazione con l’utente: lo guida attraverso le diverse fasi del gioco fornendo, per ogni fase, un sottoinsieme di funzionalità basate sullo stato corrente (come da AST).</p>
+<h2 id="multicastsender"><a href="https://www.geoteo.net/wordle/doc/MulticastSender.html"><code>MulticastSender</code></a></h2>
+<p><code>Runnable</code> che gestisce l’invio di notifiche tramite il gruppo multicast. Le principali variabili sono le seguenti.</p>
+<ul>
+<li><em><code>multicastGroupPort</code></em>: <code>int</code> che rappresenta la porta del gruppo multicast.</li>
+<li><em><code>multicastGroupAddress</code></em>: <code>String</code> che rappresenta l’indirizzo del gruppo multicast.</li>
+<li><em><code>queue</code></em>: coda utilizzata per conservare temporaneamente le notifiche inviate dal server.</li>
+</ul>
+<p>Per ogni notifica accodata su <em><code>queue</code></em> da un <code>Game</code>, il <code>MulticastSender</code> riceverà una <a href="https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L56-L64"><em><code>notify()</code></em></a>, eseguità una <a href="https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L43-L53"><em><code>queue.poll()</code></em></a> e si occuperà di <a href="https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L81-L91">inviare una notifica</a> sul canale multicast. Svuotata la coda, il <code>Runnable</code> tornerà in attesa di altre notifiche con una <em>wait()</em></p>
+<h2 id="clientsetup"><a href="https://www.geoteo.net/wordle/doc/ClientSetup.html"><code>ClientSetup</code></a></h2>
+<p>Classe analoga a <code>ServerSetup</code>, fornisce al client tutte le informazioni necessarie per la sua configurazione iniziale. Estende la classe <code>Properties</code> e viene usata da <code>ClientMain</code> per leggere il file di configurazione all’avvio, memorizzando le varie proprietà.</p>
+<ol type="1">
+<li><em><code>HOSTNAME</code></em>: nome del server al quale il client deve connettersi (<code>String</code>).</li>
+<li><em><code>PORT</code></em>: numero di porta del server (<code>int</code>).</li>
+<li><em><code>MULTICAST_GROUP_ADDRESS</code></em>: indirizzo del gruppo multicast (<code>String</code>).</li>
+<li><em><code>MULTICAST_GROUP_PORT</code></em>: numero di porta del gruppo multicast (<code>int</code>).</li>
+</ol>
+<h2 id="clientmain"><a href="https://www.geoteo.net/wordle/doc/ClientMain.html"><code>ClientMain</code></a></h2>
+<p>Classe che contiene il punto di ingresso (<code>main</code>) ed è responsabile per l’inizializzazione e la comunicazione con il server. Di seguito le principali variabili.</p>
+<ul>
+<li><em><code>PATH_CONF</code></em>: <code>String</code> che rappresenta il path del file di configurazione del client.</li>
+<li><em><code>clientProperties</code></em>: istanza di <code>ClientSetup</code> che memorizza le proprietà del client.</li>
+<li><em><code>multicastListener</code></em>: <code>Thread</code> che rimane in ricezione delle notifiche pubbliche sul canale multicast.</li>
+<li><em><code>multicastReceiver</code></em>: istanza di <code>MulticastReceiver</code> che memorizza le notifiche ricevute.</li>
+<li><em><code>logStatus</code></em>: <code>boolean</code> che indica lo stato del log (<em>false</em> se non-loggato, <em>true</em> se loggato).</li>
+</ul>
+<p>La particolarità di <code>ClientMain</code> sta nel fatto che non mantiene traccia dello stato del client: invia il comando da eseguire sul server, stampa la risposta e, in base alla regex presente in testa a <a href="https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/ClientMain.java#L52-L139">ciascuna <em>line</em> letta</a>, decide il comando da eseguire.</p>
+<h2 id="multicastreceiver"><a href="https://www.geoteo.net/wordle/doc/MulticastReceiver.html"><code>MulticastReceiver</code></a></h2>
+<p><code>Runnable</code> che gestisce la ricezione delle notifiche tramite il gruppo multicast. La classe estende <code>ConcurrentLinkedQueue&lt;String&gt;</code> fungendo da coda thread-safe delle notifiche ricevute. Le principali variabili sono le seguenti.</p>
+<ul>
+<li><em><code>multicastGroupPort</code></em>: numero di porta del gruppo multicast.</li>
+<li><em><code>multicastGroupAddress</code></em>: indirizzo del gruppo multicast.</li>
+<li><em><code>userName</code></em>: nome dell’utente che ha inviato la richiesta di condivisione sul canale multicast.</li>
+</ul>
+<p>Tramite la variabile <em><code>multicastReceiver</code></em> di <code>ClientMain</code>, le notifiche dal gruppo multicast vengono intercettate e messe in coda. Questo meccanismo assicura la ricezione in tempo reale e l’elaborazione asincrona delle notifiche. ai client un ricevimento delle notifiche in tempo reale e una loro elaborazione asincrona.</p>
+<p style="margin-top: 3rem; margin-bottom: 0rem;">
+<center>
+<code><i><a href="https://www.geoteo.net/wordle/relazione/relazione.pdf">PDF</a> e corrispondente pagina <a href="https://www.geoteo.net/wordle/relazione/notes/relazione.html">HTML</a></i></code>
+</center>
+<center>
+<code><i>sono stati creati con <a href="https://github.com/matteogiorgi/.minidot/blob/master/vim/.vim/plugin/auxilium.vim">vim-auxilium</a></i></code>
+</center>
+</p>
+<nav class="site-nav" style="font-size:70%">
+    <!-- footer content -->
+</nav>
+</body>
+</html>

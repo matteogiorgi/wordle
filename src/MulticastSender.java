@@ -78,8 +78,9 @@ public class MulticastSender implements Runnable {
                 throw new IllegalArgumentException("[ERROR] indirizzo multicast non valido: " + multicastGroup.getHostAddress());
             }
 
-            // ---
             // mi unisco al gruppo multicast
+            // anche se non serve a niente perché il server non si
+            // metterà mai in ascolto delle notifiche (invia e basta)
             multicastSocket.joinGroup(multicastGroup);
 
             // ciclo (virtualmente) infinito dove vengo svegliato,

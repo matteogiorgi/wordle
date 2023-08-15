@@ -1,3 +1,10 @@
-# Wordle 2023: un gioco di parole 3.0
+# Wordle 3.0
 
-Il progetto consiste nella implementazione di WORDLE, un gioco di parole web-based, divenuto virale alla fine del 2021.  Il gioco consiste nel trovare una parola inglese formata da 5 lettere, impiegando un numero massimo di 6 tentativi. WORDLE dispone di un vocabolario di parole di 5 lettere, da cui estrae casualmente una parola SW (Secret Word), che gli utenti devono indovinare. Ogni giorno viene selezionata una nuova SW, che rimane invariata fino al giorno successivo e che viene proposta a tutti gli utenti che si collegano al sistema durante quel giorno. Quindi esiste una sola parola per ogni giorno e tutti gli utenti devono indovinarla, questo attribuisce al gioco un aspetto sociale. L’utente propone una parola GW (Guessed Word) e il sistema inizialmente verifica se la parola è presente nel vocabolario. In caso negativo avverte l’utente che deve immettere un’altra parola. In caso la parola sia presente, il sistema fornisce all’utente alcuni indizi, utili per indovinare la parola.
+Progetto di fine corso *Laboratorio di Reti* 2022-2023.
+
+- Specifiche e dettagli: [E-Learning](https://elearning.di.unipi.it/mod/assign/view.php?id=15600) del corso.
+- Relazione *PDF*: [Wordle 3.0 - *PDF*](https://www.geoteo.net/wordle/relazione/relazione.pdf).
+- Relazione *HTML*: [Wordle 3.0 - *HTML*](https://www.geoteo.net/wordle/relazione/notes/relazione.html)
+- Documentazione *JavaDoc*: [Wordle 3.0 - *JavaDoc*](https://www.geoteo.net/wordle/doc/allclasses-index.html)
+- Sorgenti *Java*: [Wordle 3.0 - src *Java*](https://github.com/matteogiorgi/wordle/tree/master/src)
+- Pagina *GitHub*: [Wordle 3.0 - *GitHub*](https://github.com/matteogiorgi/wordle/tree/master)

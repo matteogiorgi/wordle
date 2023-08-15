@@ -27,14 +27,24 @@
 		]
 	},
 	{
+		"user": "mariangelo",
+		"password": "nonso",
+		"giocate": 0,
+		"vinte": 0,
+		"streaklast": 0,
+		"streakmax": 0,
+		"guessd": []
+	},
+	{
 		"user": "franco",
 		"password": "pippolo",
-		"giocate": 1,
-		"vinte": 1,
-		"streaklast": 1,
-		"streakmax": 1,
+		"giocate": 2,
+		"vinte": 2,
+		"streaklast": 2,
+		"streakmax": 2,
 		"guessd": [
-			3
+			3,
+			1
 		]
 	},
 	{

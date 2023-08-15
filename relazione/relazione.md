@@ -1,7 +1,6 @@
 <style>
 h1 { margin-top: -1.5rem; }
 h4 { margin-top: -1rem; }
-code,pre { font-family: 'Ubuntu Mono'; font-size: 95%; }
 </style>
 
 <center>
@@ -11,15 +10,13 @@ code,pre { font-family: 'Ubuntu Mono'; font-size: 95%; }
 
 <br>
 
-<div style="font-style: italic; color: black; border: 1px solid black; border-radius: 4px; background: #e9edf3; padding: 1rem 3rem 2rem 3rem">
-Il progetto consiste nella implementazione di [Wordle](https://www.nytimes.com/games/wordle/index.html), un gioco di parole web-based sviluppato da Josh Wardle nel 2021, acquistato poi dal New York Times a fine 2022.
-
-Ogni 24h il gioco estrae casualmente dal proprio dizionario una Secret-Word di 5 lettere che il giocatore deve indovinare proponendo una Guessed-Word per ciascuno dei 6 tentativi massimi consentiti. Ad ogni tentativo, Wordle risponderà con indizi utili riguardo le lettere che compongono la Guessed-Word così da aiutare il giocatore a indovinare la Secret-Word giornaliera.
-
-Questa implementazione consiste in una versione semplificata del gioco, che conserva la logica di base dell'originale ma apporta modifiche su alcune funzionalità come la condivisione social dei risultati (realizzata qui con un gruppo multicast), e l'assenza di una interfaccia grafica (sostituita da una semplice Command-Line UI).
-
-La presente relazione è corredata da documentazione [JavaDoc](file:///home/geoteo/Documents/reti/wordle/doc/allclasses-index.html) secondo quanto specificato nelle [Tecnical-Resources](https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html) Oracle e affiancata dai [sorgenti](https://github.com/matteogiorgi/wordle/tree/master/src) Java su GitHub.
-</div>
+> Il progetto consiste nella implementazione di [Wordle](https://www.nytimes.com/games/wordle/index.html), un gioco di parole web-based sviluppato da Josh Wardle nel 2021, acquistato poi dal New York Times a fine 2022.
+>
+> Ogni 24h il gioco estrae casualmente dal proprio dizionario una Secret-Word di 5 lettere che il giocatore deve indovinare proponendo una Guessed-Word per ciascuno dei 6 tentativi massimi consentiti. Ad ogni tentativo, Wordle risponderà con indizi utili riguardo le lettere che compongono la Guessed-Word così da aiutare il giocatore a indovinare la Secret-Word giornaliera.
+>
+> Questa implementazione consiste in una versione semplificata del gioco, che conserva la logica di base dell'originale ma apporta modifiche su alcune funzionalità come la condivisione social dei risultati (realizzata qui con un gruppo multicast), e l'assenza di una interfaccia grafica (sostituita da una semplice Command-Line UI).
+>
+> La presente relazione è corredata da documentazione [JavaDoc](https://www.geoteo.net/wordle/doc/allclasses-index.html) secondo quanto specificato nelle [Tecnical-Resources](https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html) Oracle e affiancata dai [sorgenti](https://github.com/matteogiorgi/wordle/tree/master/src) Java su GitHub.
 
 *Wordle 3.0* usa una classica struttura client-server. Il server legge il proprio file di configurazione e si occupa di caricare in memoria l'elenco degli utenti, l'elenco delle parole (dizionario) e rimanere in attesa di connessioni su una welcome-socket (`ServerSocket`) appositamente allocata su una porta predefinita nel file di configurazione. Agganciato un client, il server lancerà dunque un nuovo Runnable (`Game`) con cui verranno soddisfatte le richieste, per poi rimettersi in attesa di una nuova connessione. Il client invece, dopo la lettura del proprio file di configurazione, ha l'unico scopo di connettersi al server con una socket (`Socket`) e inviare comandi sottoforma di *lines* (stringhe terminanti con il carattere di line-break).
 
@@ -63,105 +60,135 @@ Prima di entrare nelle specifiche dell'implementazione ecco qua sotto l'ASF che 
 
 
 
-## [`Word`](file:///home/geoteo/Documents/reti/wordle/doc/Word.html)
+## [`Word`](https://www.geoteo.net/wordle/doc/Word.html)
 
 Classe che rappresenta la *Guess-Word* che i giocatori devono indovinare; è implementata usando due variabili private. Di seguito la struttura di base.
 
 - *`currentWord`*: `String` che identifica la *Secret-Word* corrente.
 - *`userSet`*: `Set<String>` che contiene i nomi degli utenti che hanno già giocato la *Secret-Word* corrente.
 
-Come illustrato nell'AST, un utente che avesse già giocato la *Secret-Word* corrente e chiedesse di iniziare una nuova partita, rimarrebbe in `[LOGIN SESSION]` in attessa della *Secret-Word* successiva.
+Come illustrato nell'AST, un utente che avesse già giocato la *Secret-Word* corrente e chiedesse di iniziare una nuova partita, rimarrebbe nella sessione di login, in attesa della *Secret-Word* successiva.
 
 Il [costruttore](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/Word.java#L26-L39) della classe prende come parametro una `String` che rappresenta la parola da indovinare; non è consentito creare una parola *null*, causerebbe il lancio di una `IllegalArgumentException`.
 
-Oltre ai metodi [*`getWord`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L42-L49), [*`containsUser`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L52-L62) e [*`addUser`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L65-L75), la classe contiene anche [*`getMask`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L78-L107), necessario a ciascunn `Game` per fornire informazioni al client sulla correttezza della *Guessed-Word* inserita, sottoforma di una maschera di caratteri speciali (`X`, `+`, `?`) come da specifica.
+Oltre ai metodi [*`getWord`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L42-L49), [*`containsUser`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L52-L62) e [*`addUser`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L65-L75), la classe contiene anche [*`getMask`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/Word.java#L78-L107), necessario a ciascun `Game` per fornire informazioni al client sulla correttezza della *Guessed-Word* inserita, sottoforma di una maschera di caratteri speciali (`X`, `+`, `?`) come da specifica.
 
 
 
 
-## [`WordList`](file:///home/geoteo/Documents/reti/wordle/doc/WordList.html)
+## [`WordList`](https://www.geoteo.net/wordle/doc/WordList.html)
 
 Classe che rappresenta il vocabolario utilizzato da *Wordle* per estrarre la *Secret-Word* e controllare la validità delle *Guessed-Word* inserite dagli utenti durante una partita. Di seguito la struttura base.
 
 - *`wordVocabulary`*: `List<String>` che contiene le parole del vocabolario.
 - *`currentWord`*: istanza della classe `Word` che rappresenta la parola attualmente selezionata come *Secret-Word*.
 - *`wordExtractor`*: `ScheduledExecutorService` che estrae dal vocabolario ogni nuova *Secret-Word*.
+- [*`extractWord`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/WordList.java#L38-L45): `Runnable` che rappresenta il task di estrazione casuale di una nuova *Secret-Word* dal vocabolario, eseguito da `wordExtractor` ogni `wordTimer` secondi (tempo specificato nel file di configurazione del server).
 
-La classe contiene anche il `Runnable` [*`extractWord`*](https://github.com/matteogiorgi/wordle/blob/2dc0d25fd78f3db4454bc6c6ab7585bbbfd28ded/src/WordList.java#L38-L45) che rappresenta il task di estrazione casuale di una nuova *Secret-Word* dal vocabolario, eseguito da `wordExtractor` ogni `wordTimer` secondi (tempo specificato nel file di configurazione del server).
-
-Si ricorda che il vocabolario fornito contiene solamente stringhe di 10 caratteri e i tentativi consentiti per indovinare la *Guessed-Word* sono fissati ad un massimo di 12.
-
+Si ricorda che il vocabolario fornito contiene solamente stringhe di 10 caratteri e i tentativi consentiti per indovinare la *Guessed-Word* sono fissati ad un massimo di 12, come da specifica.
 
 
 
-## [`User`](file:///home/geoteo/Documents/reti/wordle/doc/User.html)
 
-Classe che rappresenta l'utente come una mappa chiave-valore che ne definisce le seguenti proprietà, come da specifica.
+## [`User`](https://www.geoteo.net/wordle/doc/User.html)
 
-- *`user`*: nome dell'utente.
-- *`password`*: password per il login dell'utente.
-- *`giocate`*: numero di partite giocate dall'utente.
-- *`vinte`*: numero di partite vinte dall'utente.
-- *`streaklast`*: lunghezza della serie di vittorie più recente dell'utente.
-- *`streakmax`*: lunghezza massima della serie di vittorie ottenuta dall'utente.
-- *`guessd`*: distribuzione che indica i tentativi impiegati dall'utente per arrivare alla soluzione nelle partite giocate.
+Classe che rappresenta l'utente come una mappa chiave-valore che ne definisce le seguenti proprietà.
 
-Per evitare di esporre i metodi di modifica della mappa, invece di estendere una delle implementazioni di `Map`, è stata usata la variabile privata *`user`* di tipo `Map<String, Object>` per identificare l'utente con le sue proprietà.
+- *`user`*: nome dell'utente (String).
+- *`password`*: password per il login dell'utente (int).
+- *`giocate`*: numero di partite giocate dall'utente (int).
+- *`vinte`*: numero di partite vinte dall'utente (int).
+- *`streaklast`*: lunghezza della serie di vittorie più recente dell'utente (int).
+- *`streakmax`*: lunghezza massima della serie di vittorie ottenuta dall'utente (int).
+- *`guessd`*: distribuzione che indica i tentativi impiegati dall'utente per arrivare alla soluzione nelle partite giocate (List<Integer>).
 
-Questa scelta permette di avere una struttura sicura e flessibile, facilmente modificabile al termine di ogni partita con l'apposito metodo [*`update`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L159-L174), con il quale il relativo `Game` può aggiornare i dati dell'utente.
+Per evitare di esporre i metodi di modifica della mappa, invece di estendere una delle implementazioni di `Map`, è stata usata la variabile privata `Map<String, Object>` *`user`* che identifica l'utente con le sue proprietà.
 
-Oltre ai [metodi getter](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L88-L156) con i quali recuperare i sette valori della mappa, la classe contiene il metodo [*`copy`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L63-L85) che permette di creare una copia profonda dell'utente.
+Questa scelta permette di avere una struttura sicura e flessibile, facilmente modificabile al termine di ogni partita con l'apposito metodo [*`update`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L159-L174), che il relativo `Game` userà per aggiornare i dati dell'utente.
+
+Oltre ai [metodi getter](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L88-L156) con i quali recuperare i sette valori della mappa, la classe contiene anche il metodo [*`copy`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L63-L85) che permette di creare una copia profonda dell'utente.
 
 La classe ha un unico [costruttore](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L33-L60) che permette di creare un nuovo utente partendo da una `Map<String, Object>`. Non è consentito creare un oggetto della classe `User` usando una mappa *null*, incompleta o contenente associazioni chiave-valore di tipo sbagliato: questi casi causerebbero il lancio di una `NullPointerException` o di una `IllegalArgumentException`.
 
 
 
 
-## [`UserList`](file:///home/geoteo/Documents/reti/wordle/doc/UserList.html)
+## [`UserList`](https://www.geoteo.net/wordle/doc/UserList.html)
 
 Classe che implementa l'elenco degli utenti registrati e contiene due strutture dati principali.
 
 - *`userRegistrati`*: `Map<String, User>` contenente gli utenti registrati al gioco, nella quale il nome utente rappresenta la chiave e l'oggetto `User` il valore associato. L'associazione è biunivoca: il nome identifica univocamemte l'utente registrato.
 - *`userLoggati`*: `Set<String>` contenente i nomi degli utenti attualmente loggati al gioco.
 
-La classe utilizza la libreria [*Gson*](https://github.com/google/gson) per gestire la serializzazione e deserializzazione degli utenti in formato JSON, permettendo di [caricare](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L45-L88)/[salvare](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L91-L118) l'elenco degli utenti da/verso un file `.json` il cui path è specificato nel file di configurazione del server.
+La classe utilizza la libreria [*Gson*](https://github.com/google/gson) per gestire la serializzazione e deserializzazione degli utenti in formato *JSON*, permettendo di [caricare](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L45-L88)/[salvare](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/UserList.java#L91-L118) l'elenco degli utenti da/verso un file `.json` il cui path è specificato nel file di configurazione del server.
 
 
 
 
-## [`ServerSetup`](file:///home/geoteo/Documents/reti/wordle/doc/ServerSetup.html)
+## [`ServerSetup`](https://www.geoteo.net/wordle/doc/User.html)
 
 Classe che fornisce al server tutte le informazioni necessarie per la sua configurazione iniziale. Estende la classe `Properties` e viene usata da `ServerMain` per leggere il file di configurazione all'avvio, memorizzando le varie proprietà.
 
 1. *`PORT`*: numero di porta su cui il server si mette in ascolto (`int`).
 2. *`PATH_VOCABULARY`*: path del file che contiene il vocabolario (dizionario) del gioco (`String`).
-3. *`PATH_JSON`*: path del file JSON che contiene i dati degli utenti (`String`).
+3. *`PATH_JSON`*: path del file *JSON* che contiene i dati degli utenti (`String`).
 4. *`WORD_TIMER`*: tempo in secondi che intercorre tra due estrazioni della *Secret-Word* (`int`).
 5. *`MULTICAST_GROUP_ADDRESS`*: indirizzo del gruppo multicast utilizzato per la condivisione dei risultati (`String`).
 
 
 
 
-## [`ServerMain`](file:///home/geoteo/Documents/reti/wordle/doc/ServerMain.html)
+## [`ServerMain`](https://www.geoteo.net/wordle/doc/ServerMain.html)
 
-Classe che contiene il punto di ingresso (`main`) ed è responsabile per l'inizializzazione, l'attesa di connessioni e la comunicazione con i client. L'esecuzione del `main` può essere schematizzato in tre fasi.
-
-1. *Creazione strutture dati*: all'avvio, il server crea l'elenco degli utenti (`UserList`) e il dizionario (`WordList`).
-2. *Attesa connessioni*: il server [rimane in attesa](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/ServerMain.java#L139-L159) di connessioni dai client; ad ogni connessione ricevuta, lancerà una istanza di `Game` che si occuperà di gestire l'interazione con il client.
-3. *Gestione socket e thread-pools*: *`ServerMain`* esegue anche la chiusura delle socket e dei thread pools, usando il `Runnable` [*`shutdownHook`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/ServerMain.java#L43-L94) che garantisce tutte le operazioni indispensabili per una terminazione appropriata del server.
-
-Le variabili principali usate dalla classe sono le seguenti.
+Classe che contiene il punto di ingresso (`main`) ed è responsabile dell'inizializzazione, dell'attesa di connessioni e della comunicazione con i client. Le variabili principali usate dalla classe sono le seguenti.
 
 - *`PATH_CONF`*: `String` che rappresenta il path del file di configurazione del server.
 - *`serverProperties`*: istanza di `ServerSetup` che memorizza le proprietà del server.
 - *`listaUtenti`*: istanza di `UserList` che memorizza gli utenti registrati al gioco.
 - *`listaParole`*: istanza di `WordList` che memorizza le parole del gioco.
 - *`welcomeSocket`*: `ServerSocket` utilizzata per accettare connessioni dai client.
+- *`socket`*: `Socket` di connessione per la comunicazione tra `Game` e client.
+- *`threadPool`*: `ExecutorService` che gestisce i client connessi.
+- *`multicastListener`*: `Thread` che legge le notifiche inviate dai `Game` e le inoltra sul canale multicast.
+- [*`shutdownHook`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/ServerMain.java#L43-L94): task atto allo spegnimento di *Wordle*, vedi [Shutdown-Hook](#shutdown-hook).
+
+L'esecuzione del `main` può essere schematizzata in tre fasi.
+
+1. *Creazione strutture dati*: all'avvio, il server crea l'elenco degli utenti (`UserList`) e il dizionario (`WordList`).
+2. *Attesa connessioni*: il server [rimane in attesa](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/ServerMain.java#L139-L159) di connessioni dai client; ad ogni connessione ricevuta, lancerà una istanza di `Game` che si occuperà di gestire l'interazione con il client.
+3. *Gestione socket e thread-pools*: *`ServerMain`* esegue anche la chiusura delle socket e dei thread-pools, usando il `Runnable` *`shutdownHook`* che garantisce tutte le operazioni indispensabili per una terminazione appropriata del server.
+
+
+### Shutdown-Hook
+
+Nello specifico, `ServerMain` usa il `Runnable` *`shutdownHook`* per creare un nuovo `Thread` e registrarlo come *shutdown-hook* usando il `Runtime` della applicazione *Java* corrente.
+
+```java
+Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook));
+```
+
+In caso di una interruzione (`^C` da tastiera o *system-shutdown*), la *JVM* eseguità lo *shutdown-hook* come prima istruzione della procedura di spegnimento. *`shutdownHook`*, a sua volta, lancerà i seguenti comandi per chiudere [*`welcomeSocket`*](https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/ServerMain.java#L37), [*`threadPool`*](https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/ServerMain.java#L39), [*`multicastListener`*](https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/ServerMain.java#L40) e [*`wordExtractor`*](https://github.com/matteogiorgi/wordle/blob/48c934adef8dcf2f0118869bf6615625ccb2b9fb/src/WordList.java#L34) di *`listaParole`* appositamente controllati dai relativi `try-catch`.
+
+```java
+welcomeSocket.close();
+...
+threadPool.shutdown();
+multicastListener.interrupt();
+listaParole.getSheduler().shutdown();
+```
+
+In coda allo *shutdown-hook* viene eseguito un blocco *try-catch* per salvare i dati relativi agli utenti registrati in `lib/USERS.json`.
+
+```java
+try {
+    listaUtenti.setRegistrati(serverProperties.getPathJSON());
+} catch (IOException e) { ...
+```
 
 
 
 
-## [`Game`](file:///home/geoteo/Documents/reti/wordle/doc/Game.html)
+## [`Game`](https://www.geoteo.net/wordle/doc/Game.html)
 
 `Runnable` che gestisce l'interazione tra il server e un singolo client, organizzando la comunicazione in tre sessioni (come da AST).
 
@@ -180,12 +207,12 @@ Le variabili principali usate dalla classe sono le seguenti.
     - *`quit!`*: interrompere la partita in corso e tornare alla sessione di login.
     - *`<tentativo>`*: nuova *Guessed-Word*.
 
-I comandi documentati delle specifiche non sono quindi universalmente disponibili ma limitati al contesto della singola sessione: la classe `Game` gestisce l'interazione con l'utente, guidandolo attraverso le diverse fasi del gioco e fornendo un sottoinsieme di funzionalità basate sullo stato corrente, come descritto nell'AST.
+I comandi documentati delle specifiche non sono quindi universalmente disponibili ma limitati al contesto della singola sessione. La classe `Game` gestisce l'interazione con l'utente: lo guida attraverso le diverse fasi del gioco fornendo, per ogni fase, un sottoinsieme di funzionalità basate sullo stato corrente (come da AST).
 
 
 
 
-## [`MulticastSender`](file:///home/geoteo/Documents/reti/wordle/doc/MulticastSender.html)
+## [`MulticastSender`](https://www.geoteo.net/wordle/doc/MulticastSender.html)
 
 `Runnable` che gestisce l'invio di notifiche tramite il gruppo multicast. Le principali variabili sono le seguenti.
 
@@ -193,12 +220,12 @@ I comandi documentati delle specifiche non sono quindi universalmente disponibil
 - *`multicastGroupAddress`*: `String` che rappresenta l'indirizzo del gruppo multicast.
 - *`queue`*: coda utilizzata per conservare temporaneamente le notifiche inviate dal server.
 
-Per ogni notifica accodata su *`queue`* da un `Game`, il `MulticastSender` riceverà una [*`notify()`*](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L56-L64), eseguità una [*`queue.poll()`*](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L43-L53) e si occuperà di [inviare una notifica](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L81-L91) sul canale multicast. Svuotata la coda, il `Runnable` eseguirà una *wait* in attesa di altre notifiche.
+Per ogni notifica accodata su *`queue`* da un `Game`, il `MulticastSender` riceverà una [*`notify()`*](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L56-L64), eseguità una [*`queue.poll()`*](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L43-L53) e si occuperà di [inviare una notifica](https://github.com/matteogiorgi/wordle/blob/e6f51300ba5eff1dbc1671f4ca2fa8d90b880cb1/src/MulticastSender.java#L81-L91) sul canale multicast. Svuotata la coda, il `Runnable` tornerà in attesa di altre notifiche con una *wait()*
 
 
 
 
-## [`ClientSetup`](file:///home/geoteo/Documents/reti/wordle/doc/ClientSetup.html)
+## [`ClientSetup`](https://www.geoteo.net/wordle/doc/ClientSetup.html)
 
 Classe analoga a `ServerSetup`, fornisce al client tutte le informazioni necessarie per la sua configurazione iniziale. Estende la classe `Properties` e viene usata da `ClientMain` per leggere il file di configurazione all'avvio, memorizzando le varie proprietà.
 
@@ -210,7 +237,7 @@ Classe analoga a `ServerSetup`, fornisce al client tutte le informazioni necessa
 
 
 
-## [`ClientMain`](file:///home/geoteo/Documents/reti/wordle/doc/ClientMain.html)
+## [`ClientMain`](https://www.geoteo.net/wordle/doc/ClientMain.html)
 
 Classe che contiene il punto di ingresso (`main`) ed è responsabile per l'inizializzazione e la comunicazione con il server. Di seguito le principali variabili.
 
@@ -225,7 +252,7 @@ La particolarità di `ClientMain` sta nel fatto che non mantiene traccia dello s
 
 
 
-## [`MulticastReceiver`](file:///home/geoteo/Documents/reti/wordle/doc/MulticastReceiver.html)
+## [`MulticastReceiver`](https://www.geoteo.net/wordle/doc/MulticastReceiver.html)
 
 `Runnable` che gestisce la ricezione delle notifiche tramite il gruppo multicast. La classe estende `ConcurrentLinkedQueue<String>` fungendo da coda thread-safe delle notifiche ricevute. Le principali variabili sono le seguenti.
 
@@ -233,11 +260,10 @@ La particolarità di `ClientMain` sta nel fatto che non mantiene traccia dello s
 - *`multicastGroupAddress`*: indirizzo del gruppo multicast.
 - *`userName`*: nome dell'utente che ha inviato la richiesta di condivisione sul canale multicast.
 
-Tramite la variabile *`multicastReceiver`* di `ClientMain`, le notifiche dal gruppo multicast vengono intercettate e messe in coda. Questo meccanismo assicura ai client un ricevimento delle notifiche in tempo reale e una loro elaborazione asincrona.
+Tramite la variabile *`multicastReceiver`* di `ClientMain`, le notifiche dal gruppo multicast vengono intercettate e messe in coda. Questo meccanismo assicura la ricezione in tempo reale e l'elaborazione asincrona delle notifiche.
+ai client un ricevimento delle notifiche in tempo reale e una loro elaborazione asincrona.
 
-<p style="margin-top: 3rem; margin-bottom: 0rem">
-<center style="font-style: italic; font-family: 'Ubuntu Mono'; font-size: 80%;">
-Questo testo e la corrispondente [wiki-page]()<br>
-sono stati creati con [vim-auxilium](https://github.com/matteogiorgi/.minidot/blob/master/vim/.vim/plugin/auxilium.vim).
-</center>
+<p style="margin-top: 3rem; margin-bottom: 0rem;">
+<center><code><i>[PDF](https://www.geoteo.net/wordle/relazione/relazione.pdf) e corrispondente pagina [HTML](https://www.geoteo.net/wordle/relazione/notes/relazione.html)</i></code></center>
+<center><code><i>sono stati creati con [vim-auxilium](https://github.com/matteogiorgi/.minidot/blob/master/vim/.vim/plugin/auxilium.vim)</i></code></center>
 </p>
