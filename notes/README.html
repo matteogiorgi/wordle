@@ -131,7 +131,7 @@
 <li><a href="https://github.com/matteogiorgi/wordle/tree/master/src">Sorgenti <em>Java</em></a></li>
 <li><a href="https://www.geoteo.net/wordle/specifiche-wordle.pdf">Specifiche</a></li>
 </ul>
-<h2 id="generare-gli-eseguibili">Generare gli eseguibili</h2>
+<h2 id="come-creare-gli-archivi-java">Come creare gli archivi <em>Java</em></h2>
 <p>Compilare i sorgenti <code>.java</code> del server in <code>bin-server</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">javac</span> -cp lib/gson-2.10.jar -d bin-server/ <span class="kw">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="ex">src/ServerMain.java</span> <span class="kw">\</span></span>
@@ -147,11 +147,11 @@
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="ex">src/ClientMain.java</span> <span class="kw">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="ex">src/ClientSetup.java</span> <span class="kw">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="ex">src/multicastReceiver.java</span> <span class="kw">\</span></span></code></pre></div>
-<p>Creare gli eseguibili <code>.jar</code> per server e client:</p>
+<p>Generare i file <code>.jar</code> per server e client:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;Main-Class: ServerMain&quot;</span> <span class="kw">|</span> <span class="ex">jar</span> cvfm WordleServer.jar - -C bin-server/ .</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;Main-Class: ClientMain&quot;</span> <span class="kw">|</span> <span class="ex">jar</span> cvfm WordleClient.jar - -C bin-client/ .</span></code></pre></div>
-<h2 id="eseguire-wordle-3.0">Eseguire <em>Wordle 3.0</em></h2>
-<p>Il repo contiene già i file <code>.jar</code> pronti per essere testati. Per eseguire il programma lanciare quindi le seguenti istruzioni in due istanze separate di <code>sh</code>:</p>
+<h2 id="come-eseguire-wordle-3.0">Come eseguire <em>Wordle 3.0</em></h2>
+<p>Gli archivi <code>.jar</code> sono già presenti nella directory principale del repository. Per eseguire il programma lanciare quindi le seguenti istruzioni in due istanze separate di <code>sh</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co"># SERVER</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="ex">java</span> -cp WordleServer.jar:lib/gson-2.10.jar ServerMain</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>

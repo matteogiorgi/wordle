@@ -11,7 +11,7 @@ Progetto di fine corso *Laboratorio di Reti* 2022-2023.
 
 
 
-## Generare gli eseguibili
+## Come creare gli archivi *Java*
 
 Compilare i sorgenti `.java` del server in `bin-server`:
 
@@ -36,7 +36,7 @@ javac -d bin-client/ \
     src/multicastReceiver.java \
 ```
 
-Creare gli eseguibili `.jar` per server e client:
+Generare i file `.jar` per server e client:
 
 ```bash
 echo "Main-Class: ServerMain" | jar cvfm WordleServer.jar - -C bin-server/ .
@@ -46,9 +46,9 @@ echo "Main-Class: ClientMain" | jar cvfm WordleClient.jar - -C bin-client/ .
 
 
 
-## Eseguire *Wordle 3.0*
+## Come eseguire *Wordle 3.0*
 
-Il repo contiene già i file `.jar` pronti per essere testati. Per eseguire il programma lanciare quindi le seguenti istruzioni in due istanze separate di `sh`:
+Gli archivi `.jar` sono già presenti nella directory principale del repository. Per eseguire il programma lanciare quindi le seguenti istruzioni in due istanze separate di `sh`:
 
 ```bash
 # SERVER
