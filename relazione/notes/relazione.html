@@ -295,9 +295,9 @@ h4 { margin-top: -1rem; }
 <h2 id="multicastreceiver"><a href="https://www.geoteo.net/wordle/doc/MulticastReceiver.html"><code>MulticastReceiver</code></a></h2>
 <p><code>Runnable</code> che gestisce la ricezione delle notifiche tramite il gruppo multicast. La classe estende <code>ConcurrentLinkedQueue&lt;String&gt;</code> fungendo da coda thread-safe delle notifiche ricevute. Le principali variabili sono le seguenti.</p>
 <ul>
-<li><em><code>multicastGroupPort</code></em>: numero di porta del gruppo multicast.</li>
-<li><em><code>multicastGroupAddress</code></em>: indirizzo del gruppo multicast.</li>
-<li><em><code>userName</code></em>: nome dell’utente che ha inviato la richiesta di condivisione sul canale multicast.</li>
+<li><em><code>multicastGroupPort</code></em>: <code>int</code> che rappresenta il numero di porta del gruppo multicast.</li>
+<li><em><code>multicastGroupAddress</code></em>: <code>String</code> che rappresenta l’indirizzo del gruppo multicast.</li>
+<li><em><code>userName</code></em>: <code>String</code> che rappresenta il nome dell’utente che ha inviato la richiesta di condivisione sul canale multicast.</li>
 </ul>
 <p>Tramite la variabile <em><code>multicastReceiver</code></em> di <code>ClientMain</code>, le notifiche dal gruppo multicast vengono intercettate e messe in coda. Questo meccanismo assicura la ricezione in tempo reale e l’elaborazione asincrona delle notifiche.</p>
 <p style="margin-top: 3rem; margin-bottom: 0rem;">

@@ -256,9 +256,9 @@ La particolarità di `ClientMain` sta nel fatto che non mantiene traccia dello s
 
 `Runnable` che gestisce la ricezione delle notifiche tramite il gruppo multicast. La classe estende `ConcurrentLinkedQueue<String>` fungendo da coda thread-safe delle notifiche ricevute. Le principali variabili sono le seguenti.
 
-- *`multicastGroupPort`*: numero di porta del gruppo multicast.
-- *`multicastGroupAddress`*: indirizzo del gruppo multicast.
-- *`userName`*: nome dell'utente che ha inviato la richiesta di condivisione sul canale multicast.
+- *`multicastGroupPort`*: `int` che rappresenta il numero di porta del gruppo multicast.
+- *`multicastGroupAddress`*: `String` che rappresenta l'indirizzo del gruppo multicast.
+- *`userName`*: `String` che rappresenta il nome dell'utente che ha inviato la richiesta di condivisione sul canale multicast.
 
 Tramite la variabile *`multicastReceiver`* di `ClientMain`, le notifiche dal gruppo multicast vengono intercettate e messe in coda. Questo meccanismo assicura la ricezione in tempo reale e l'elaborazione asincrona delle notifiche.
 
