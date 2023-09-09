@@ -94,13 +94,13 @@ Si ricorda che il vocabolario fornito contiene solamente stringhe di 10 caratter
 
 Classe che rappresenta l'utente come una mappa chiave-valore che ne definisce le seguenti proprietà.
 
-- *`user`*: nome dell'utente (String).
-- *`password`*: password per il login dell'utente (int).
-- *`giocate`*: numero di partite giocate dall'utente (int).
-- *`vinte`*: numero di partite vinte dall'utente (int).
-- *`streaklast`*: lunghezza della serie di vittorie più recente dell'utente (int).
-- *`streakmax`*: lunghezza massima della serie di vittorie ottenuta dall'utente (int).
-- *`guessd`*: distribuzione che indica i tentativi impiegati dall'utente per arrivare alla soluzione nelle partite giocate (List<Integer>).
+- *`user`*: nome dell'utente (`String`).
+- *`password`*: password per il login dell'utente (`int`).
+- *`giocate`*: numero di partite giocate dall'utente (`int`).
+- *`vinte`*: numero di partite vinte dall'utente (`int`).
+- *`streaklast`*: lunghezza della serie di vittorie più recente dell'utente (`int`).
+- *`streakmax`*: lunghezza massima della serie di vittorie ottenuta dall'utente (`int`).
+- *`guessd`*: distribuzione che indica i tentativi impiegati dall'utente per arrivare alla soluzione nelle partite giocate (`List<Integer>`).
 
 Per evitare di esporre i metodi di modifica della mappa, invece di estendere una delle implementazioni di `Map`, è stata usata la variabile privata `Map<String, Object>` *`user`* che identifica l'utente con le sue proprietà.
 
@@ -108,7 +108,7 @@ Questa scelta permette di avere una struttura sicura e flessibile, facilmente mo
 
 Oltre ai [metodi getter](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L88-L156) con i quali recuperare i sette valori della mappa, la classe contiene anche il metodo [*`copy`*](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L63-L85) che permette di creare una copia profonda dell'utente.
 
-La classe ha un unico [costruttore](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L33-L60) che permette di creare un nuovo utente partendo da una `Map<String, Object>`. Non è consentito creare un oggetto della classe `User` usando una mappa *null*, incompleta o contenente associazioni chiave-valore di tipo sbagliato: questi casi causerebbero il lancio di una `NullPointerException` o di una `IllegalArgumentException`.
+La classe ha un unico [costruttore](https://github.com/matteogiorgi/wordle/blob/73926891f8bb2664cfd047886aeed3906a608a93/src/User.java#L33-L60) che permette di creare un nuovo utente partendo da una `Map<String, Object>`. Non è consentito creare un oggetto della classe `User` usando una mappa *null*, incompleta o contenente associazioni chiave-valore di tipo sbagliato: questi casi comporterebbero il lancio di una `NullPointerException` o di una `IllegalArgumentException`.
 
 
 
@@ -125,7 +125,7 @@ La classe utilizza la libreria [*Gson*](https://github.com/google/gson) per gest
 
 
 
-## [`ServerSetup`](https://www.geoteo.net/wordle/doc/User.html)
+## [`ServerSetup`](https://www.geoteo.net/wordle/doc/ServerSetup.html)
 
 Classe che fornisce al server tutte le informazioni necessarie per la sua configurazione iniziale. Estende la classe `Properties` e viene usata da `ServerMain` per leggere il file di configurazione all'avvio, memorizzando le varie proprietà.
 
@@ -261,7 +261,6 @@ La particolarità di `ClientMain` sta nel fatto che non mantiene traccia dello s
 - *`userName`*: nome dell'utente che ha inviato la richiesta di condivisione sul canale multicast.
 
 Tramite la variabile *`multicastReceiver`* di `ClientMain`, le notifiche dal gruppo multicast vengono intercettate e messe in coda. Questo meccanismo assicura la ricezione in tempo reale e l'elaborazione asincrona delle notifiche.
-ai client un ricevimento delle notifiche in tempo reale e una loro elaborazione asincrona.
 
 <p style="margin-top: 3rem; margin-bottom: 0rem;">
 <center><code><i>[PDF](https://www.geoteo.net/wordle/relazione/relazione.pdf) e corrispondente pagina [HTML](https://www.geoteo.net/wordle/relazione/notes/relazione.html)</i></code></center>
